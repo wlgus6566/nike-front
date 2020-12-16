@@ -3,6 +3,7 @@ package com.nike.dnp.dto.notice;
 import com.nike.dnp.dto.BasicDTO;
 import lombok.*;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Locale;
  * @author [정주희]
  * @CreatedOn 2020. 7. 19. 오전 1:14:17
  * @Description
+ * @since 2020. 12. 16. 오후 6:20:51
  */
 @Getter
 @Setter
@@ -96,6 +98,18 @@ public class CustomerSaveDTO extends BasicDTO {
      */
     private String imageBase64;
 
+    /**
+     * The Notice file save list
+     *
+     * @author [이소정]
+     */
+    private List<NoticeFileSaveDTO> fileList;
+
+    /**
+     * Sets notice article category code.
+     *
+     * @param noticeArticleCategoryCode the notice article category code
+     */
     public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
         this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase(Locale.KOREA);
     }

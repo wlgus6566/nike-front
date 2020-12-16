@@ -2,10 +2,13 @@ package com.nike.dnp.service.notice;
 
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.notice.*;
 import com.nike.dnp.entity.notice.NoticeArticle;
+import com.nike.dnp.entity.notice.NoticeFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
+import com.nike.dnp.repository.notice.NoticeFileRepository;
 import com.nike.dnp.repository.notice.NoticeRepository;
 import com.nike.dnp.service.user.UserService;
 import com.nike.dnp.util.FileUtil;
@@ -25,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+
+import static com.nike.dnp.common.variable.ServiceCode.NoticeArticleSectionEnumCode;
 
 /**
  * The Class Notice service.
@@ -53,6 +58,16 @@ public class NoticeService {
      */
     private final UserService userService;
 
+    /**
+     * The Notice file repository
+     *
+     * @author [이소정]
+     */
+    private final NoticeFileRepository noticeFileRepository;
+
+    /**
+     * The Editor url
+     */
     @Value("${nike.url.pc.domain:}")
     private String editorUrl;
 
@@ -62,8 +77,8 @@ public class NoticeService {
      * @param customerSearchDTO the notice search dto
      * @return the page
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 10:07:02
      * @implNote Customer Center 게시글 목록 조회
+     * @since 2020. 7. 20. 오후 10:07:02
      */
     public Page<CustomerListDTO> findNoticePages(final CustomerSearchDTO customerSearchDTO) {
         log.info("NoticeService.findNoticePages");
@@ -88,8 +103,8 @@ public class NoticeService {
      * @param noticeSeq the notice seq
      * @return the notice article
      * @author [정주희]
-     * @since 2020. 7. 21. 오후 4:07:10
      * @implNote Customer Center 상세 조회
+     * @since 2020. 7. 21. 오후 4:07:10
      */
     public CustomerResultDTO findById(final Long noticeSeq) {
         log.info("NoticeService.findById");
@@ -104,8 +119,8 @@ public class NoticeService {
      * @param customerSaveDTO the notice save dto
      * @return the notice article
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 9:21:49
      * @implNote Customer Center 게시글 등록
+     * @since 2020. 7. 20. 오후 9:21:49
      */
     @Transactional
     public NoticeArticle save(final CustomerSaveDTO customerSaveDTO) {
@@ -114,16 +129,63 @@ public class NoticeService {
         this.checkNoticeYn(customerSaveDTO.getNoticeArticleSectionCode(),
                 customerSaveDTO.getNoticeYn(), null);
 
-        return noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
+        NoticeArticle savedNoticeArticle = noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
+
+        // NOTICE, NEW 인 경우에만 fileList 저장
+        if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())
+            || NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
+            for (NoticeFileSaveDTO noticeFileSaveDTO : customerSaveDTO.getFileList()) {
+                noticeFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
+                noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(noticeFileSaveDTO)));
+            }
+        }
+
+        return savedNoticeArticle;
+    }
+
+    /**
+     * S 3 file copy save notice file save dto.
+     *
+     * @param noticeFileSaveDTO the notice file save dto
+     * @return the notice file save dto
+     * @author [이소정]
+     * @implNote 게시물 저장 > 파일 경로(temp -> contents) 변경 후 set
+     * @since 2020. 12. 16. 오후 7:18:49
+     */
+    public NoticeFileSaveDTO s3FileCopySave(final NoticeFileSaveDTO noticeFileSaveDTO) {
+        log.info("ContentsService.s3FileCopySave");
+        if (!ObjectUtils.isEmpty(noticeFileSaveDTO.getFilePhysicalName()) && noticeFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            noticeFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(noticeFileSaveDTO.getFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
+        }
+        return noticeFileSaveDTO;
+    }
+
+    /**
+     * Temp to real path file move string.
+     *
+     * @param filePhysicalName the file physical name
+     * @return the string
+     * @author [이소정]
+     * @implNote 게시물 파일 경로 temp -> contents
+     * @since 2020. 7. 28. 오후 3:59:37
+     */
+    public String fileMoveTempToRealPath(final String filePhysicalName, final String fileFolder) {
+        log.info("ContentsService.fileMoveTempToRealPath");
+        String imgPath = filePhysicalName;
+        if (null  != filePhysicalName) {
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, fileFolder, true);
+        }
+        return imgPath;
     }
 
     /**
      * Check notice yn cnt long.
      *
+     * @param noticeArticleSeq the notice article seq
      * @return the long
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 9:21:57
      * @implNote 공지사항 등록시 상단 고정된 게시글 개수 확인
+     * @since 2020. 7. 20. 오후 9:21:57
      */
     public Boolean checkNoticeYn(Long noticeArticleSeq) {
         log.info("NoticeService.checkNoticeYnCnt");
@@ -153,13 +215,12 @@ public class NoticeService {
     /**
      * Update customer center notice article.
      *
-     *
-     * @param noticeSeq
+     * @param noticeSeq         the notice seq
      * @param customerUpdateDTO the notice update dto
      * @return the notice article
      * @author [정주희]
-     * @since 2020. 7. 23. 오후 10:11:06
      * @implNote Customer Center 게시글 수정
+     * @since 2020. 7. 23. 오후 10:11:06
      */
     @Transactional
     public NoticeArticle updateCustomerCenter(Long noticeSeq, final CustomerUpdateDTO customerUpdateDTO) {
@@ -177,12 +238,11 @@ public class NoticeService {
     /**
      * Delete customer center optional.
      *
-     *
-     * @param noticeSeq
+     * @param noticeSeq the notice seq
      * @return the optional
      * @author [정주희]
-     * @since 2020. 7. 20. 오후 10:06:54
      * @implNote customer center 삭제 (사용 여부 == 'N')
+     * @since 2020. 7. 20. 오후 10:06:54
      */
     @Transactional
     public NoticeArticle deleteCustomerCenter(Long noticeSeq) {
@@ -197,12 +257,12 @@ public class NoticeService {
     /**
      * Upload editor images list.
      *
-     *
      * @param multiReq                 the multi req
+     * @param noticeArticleSectionCode the notice article section code
      * @return noticeArticleSectionCode the notice article section code
      * @author [정주희]
-     * @since 2020. 8. 19. 오후 12:17:33
      * @implNote 에디터 이미지 업로드
+     * @since 2020. 8. 19. 오후 12:17:33
      */
     public String uploadEditorImages(MultipartFile multiReq, String noticeArticleSectionCode) {
         log.info("NoticeService.uploadEditorImages");
@@ -223,12 +283,13 @@ public class NoticeService {
     /**
      * Check notice yn.
      *
-     *
-     * @param code the code         
+     * @param code the code
+     * @param isYn the is yn
+     * @param seq  the seq
      * @return isYn the is yn
      * @author [정주희]
+     * @implNote 등록 /수정 버튼 클릭시 고정게시글 개수 체크
      * @since 2020. 8. 19. 오후 12:17:33
-     * @implNote 등록/수정 버튼 클릭시 고정게시글 개수 체크
      */
     private void checkNoticeYn(final String code, final String isYn, final Long seq){
         if(StringUtils.equalsIgnoreCase(code, "NOTICE") && StringUtils.equalsIgnoreCase(isYn, "Y")){

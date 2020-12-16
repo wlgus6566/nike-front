@@ -735,7 +735,7 @@ public class ContentsService {
         log.info("ContentsService.fileMoveTempToRealPath");
         String imgPath = filePhysicalName;
         if (null  != filePhysicalName) {
-            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.CONTENTS.getFolder());
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.CONTENTS.getFolder(), true);
         }
         return imgPath;
     }

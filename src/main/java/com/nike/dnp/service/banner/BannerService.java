@@ -119,8 +119,8 @@ public class BannerService {
      */
     @Transactional
     public BannerReturnDTO save (final BannerSaveDTO bannerSaveDTO) {
-        bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
-        bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+        bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name(), true));
+        bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name(), true));
         final Banner banner = bannerRepository.save(new Banner().saveOrUpdate(bannerSaveDTO));
         final BannerReturnDTO bannerDTO = ObjectMapperUtil.map(banner, BannerReturnDTO.class);
         redisService.set(BANNER_REDIS_KEY, bannerDTO, 0);
@@ -142,14 +142,14 @@ public class BannerService {
         final Banner banner = this.findByBannerSeq(bannerSeq);
 
         if (bannerSaveDTO.getImageFilePhysicalName().contains("temp/")) {
-            bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+            bannerSaveDTO.setImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name(), true));
         } else {
             bannerSaveDTO.setImageFileName(banner.getImageFileName());
             bannerSaveDTO.setImageFileSize(banner.getImageFileSize());
             bannerSaveDTO.setImageFilePhysicalName(banner.getImageFilePhysicalName());
         }
         if (bannerSaveDTO.getMobileImageFilePhysicalName().contains("temp/")) {
-            bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name()));
+            bannerSaveDTO.setMobileImageFilePhysicalName(S3Util.fileCopyAndOldFileDelete(bannerSaveDTO.getMobileImageFilePhysicalName(), ServiceCode.FileFolderEnumCode.BANNER.name(), true));
         } else {
             bannerSaveDTO.setMobileImageFilePhysicalName(banner.getMobileImageFilePhysicalName());
         }

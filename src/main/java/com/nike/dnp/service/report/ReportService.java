@@ -663,7 +663,7 @@ public class ReportService {
         log.info("ReportService.fileMoveTempToRealPath");
         String imgPath = filePhysicalName;
         if (null  != filePhysicalName) {
-            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.REPORT.getFolder());
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, ServiceCode.FileFolderEnumCode.REPORT.getFolder(), true);
         }
         return imgPath;
     }

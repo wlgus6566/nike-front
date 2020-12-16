@@ -75,7 +75,7 @@ public class S3Util {
 	 *
 	 * @param root the root
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:51
 	 */
 	@Value("${nike.file.root:}")
@@ -88,7 +88,7 @@ public class S3Util {
 	 *
 	 * @param bucket the bucket
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	@Value("${cloud.aws.s3.bucket:}")
@@ -114,7 +114,7 @@ public class S3Util {
 	 *
 	 * @return the amazon s 3
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static void init(){
@@ -134,7 +134,7 @@ public class S3Util {
 	 * @param downloadYn    the download yn
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
 	public static void upload(final FileResultDTO fileResultDTO, final String privateYn, final String downloadYn) {
@@ -211,25 +211,30 @@ public class S3Util {
 	 * @param oldFileDelete 기존 파일 삭제 유무
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
-	public static String fileCopy(final String oldFile, final String newFolder,final boolean oldFileDelete) {
+	public static String fileCopy(final String oldFile, final String newFolder,final boolean oldFileDelete, final boolean privateBucket) {
 		log.info("S3Util.fileCopy");
+
+		String bucketPath = bucket;
+		if (!privateBucket) {
+			bucketPath = editorBucket;
+		}
+
 		final String awsOldPath = awsPathReplace(oldFile);
 		final String fileName = StringUtils.getFilename(awsOldPath);
 		final String awsNewPath = newFolder+"/"+fileName;
-		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, awsOldPath, bucket, awsNewPath).withCannedAccessControlList(CannedAccessControlList.Private);
+		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucketPath, awsOldPath, bucketPath, awsNewPath).withCannedAccessControlList(CannedAccessControlList.Private);
 		client.copyObject(copyObjectRequest);
-		final URL url = client.getUrl(bucket, awsNewPath);
+		final URL url = client.getUrl(bucketPath, awsNewPath);
 		// 기존 파일 삭제
 		if(oldFileDelete){
-			client.deleteObject(bucket, awsOldPath);
+			client.deleteObject(bucketPath, awsOldPath);
 		}
 		log.debug("url.toString() {}", url.toString());
 		return url.getPath();
 	}
-
 
 	/**
 	 * S3 파일 복사 및 기존 파일 삭제
@@ -238,14 +243,14 @@ public class S3Util {
 	 * @param newFolder 복사할 폴더
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:52
 	 */
-	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder) {
+	public static String fileCopyAndOldFileDelete(final String oldFile, final String newFolder, final boolean privateBucket) {
 		log.info("S3Util.fileCopyAndOldFileDelete");
 		String result = oldFile;
 		if (oldFile.contains(ServiceCode.FileFolderEnumCode.TEMP.getFolder())) {
-			result = fileCopy(oldFile, newFolder,true);
+			result = fileCopy(oldFile, newFolder,true, privateBucket);
 		}
 		return result;
 	}
@@ -257,12 +262,12 @@ public class S3Util {
 	 * @param newFolder 복사할 폴더
 	 * @return the url
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:11:49
 	 */
 	public static String fileCopy(final String oldFile, final String newFolder) {
 		log.info("S3Util.fileCopy");
-		return fileCopy(oldFile, newFolder, false);
+		return fileCopy(oldFile, newFolder, false, true);
 	}
 
 	/**
@@ -270,7 +275,7 @@ public class S3Util {
 	 *
 	 * @param deleteFile the delete file
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:58:52
 	 */
 	public static void tempFileDelete(final String deleteFile){
@@ -291,7 +296,7 @@ public class S3Util {
 	 *
 	 * @param deleteFile 삭제 버킷 경로
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:58:52
 	 */
 	public static void fileDelete(final String deleteFile) {
@@ -369,7 +374,7 @@ public class S3Util {
 	 * @param oldPath the old path
 	 * @return the string
 	 * @author [윤태호]
-	 * @implNote 설명]
+	 * @implNote 설명] 설명]
 	 * @since 2020. 7. 27. 오후 4:09:53
 	 */
 	public static String awsPathReplace(final String oldPath) {
