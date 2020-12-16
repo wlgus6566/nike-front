@@ -3,7 +3,7 @@
     <h2 class="page-title">
       <span class="ko">공지사항</span>
     </h2>
-    <form @submit.prevent="submitData">
+    <form @submit.prevent="uploadFiles">
       <h3 class="form-title mt20">등록/수정</h3>
       <hr class="hr-black" />
       <ul class="form-list">
@@ -245,7 +245,6 @@ export default {
       });
       this.uploadFileList = this.uploadFileList.concat(mergeArray);
     },
-
     async uploadFiles() {
       await Promise.all(
           this.uploadFileList.map(async (el) => {
@@ -299,7 +298,6 @@ export default {
       await this.submitData();
       this.uploadFileList = [];
     },
-
     removeFile() {
       this.checkedFile.forEach((a) => {
         this.noticeDetail.noticeFileSaveDTOList = this.noticeDetail.noticeFileSaveDTOList.filter(
@@ -345,6 +343,7 @@ export default {
         this.$store.state.saveFolder = true;
         this.$store.commit('SET_RELOAD', true);
         if (response.data.success) {
+          this.uploadFiles();
           this.detailDataReset();
           this.$router.push('/mypage/notice');
         } else {
