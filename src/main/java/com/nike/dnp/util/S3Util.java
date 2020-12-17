@@ -189,7 +189,7 @@ public class S3Util {
 		if (privateYn.equals("Y")) {
 			putObjectRequest = new PutObjectRequest(bucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.Private);
 		} else {
-			putObjectRequest = new PutObjectRequest(editorBucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicRead);
+			putObjectRequest = new PutObjectRequest(editorBucket, uploadUrl, file).withCannedAcl(CannedAccessControlList.PublicReadWrite);
 		}
 
 		if (downloadYn.equals("Y")) {
@@ -217,15 +217,20 @@ public class S3Util {
 	public static String fileCopy(final String oldFile, final String newFolder,final boolean oldFileDelete, final boolean privateBucket) {
 		log.info("S3Util.fileCopy");
 
+
+		final String awsOldPath = awsPathReplace(oldFile);
+		final String fileName = StringUtils.getFilename(awsOldPath);
+		final String awsNewPath = newFolder+"/"+fileName;
+
 		String bucketPath = bucket;
 		if (!privateBucket) {
 			bucketPath = editorBucket;
 		}
 
-		final String awsOldPath = awsPathReplace(oldFile);
-		final String fileName = StringUtils.getFilename(awsOldPath);
-		final String awsNewPath = newFolder+"/"+fileName;
-		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucketPath, awsOldPath, bucketPath, awsNewPath).withCannedAccessControlList(CannedAccessControlList.Private);
+		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucketPath, awsOldPath, bucketPath, awsNewPath)
+				.withCannedAccessControlList(!privateBucket ? CannedAccessControlList.PublicReadWrite : CannedAccessControlList.Private);
+
+//		final CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucketPath, awsOldPath, bucketPath, awsNewPath);
 		client.copyObject(copyObjectRequest);
 		final URL url = client.getUrl(bucketPath, awsNewPath);
 		// 기존 파일 삭제

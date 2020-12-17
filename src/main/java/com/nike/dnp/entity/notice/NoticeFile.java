@@ -1,10 +1,8 @@
 package com.nike.dnp.entity.notice;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.nike.dnp.dto.notice.NoticeFileSaveDTO;
-import com.nike.dnp.dto.order.OrderProductFileSaveDTO;
+import com.nike.dnp.dto.notice.CustomerFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
-import com.nike.dnp.entity.order.OrderProductMapping;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -117,20 +115,21 @@ public class NoticeFile extends BaseTimeEntity {
     /**
      * Save notice file notice file.
      *
-     * @param noticeFileSaveDTO the notice file save dto
+     * @param customerFileSaveDTO the customer file save dto
      * @return the notice file
      * @author [이소정]
      * @implNote [method 설명]
      * @since 2020. 12. 16. 오후 6:57:15
      */
-    public NoticeFile saveNoticeFile(final NoticeFileSaveDTO noticeFileSaveDTO) {
+    public NoticeFile saveNoticeFile(final CustomerFileSaveDTO customerFileSaveDTO) {
         NoticeFile noticeFile = new NoticeFile();
-        noticeFile.setNoticeArticleSeq(noticeFileSaveDTO.getNoticeArticleSeq());
-        noticeFile.setFileContentType(noticeFileSaveDTO.getFileContentType());
-        noticeFile.setFileExtension(noticeFileSaveDTO.getFileExtension());
-        noticeFile.setFileName(noticeFileSaveDTO.getFileName());
-        noticeFile.setFileSize(noticeFileSaveDTO.getFileSize());
-        noticeFile.setUseYn(noticeFileSaveDTO.getUseYn());
+        noticeFile.setNoticeArticleSeq(customerFileSaveDTO.getNoticeArticleSeq());
+        noticeFile.setFileContentType(customerFileSaveDTO.getFileContentType());
+        noticeFile.setFileExtension(customerFileSaveDTO.getFileExtension());
+        noticeFile.setFileName(customerFileSaveDTO.getFileName());
+        noticeFile.setFileSize(customerFileSaveDTO.getFileSize());
+        noticeFile.setFilePhysicalName(customerFileSaveDTO.getFilePhysicalName());
+        noticeFile.setUseYn(customerFileSaveDTO.getUseYn());
         return noticeFile;
     }
 

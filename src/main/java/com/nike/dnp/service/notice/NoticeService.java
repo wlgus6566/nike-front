@@ -2,7 +2,6 @@ package com.nike.dnp.service.notice;
 
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.notice.*;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.entity.notice.NoticeFile;
@@ -27,6 +26,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.nike.dnp.common.variable.ServiceCode.NoticeArticleSectionEnumCode;
@@ -110,6 +110,14 @@ public class NoticeService {
         log.info("NoticeService.findById");
         CustomerResultDTO result = ObjectMapperUtil.map(noticeRepository.findByNoticeArticleSeq(noticeSeq), CustomerResultDTO.class);
         result.setNickname(userService.findByUserSeq(result.getRegisterSeq()).getNickname());
+
+        // NOTICE, NEW 인 경우에만 fileList 조회
+        if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(result.getNoticeArticleSectionCode())
+            || NoticeArticleSectionEnumCode.NEWS.toString().equals(result.getNoticeArticleSectionCode())) {
+            result.setFileList(
+                    ObjectMapperUtil.mapAll(noticeFileRepository.findAllByNoticeArticleSeqAndUseYn(noticeSeq, "Y"), CustomerFileResultDTO.class)
+            );
+        }
         return result;
     }
 
@@ -130,15 +138,18 @@ public class NoticeService {
                 customerSaveDTO.getNoticeYn(), null);
 
         NoticeArticle savedNoticeArticle = noticeRepository.save(new NoticeArticle().customerSave(customerSaveDTO));
+        List<NoticeFile> noticeFileList = new ArrayList<>();
 
         // NOTICE, NEW 인 경우에만 fileList 저장
         if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())
             || NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
-            for (NoticeFileSaveDTO noticeFileSaveDTO : customerSaveDTO.getFileList()) {
-                noticeFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
-                noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(noticeFileSaveDTO)));
+            for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
+                customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
+                noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))));
             }
         }
+
+        savedNoticeArticle.setNoticeFileList(noticeFileList);
 
         return savedNoticeArticle;
     }
@@ -146,24 +157,25 @@ public class NoticeService {
     /**
      * S 3 file copy save notice file save dto.
      *
-     * @param noticeFileSaveDTO the notice file save dto
+     * @param cutCustomerFileSaveDTO the cut customer file save dto
      * @return the notice file save dto
      * @author [이소정]
      * @implNote 게시물 저장 > 파일 경로(temp -> contents) 변경 후 set
      * @since 2020. 12. 16. 오후 7:18:49
      */
-    public NoticeFileSaveDTO s3FileCopySave(final NoticeFileSaveDTO noticeFileSaveDTO) {
+    public CustomerFileSaveDTO s3FileCopySave(final CustomerFileSaveDTO cutCustomerFileSaveDTO) {
         log.info("ContentsService.s3FileCopySave");
-        if (!ObjectUtils.isEmpty(noticeFileSaveDTO.getFilePhysicalName()) && noticeFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
-            noticeFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(noticeFileSaveDTO.getFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
+        if (!ObjectUtils.isEmpty(cutCustomerFileSaveDTO.getFilePhysicalName()) && cutCustomerFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
+            cutCustomerFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(cutCustomerFileSaveDTO.getFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
         }
-        return noticeFileSaveDTO;
+        return cutCustomerFileSaveDTO;
     }
 
     /**
      * Temp to real path file move string.
      *
      * @param filePhysicalName the file physical name
+     * @param fileFolder       the file folder
      * @return the string
      * @author [이소정]
      * @implNote 게시물 파일 경로 temp -> contents
@@ -173,7 +185,7 @@ public class NoticeService {
         log.info("ContentsService.fileMoveTempToRealPath");
         String imgPath = filePhysicalName;
         if (null  != filePhysicalName) {
-            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, fileFolder, true);
+            imgPath = S3Util.fileCopyAndOldFileDelete(filePhysicalName, fileFolder, false);
         }
         return imgPath;
     }

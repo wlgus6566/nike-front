@@ -1,19 +1,28 @@
 package com.nike.dnp.dto.notice;
 
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+/**
+ * The Class Customer file result dto.
+ *
+ * @author [이소정]
+ * @since 2020. 12. 17. 오후 5:47:48
+ */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class NoticeFileSaveDTO {
+public class CustomerFileResultDTO {
+
+    /**
+     * The Editor url
+     */
+    @Value("${nike.url.pc.domain:}")
+    private String cdnUrl;
 
     /**
      * 게시물_파일_시퀀스
@@ -77,6 +86,18 @@ public class NoticeFileSaveDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "useYn", value = "사용 여부")
-    private String useYn = "Y";
+    private String useYn;
+
+    /**
+     * Gets file physical name.
+     *
+     * @return the file physical name
+     * @author [이소정]
+     * @implNote
+     * @since 2020. 12. 17. 오후 5:47:48
+     */
+    public String getFilePhysicalName() {
+        return cdnUrl + filePhysicalName;
+    }
 
 }

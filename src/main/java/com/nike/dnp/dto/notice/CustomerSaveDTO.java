@@ -103,7 +103,7 @@ public class CustomerSaveDTO extends BasicDTO {
      *
      * @author [이소정]
      */
-    private List<NoticeFileSaveDTO> fileList;
+    private List<CustomerFileSaveDTO> fileList;
 
     /**
      * Sets notice article category code.
