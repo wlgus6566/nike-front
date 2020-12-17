@@ -1,5 +1,6 @@
 package com.nike.dnp.entity.notice;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.notice.CustomerSaveDTO;
@@ -13,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * The Class Notice article.
@@ -123,6 +125,16 @@ public class NoticeArticle extends BaseTimeEntity {
     private String useYn;
 
     /**
+     * The Notice file list
+     * 
+     * @author [이소정]
+     */
+    @OneToMany(mappedBy = "noticeArticle")
+    @ApiModelProperty(name = "noticeFileList", value = "게시물 파일 목록")
+    @JsonManagedReference
+    private List<NoticeFile> noticeFileList;
+
+    /**
      * Pre persist.
      *
      * @author [정주희]
@@ -210,6 +222,14 @@ public class NoticeArticle extends BaseTimeEntity {
         return this;
     }
 
+    /**
+     * Delete notice article.
+     *
+     * @return the notice article
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @since 2020. 12. 16. 오후 6:13:14
+     */
     public NoticeArticle delete() {
         this.useYn = "N";
 

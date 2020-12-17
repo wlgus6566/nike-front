@@ -85,7 +85,7 @@ public class FileController {
 	public SingleResult<FileResultDTO> upload(
 			final FileUploadDTO fileUploadDTO
 			, @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile
-			, @ApiParam(name = "menuCode", value = "메뉴코드(default:null/주문:order/공지사항:notice)") final String menuCode
+			, @ApiParam(name = "menuCode", value = "메뉴코드(default:null/주문:order/공지사항:notice/뉴스:news)") final String menuCode
 	) throws IOException {
 		log.info("FileController.upload");
 
@@ -97,7 +97,7 @@ public class FileController {
 			folder = ServiceCode.FileFolderEnumCode.ORDER_PRODUCT.getFolder();
 			downloadYn = "N";
 			privateYn = "N";
-		} else if (!StringUtils.isEmpty(menuCode) && menuCode.equals("notice")) {
+		} else if (!StringUtils.isEmpty(menuCode) && (menuCode.equals("notice") || menuCode.equals("news"))) {
 			privateYn = "N";
 			resize = false;
 		}
@@ -105,27 +105,6 @@ public class FileController {
 		S3Util.upload(fileResultDTO, privateYn, downloadYn);
 		return responseService.getSingleResult(fileResultDTO);
 	}
-
-//	/**
-//	 * Upload order product file single result.
-//	 *
-//	 * @param fileUploadDTO the file upload dto
-//	 * @param uploadFile    the upload file
-//	 * @return the single result
-//	 * @author [이소정]
-//	 * @implNote 주문 파일 업로드
-//	 * @since 2020. 12. 14. 오후 7:44:13
-//	 */
-//	@ApiOperation(value = "파일 업로드", notes = BASIC_CHARACTER)
-//	@PostMapping(value = "/api/open/publicUpload/{menuCode}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//	public SingleResult<FileResultDTO> uploadPublicFile (
-//			final FileUploadDTO fileUploadDTO
-//			, @ApiParam(name = "uploadFile", value = "파일업로드") final MultipartFile uploadFile
-//			, @ApiParam(value = "메뉴코드(주문:order / 공지사항:notice)", defaultValue = "ALL") @PathVariable final String menuCode
-//	) throws IOException {
-//		log.info("FileController.publicUpload");
-//
-//	}
 
 	/**
 	 * 리스트 파일 업로드

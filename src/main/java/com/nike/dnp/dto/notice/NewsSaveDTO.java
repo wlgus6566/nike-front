@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * The Class Notice save dto.
@@ -200,5 +201,13 @@ public class NewsSaveDTO extends BasicDTO {
             "UUUAFFFFABRRRQAUUUUAFFFFABRRRQAVFb2dvZhxbwxwh2Lt5ahdzHqTjqfepaKBhRRRQIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoo" +
             "ooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//2Q==")
     private String imageBase64;
+
+    /**
+     * The Notice file save list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileList", value = "게시글 파일목록")
+    private List<CustomerFileSaveDTO> fileList;
 
 }

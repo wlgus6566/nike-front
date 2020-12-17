@@ -297,7 +297,8 @@ public class ServiceCode {
         TEMP("temp"),
         NEWS("NEWS"),
         BANNER("banner"),
-        ORDER_PRODUCT("orderProduct")
+        ORDER_PRODUCT("orderProduct"),
+        NOTICE("notice")
         ;
 
         /**

@@ -31,7 +31,7 @@ public class ContentsFileSearchDTO extends SearchDTO {
      *
      * @author [이소정]
      */
-    @ApiParam(value = "파일 구분 코드(ALL/ATT/ENG/RN/TR/NSW/FB/BB/JD/KIDS/OTHERS/DIGITAL/GUIDE/VIDEO/VR)", name = "sectionCode" , defaultValue = "ALL")
+    @ApiParam(value = "파일 구분 코드(ALL/ATTRACT/ENGAGEMENT/RN/TR/NSW/FB/BB/JD/KIDS/OTHERS/DIGITAL/GUIDE/VIDEO/VR)", name = "sectionCode" , defaultValue = "ALL")
     private String sectionCode = "";
 
     /**

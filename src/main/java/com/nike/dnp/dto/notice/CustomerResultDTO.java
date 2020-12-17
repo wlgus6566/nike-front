@@ -9,13 +9,14 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * The Class Notice list dto.
  *
  * @author [정주희]
- * @since 2020. 7. 13. 오후 7:11:50
  * @implNote Customer Center 목록 반환 DTO
+ * @since 2020. 7. 13. 오후 7:11:50
  */
 @Getter
 @Setter
@@ -121,6 +122,9 @@ public class CustomerResultDTO {
     @ApiModelProperty(name = "nickname", value = "최초 작성자")
     private String nickname;
 
+    /**
+     * The Register seq
+     */
     @ApiModelProperty(name = "registerSeq", value = "최초 작성자 시퀀스")
     private Long registerSeq;
 
@@ -133,15 +137,19 @@ public class CustomerResultDTO {
     @ApiModelProperty(name = "updateDt", value = "최종 수정일")
     private LocalDateTime updateDt;
 
-    /*@ApiModelProperty(name = "cdnUrl", value = "cdnUrl", hidden = true)
-    private static String cdnUrl;
+    /**
+     * The File list
+     */
+    @ApiModelProperty(name = "fileList", value = "게시물 파일 목록")
+    private List<CustomerFileResultDTO> fileList;
 
-    @Value("${nike.file.cdnUrl:}")
-    public void setCdnUrl(final String cdnUrl) {
-        this.cdnUrl = cdnUrl;
-    }
-*/
+    /**
+     * Gets thumbnail file physical name.
+     *
+     * @return the thumbnail file physical name
+     */
     public String getThumbnailFilePhysicalName() {
         return StringUtils.isEmpty(thumbnailFilePhysicalName) ? null : CloudFrontUtil.getCustomSignedUrl(thumbnailFilePhysicalName);
     }
+
 }
