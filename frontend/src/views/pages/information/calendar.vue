@@ -226,7 +226,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
@@ -270,6 +270,7 @@ export default {
         },
         // 일정 수정 클릭시
         onClickToEdit(item) {
+            console.log(item);
             this.statusCode = 'EDIT';
             this.calendarDetail = item;
             this.calendarSeq = item.calendarSeq;

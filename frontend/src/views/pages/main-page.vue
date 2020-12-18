@@ -192,14 +192,31 @@
         <CalendarModal
             :visible.sync="visible.calendar"
             :calendarData="calendarData"
+            @onClickToEdit="onClickToEdit"
         ></CalendarModal>
+        <calendarManagement
+            v-if="visible.calendarManagement"
+            :visible.sync="visible.calendarManagement"
+            :statusCode="statusCode"
+            :calendarDetail="calendarDetail"
+            :calendarSeq="calendarSeq"
+            :calenderSectionCodeList="calenderSectionCodeList"
+            @createCalendar="createCalendar"
+            @modifyCalendar="modifyCalendar"
+            @delCalendar="delCalendar"
+            @closeDialog="closeDialog"
+        />
     </div>
 </template>
 <script>
 import { getMain } from '@/api/main';
 import {
-    getCalendarEachList, // CALENDAR 목록 조회
-    getTodayCalendar, // CALENDAR 오늘 조회
+    delCalendar,
+    getCalendarEachList,
+    getCalendarList, // CALENDAR 목록 조회
+    getTodayCalendar,
+    postCalendar,
+    putCalendar, // CALENDAR 오늘 조회
 } from '@/api/calendar';
 
 import FullCalendar from '@fullcalendar/vue';
@@ -207,6 +224,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
 import CalendarModal from '@/views/pages/mainCalendar/calendar-detail.vue';
+import calendarManagement from '@/views/pages/information/calendar-management';
+import { authCheck } from '@/utils/authCheck';
+import { getCode } from '@/api/code';
 
 export default {
     name: 'MainPage',
@@ -214,12 +234,18 @@ export default {
         return {
             visible: {
                 calendar: false,
+                calendarManagement: false,
             },
+            calendarSeq: null,
+            statusCode: null,
+            calendarDetail: {},
+            calenderSectionCodeList: [],
             calendarData: null,
             mainData: null,
             todayData: [],
             yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
+                height: 'auto',
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 // 일자 클릭시
@@ -227,7 +253,6 @@ export default {
                 //moreLinkClick: this.calClickEvent,
                 eventClick: this.eventClickEvent,
                 //eventMouseEnter:this.mouserOverEvent,
-                height: 'auto',
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -268,13 +293,15 @@ export default {
             },
         };
     },
+    mixins: [authCheck],
     components: {
         FullCalendar,
         CalendarModal,
+        calendarManagement,
     },
     created() {
         this.main();
-        this.loadCalendar();
+        this.calLendarFetchData();
     },
     activated() {
         this.main();
@@ -384,24 +411,34 @@ export default {
                 console.error(error);
             }
         },
-        // 달력 초기 목록 호출
-        async loadCalendar() {
+        // 캘린더 초기 데이타 조회
+        async calLendarFetchData() {
             this.loadingData = true;
             try {
-                await this.getCalendarEachList(this.yyyyMm);
+                await this.getCalendarList(this.yyyyMm);
+                await this.getTodayCalendar(this.searchDt);
                 this.loadingData = false;
+                await this.loadCalendarCode();
             } catch (error) {
                 console.error(error);
             }
         },
         // 한달 일정 조회
-        async getCalendarEachList(yyyyMm) {
+        async getCalendarList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
+        },
+        // 해당 날짜 일정 조회
+        async getTodayCalendar(searchDt) {
+            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+            const {
+                data: { data: response },
+            } = await getTodayCalendar({ searchDt: this.searchDt });
+            this.todayData = response;
         },
         // 달력에 맞게 변수명 변경
         transformData() {
@@ -447,12 +484,100 @@ export default {
                   this.calendarOptions.events.unshift(item);
               });
           },*/
-        async getTodayCalendar(searchDt) {
-            this.searchDt = !!searchDt ? searchDt : this.searchDt;
+        // 일정 수정 클릭시
+        onClickToEdit(item) {
+            this.statusCode = 'EDIT';
+            let className = '';
+            if (item.classNames[0] === 'edu') {
+                className = 'EDUCATION';
+            } else if (item.classNames[0] === 'campaign') {
+                className = 'CAMPAIGN';
+            } else if (item.classNames[0] === 'upload') {
+                className = 'UPLOAD_DATE';
+            } else {
+                className = 'ETC';
+            }
+
+            const beginyear = item.startStr.substr(0, 4);
+            const beginmonth = item.startStr.substr(5, 2);
+            const beginday = item.startStr.substr(8, 2);
+
+            const endnyear = item.endStr.substr(0, 4);
+            const endnmonth = item.endStr.substr(5, 2);
+            const endnday = item.endStr.substr(8, 2);
+
+            this.calendarDetail.beginDt =
+                beginyear + '.' + beginmonth + '.' + beginday;
+            this.calendarDetail.endDt =
+                endnyear + '.' + endnmonth + '.' + endnday;
+            this.calendarDetail.calendarSectionCode = className;
+            this.calendarDetail.calendarSeq = Number(item.id);
+            this.calendarDetail.contents = item.constraint;
+            this.calendarDetail.scheduleName = item.title;
+            this.calendarSeq = Number(item.id);
+            this.visible.calendarManagement = true;
+        },
+        // 캘린더 코드 목록 조회
+        async loadCalendarCode() {
             const {
                 data: { data: response },
-            } = await getTodayCalendar({ searchDt: this.searchDt });
-            this.todayData = response;
+            } = await getCode('CALANDAR_TYPE');
+            this.calenderSectionCodeList = response;
+        },
+
+        /*
+          calendar-management 관련 메소드
+       */
+        async createCalendar(data) {
+            try {
+                const { data: response } = await postCalendar(data);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async modifyCalendar(calendarSeq, data) {
+            try {
+                const { data: response } = await putCalendar(calendarSeq, data);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async delCalendar(calendarSeq) {
+            try {
+                const { data: response } = await delCalendar(calendarSeq);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async processAfterSuccess() {
+            await this.getCalendarList();
+            await this.getTodayCalendar();
+            this.closeDialog();
+        },
+        // 다이얼로드 닫기
+        closeDialog() {
+            this.visible.calendar = false;
+            this.visible.calendarManagement = false;
         },
     },
 };

@@ -33,7 +33,7 @@
             <button
                 type="button"
                 class="link-txt"
-                @click="$emit('onClickToEdit')"
+                @click="$emit('onClickToEdit', calendarData)"
             >
                 <span>수정하기</span>
             </button>

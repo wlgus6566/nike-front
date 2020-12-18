@@ -15,7 +15,7 @@
                             class="right"
                             v-if="
                                 calendarDetail.calendarSeq &&
-                                folderAuthCheck('DELETE')
+                                    folderAuthCheck('DELETE')
                             "
                         >
                             <button
@@ -213,12 +213,12 @@ export default {
             },
             pickerBeginOption: {
                 firstDayOfWeek: 7,
-                cellClassName: (date) => {
+                cellClassName: date => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: (time) => {
+                disabledDate: time => {
                     if (this.endDt) {
                         return time.getTime() > this.endDt.getTime();
                     }
@@ -226,12 +226,12 @@ export default {
             },
             pickerEndOption: {
                 firstDayOfWeek: 7,
-                cellClassName: (date) => {
+                cellClassName: date => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: (time) => {
+                disabledDate: time => {
                     if (this.beginDt) {
                         return time.getTime() < this.beginDt.getTime();
                     }
@@ -240,8 +240,19 @@ export default {
         };
     },
     mixins: [authCheck],
+    created() {
+        this.dataChange();
+    },
+    mounted() {
+        this.dataChange();
+    },
     watch: {
         calendarDetail() {
+            this.dataChange();
+        },
+    },
+    methods: {
+        dataChange() {
             if (!!this.calendarSeq) {
                 // beginDt date fomat 변환
                 const beginsecDate = this.calendarDetail.beginDt; /// 문자열 or  숫자 데이터
@@ -265,8 +276,6 @@ export default {
                 this.endDt = null;
             }
         },
-    },
-    methods: {
         validationData() {
             if (!this.detailData.scheduleName) {
                 alert('일정 명을 입력해 주세요.');
