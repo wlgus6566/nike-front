@@ -15,12 +15,9 @@
                     <i class="icon-mail"></i>
                     <span>알림메일전송</span>
                 </button>
-                <button
-                    type="button"
-                    class="btn-o-gray"
-                    @click="alarmOpen">
-                  <i class="icon-mail"></i>
-                  <span>알림메일전송2</span>
+                <button type="button" class="btn-o-gray" @click="alarmOpen">
+                    <i class="icon-mail"></i>
+                    <span>알림메일전송2</span>
                 </button>
             </template>
         </BtnArea>
@@ -68,7 +65,7 @@ export default {
     data() {
         return {
             visible: {
-              alarm: false,
+                alarm: false,
             },
             totalPage: null,
             loadingData: false,
@@ -83,204 +80,204 @@ export default {
                 asset: {
                     sp: [
                         {
-                            value: 'ATT',
-                            title: 'ATT',
+                            value: 'ATTRACT',
+                            title: 'ATTRACT',
                         },
                         {
-                            value: 'ENG',
-                            title: 'ENG',
+                            value: 'ENGAGEMENT',
+                            title: 'ENGAGEMENT',
                         },
                         {
-                          value: 'RN',
-                          title: 'RN',
+                            value: 'RN',
+                            title: 'RN',
                         },
                         {
-                          value: 'TR',
-                          title: 'TR',
+                            value: 'TR',
+                            title: 'TR',
                         },
                         {
-                          value: 'NSW',
-                          title: 'NSW',
+                            value: 'NSW',
+                            title: 'NSW',
                         },
                         {
-                          value: 'FB',
-                          title: 'FB',
+                            value: 'FB',
+                            title: 'FB',
                         },
                         {
-                          value: 'BB',
-                          title: 'BB',
+                            value: 'BB',
+                            title: 'BB',
                         },
                         {
-                          value: 'JD',
-                          title: 'JD',
+                            value: 'JD',
+                            title: 'JD',
                         },
                         {
-                          value: 'KIDS',
-                          title: 'KIDS',
+                            value: 'KIDS',
+                            title: 'KIDS',
                         },
                         {
-                          value: 'OTHERS',
-                          title: 'OTHERS',
+                            value: 'OTHERS',
+                            title: 'OTHERS',
                         },
                         {
-                          value: 'DIGITAL',
-                          title: 'DIGITAL',
+                            value: 'DIGITAL',
+                            title: 'DIGITAL',
                         },
                         {
-                          value: 'GUIDE',
-                          title: 'GUIDE',
+                            value: 'GUIDE',
+                            title: 'GUIDE',
                         },
                     ],
                     su: [
-                    {
-                      value: 'ATT',
-                      title: 'ATT',
-                    },
-                    {
-                      value: 'ENG',
-                      title: 'ENG',
-                    },
-                    {
-                      value: 'RN',
-                      title: 'RN',
-                    },
-                    {
-                      value: 'TR',
-                      title: 'TR',
-                    },
-                    {
-                      value: 'NSW',
-                      title: 'NSW',
-                    },
-                    {
-                      value: 'FB',
-                      title: 'FB',
-                    },
-                    {
-                      value: 'BB',
-                      title: 'BB',
-                    },
-                    {
-                      value: 'JD',
-                      title: 'JD',
-                    },
-                    {
-                      value: 'KIDS',
-                      title: 'KIDS',
-                    },
-                    {
-                      value: 'OTHERS',
-                      title: 'OTHERS',
-                    },
-                    {
-                      value: 'DIGITAL',
-                      title: 'DIGITAL',
-                    },
-                    {
-                      value: 'GUIDE',
-                      title: 'GUIDE',
-                    },
-                  ],
+                        {
+                            value: 'ATTRACT',
+                            title: 'ATTRACT',
+                        },
+                        {
+                            value: 'ENGAGEMENT',
+                            title: 'ENGAGEMENT',
+                        },
+                        {
+                            value: 'RN',
+                            title: 'RN',
+                        },
+                        {
+                            value: 'TR',
+                            title: 'TR',
+                        },
+                        {
+                            value: 'NSW',
+                            title: 'NSW',
+                        },
+                        {
+                            value: 'FB',
+                            title: 'FB',
+                        },
+                        {
+                            value: 'BB',
+                            title: 'BB',
+                        },
+                        {
+                            value: 'JD',
+                            title: 'JD',
+                        },
+                        {
+                            value: 'KIDS',
+                            title: 'KIDS',
+                        },
+                        {
+                            value: 'OTHERS',
+                            title: 'OTHERS',
+                        },
+                        {
+                            value: 'DIGITAL',
+                            title: 'DIGITAL',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
                     fa: [
-                    {
-                      value: 'ATT',
-                      title: 'ATT',
-                    },
-                    {
-                      value: 'ENG',
-                      title: 'ENG',
-                    },
-                    {
-                      value: 'RN',
-                      title: 'RN',
-                    },
-                    {
-                      value: 'TR',
-                      title: 'TR',
-                    },
-                    {
-                      value: 'NSW',
-                      title: 'NSW',
-                    },
-                    {
-                      value: 'FB',
-                      title: 'FB',
-                    },
-                    {
-                      value: 'BB',
-                      title: 'BB',
-                    },
-                    {
-                      value: 'JD',
-                      title: 'JD',
-                    },
-                    {
-                      value: 'KIDS',
-                      title: 'KIDS',
-                    },
-                    {
-                      value: 'OTHERS',
-                      title: 'OTHERS',
-                    },
-                    {
-                      value: 'DIGITAL',
-                      title: 'DIGITAL',
-                    },
-                    {
-                      value: 'GUIDE',
-                      title: 'GUIDE',
-                    },
-                  ],
+                        {
+                            value: 'ATTRACT',
+                            title: 'ATTRACT',
+                        },
+                        {
+                            value: 'ENGAGEMENT',
+                            title: 'ENGAGEMENT',
+                        },
+                        {
+                            value: 'RN',
+                            title: 'RN',
+                        },
+                        {
+                            value: 'TR',
+                            title: 'TR',
+                        },
+                        {
+                            value: 'NSW',
+                            title: 'NSW',
+                        },
+                        {
+                            value: 'FB',
+                            title: 'FB',
+                        },
+                        {
+                            value: 'BB',
+                            title: 'BB',
+                        },
+                        {
+                            value: 'JD',
+                            title: 'JD',
+                        },
+                        {
+                            value: 'KIDS',
+                            title: 'KIDS',
+                        },
+                        {
+                            value: 'OTHERS',
+                            title: 'OTHERS',
+                        },
+                        {
+                            value: 'DIGITAL',
+                            title: 'DIGITAL',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
                     ho: [
-                    {
-                      value: 'ATT',
-                      title: 'ATT',
-                    },
-                    {
-                      value: 'ENG',
-                      title: 'ENG',
-                    },
-                    {
-                      value: 'RN',
-                      title: 'RN',
-                    },
-                    {
-                      value: 'TR',
-                      title: 'TR',
-                    },
-                    {
-                      value: 'NSW',
-                      title: 'NSW',
-                    },
-                    {
-                      value: 'FB',
-                      title: 'FB',
-                    },
-                    {
-                      value: 'BB',
-                      title: 'BB',
-                    },
-                    {
-                      value: 'JD',
-                      title: 'JD',
-                    },
-                    {
-                      value: 'KIDS',
-                      title: 'KIDS',
-                    },
-                    {
-                      value: 'OTHERS',
-                      title: 'OTHERS',
-                    },
-                    {
-                      value: 'DIGITAL',
-                      title: 'DIGITAL',
-                    },
-                    {
-                      value: 'GUIDE',
-                      title: 'GUIDE',
-                    },
-                  ],
+                        {
+                            value: 'ATTRACT',
+                            title: 'ATTRACT',
+                        },
+                        {
+                            value: 'ENGAGEMENT',
+                            title: 'ENGAGEMENT',
+                        },
+                        {
+                            value: 'RN',
+                            title: 'RN',
+                        },
+                        {
+                            value: 'TR',
+                            title: 'TR',
+                        },
+                        {
+                            value: 'NSW',
+                            title: 'NSW',
+                        },
+                        {
+                            value: 'FB',
+                            title: 'FB',
+                        },
+                        {
+                            value: 'BB',
+                            title: 'BB',
+                        },
+                        {
+                            value: 'JD',
+                            title: 'JD',
+                        },
+                        {
+                            value: 'KIDS',
+                            title: 'KIDS',
+                        },
+                        {
+                            value: 'OTHERS',
+                            title: 'OTHERS',
+                        },
+                        {
+                            value: 'DIGITAL',
+                            title: 'DIGITAL',
+                        },
+                        {
+                            value: 'GUIDE',
+                            title: 'GUIDE',
+                        },
+                    ],
                 },
                 toolkit: {
                     vms: [
@@ -386,8 +383,8 @@ export default {
                         label: '파일명 순',
                     },
                     {
-                      value: 'UPLOAD',
-                      label: '최신파일 순',
+                        value: 'UPLOAD',
+                        label: '최신파일 순',
                     },
                 ],
                 value: 'ORDER',
@@ -507,12 +504,12 @@ export default {
         folder,
         SortingList,
         fileItem,
-        ModalAlarm
+        ModalAlarm,
     },
     computed: {
         contentsFileListTotal() {
             if (this.contentsFileList) {
-                return this.contentsFileList.filter((a) => {
+                return this.contentsFileList.filter(a => {
                     return (
                         a.fileKindCode === 'FILE'
                         /*&&
@@ -528,7 +525,7 @@ export default {
         storeContBasketList: {
             get() {
                 return this.$store.state.contBasketList.map(
-                    (el) => el.contentsFileSeq
+                    el => el.contentsFileSeq
                 );
             },
             set(value) {
@@ -551,11 +548,11 @@ export default {
         },
         contentsFileList() {
             if (!this.contentsFileList) return;
-            this.contentsFileList.forEach((el) => {
+            this.contentsFileList.forEach(el => {
                 if (
                     el.fileExtension &&
                     this.fileExtension.listSortOptions.every(
-                        (b) => b.value !== el.fileExtension
+                        b => b.value !== el.fileExtension
                     )
                 ) {
                     this.fileExtension.listSortOptions.push({
@@ -567,8 +564,8 @@ export default {
         },
     },
     methods: {
-        alarmOpen(){
-          this.visible.alarm = true;
+        alarmOpen() {
+            this.visible.alarm = true;
         },
         async sendEmail() {
             const sendAlert = confirm(
@@ -685,9 +682,9 @@ export default {
         allCheckFn() {
             this.checkAll = !this.checkAll;
             if (this.checkAll) {
-                this.contentsFileList.forEach((el) => {
+                this.contentsFileList.forEach(el => {
                     const Checked = this.checkContentsFileList.every(
-                        (elChecked) => {
+                        elChecked => {
                             return elChecked !== el.contentsFileSeq;
                         }
                     );
@@ -704,13 +701,13 @@ export default {
         },
         checkContentsFile(seq) {
             const indexOfChecked = this.checkContentsFileList.findIndex(
-                (el) => el === seq
+                el => el === seq
             );
             if (indexOfChecked === -1) {
                 this.checkContentsFileList.push(seq);
             } else {
                 this.checkContentsFileList = this.checkContentsFileList.filter(
-                    (el) => {
+                    el => {
                         return el !== seq;
                     }
                 );
@@ -774,8 +771,8 @@ export default {
             if (!seq.length) {
                 alert('선택한 파일이 없습니다.');
             }
-            const doubleFile = seq.some((el) => {
-                return this.storeContBasketList.some((b) => b === el);
+            const doubleFile = seq.some(el => {
+                return this.storeContBasketList.some(b => b === el);
             });
             if (doubleFile) {
                 alert('이미 등록된 파일입니다.');
@@ -786,7 +783,7 @@ export default {
                     this.$route.meta.menuCode
                         .replace(`${this.$route.meta.topMenuCode}_`, '')
                         .toUpperCase(),
-                    seq.filter((el) => {
+                    seq.filter(el => {
                         return !this.storeContBasketList.includes(el);
                     })
                 );
