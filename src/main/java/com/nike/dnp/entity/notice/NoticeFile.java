@@ -2,10 +2,13 @@ package com.nike.dnp.entity.notice;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nike.dnp.dto.notice.CustomerFileSaveDTO;
+import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 
@@ -16,6 +19,7 @@ import javax.persistence.*;
  * @author [이소정]
  * @since 2020. 12. 16. 오후 6:30:09
  */
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access=AccessLevel.PUBLIC)
@@ -131,6 +135,19 @@ public class NoticeFile extends BaseTimeEntity {
         noticeFile.setFilePhysicalName(customerFileSaveDTO.getFilePhysicalName());
         noticeFile.setUseYn(customerFileSaveDTO.getUseYn());
         return noticeFile;
+    }
+
+    /**
+     * Update use yn.
+     *
+     * @param useYn the use yn
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @since 2020. 12. 22. 오후 7:45:16
+     */
+    public void updateUseYn(final String useYn) {
+        log.info("NoticeFile.updateUseYn");
+        this.useYn = useYn;
     }
 
 }

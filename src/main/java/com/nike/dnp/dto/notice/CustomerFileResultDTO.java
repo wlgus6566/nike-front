@@ -19,12 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 public class CustomerFileResultDTO {
 
     /**
-     * The Editor url
-     */
-    @Value("${nike.url.pc.domain:}")
-    private String cdnUrl;
-
-    /**
      * 게시물_파일_시퀀스
      *
      * @author [이소정]
@@ -87,17 +81,5 @@ public class CustomerFileResultDTO {
      */
     @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
-
-    /**
-     * Gets file physical name.
-     *
-     * @return the file physical name
-     * @author [이소정]
-     * @implNote
-     * @since 2020. 12. 17. 오후 5:47:48
-     */
-    public String getFilePhysicalName() {
-        return cdnUrl + filePhysicalName;
-    }
 
 }
