@@ -26,9 +26,9 @@
                             <div
                                 class="number"
                                 v-else
-                                v-text="uploadFileSize + '/10'"
+                                v-text="uploadFileSize + '/30'"
                             >
-                                0/10
+                                0/30
                             </div>
                         </div>
                         <ul class="upload-file-list">
@@ -67,7 +67,7 @@
                         </ul>
                     </div>
                     <p class="desc">
-                        * 이미지는 최대 10개까지 등록 가능합니다.
+                        * 이미지는 최대 30개까지 등록 가능합니다.
                     </p>
                 </li>
                 <li class="upload-item">
@@ -263,12 +263,12 @@ export default {
                     );
                 });
             });
-            if (mergeArray.length + this.uploadFileList.length > 10) {
-                alert('10개 이상 등록 할 수 없습니다.');
-                if (this.uploadFileList.length === 10) return;
-                let maxNum = 10;
+            if (mergeArray.length + this.uploadFileList.length > 30) {
+                alert('30개 이상 등록 할 수 없습니다.');
+                if (this.uploadFileList.length === 30) return;
+                let maxNum = 30;
                 if (this.uploadFileList.length > 0) {
-                    maxNum = 10 - this.uploadFileList.length;
+                    maxNum = 30 - this.uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }

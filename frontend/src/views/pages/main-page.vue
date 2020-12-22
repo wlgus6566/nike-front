@@ -212,7 +212,6 @@
 import { getMain } from '@/api/main';
 import {
     delCalendar,
-    getCalendarEachList,
     getCalendarList, // CALENDAR 목록 조회
     getTodayCalendar,
     postCalendar,
@@ -251,8 +250,8 @@ export default {
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
                 //moreLinkClick: this.calClickEvent,
-                eventClick: this.eventClickEvent,
-                //eventMouseEnter:this.mouserOverEvent,
+                //eventClick: this.eventClickEvent,
+                eventMouseEnter: this.mouserOverEvent,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -270,7 +269,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarEachList(
+                            this.getCalendarList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -282,7 +281,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarEachList(
+                            this.getCalendarList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -307,11 +306,11 @@ export default {
         this.main();
     },
     methods: {
-        /* mouserOverEvent(e) {
+        mouserOverEvent(e) {
             this.calendarData = e.event;
             console.log(e.event);
             console.log(e.el);
-            e.el.classList.add('asd');
+            /* e.el.classList.add('asd');
             e.el.setAttribute('data-tooltip', 'tooltip text');
             const a = document.createElement('span');
             const txt = document.createTextNode('자세히 보기');
@@ -329,8 +328,8 @@ export default {
 
             tooltip(config);
 
-            //this.visible.calendar = true;
-        },*/
+            //this.visible.calendar = true;*/
+        },
         alertMsg(item) {
             if (item.detailAuthYn === 'N') {
                 alert('접근 권한이 없습니다.');
