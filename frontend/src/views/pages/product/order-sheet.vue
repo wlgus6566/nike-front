@@ -190,6 +190,7 @@
 <script>
 import { getUserIdFromCookie, getUserNickFromCookie } from '@/utils/cookies';
 import { fileUpLoad } from '@/api/file';
+import bus from '@/utils/bus';
 
 export default {
     data() {
@@ -278,69 +279,8 @@ export default {
                 index
             ].uploadFileList.concat(mergeArray);
         },
-        async uploadFiles2() {
-            await Promise.all(
-                this.basketList.forEach(basket => {
-                    console.log(1);
-                    if (basket.uploadFileList.length > 0) {
-                        basket.uploadFileList.map(async el => {
-                            try {
-                                const formData = new FormData();
-                                formData.append('uploadFile', el);
-                                const config = {
-                                    onUploadProgress: progressEvent => {
-                                        const percentCompleted = Math.round(
-                                            (progressEvent.loaded * 100) /
-                                                progressEvent.total
-                                        );
-                                        basket.orderProductFileList.fileList.forEach(
-                                            item => {
-                                                if (
-                                                    item.fileName === el.name &&
-                                                    item.fileContentType ===
-                                                        el.type &&
-                                                    item.fileSize === el.size
-                                                ) {
-                                                    item.progress = percentCompleted;
-                                                }
-                                            }
-                                        );
-                                    },
-                                };
-                                const response = await fileUpLoad(
-                                    formData,
-                                    config
-                                );
-                                if (response.existMsg) {
-                                    alert(response.msg);
-                                }
-                                basket.orderProductFileList.fileList.forEach(
-                                    (item, idx, array) => {
-                                        if (
-                                            item.fileName === el.name &&
-                                            item.fileContentType === el.type &&
-                                            item.fileSize === el.size
-                                        ) {
-                                            array[idx] = {
-                                                progress: 100,
-                                                fileOrder: idx,
-                                                ...response.data.data,
-                                            };
-                                        }
-                                    }
-                                );
-                            } catch (error) {
-                                console.log(error);
-                            }
-                        });
-                        basket.uploadFileList = [];
-                    }
-                    this.orderList.push(basket.orderProductFileList);
-                })
-            );
-            await this.$emit('orderSave', this.orderComment, this.orderList);
-        },
         async uploadFiles() {
+            bus.$emit('pageLoading', true);
             await Promise.all(
                 this.basketList.map(async basket => {
                     await Promise.all(
@@ -368,6 +308,7 @@ export default {
                                         );
                                     },
                                 };
+                                formData.append('menuCode', 'order');
                                 const response = await fileUpLoad(
                                     formData,
                                     config
