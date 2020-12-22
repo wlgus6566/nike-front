@@ -52,7 +52,7 @@ public class ContentsFileResultDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ATTRACT,ENGAGEMENT,RN,TR,NSW,FB,BB,JD,KIDS,OTHERS,DIGITAL,GUIDE,VIDEO,VR)", required = true)
+    @ApiModelProperty(name = "fileSectionCode", value = "파일 구분 공통코드 (ATTRACT,ENGAGE,RN,TR,NSW,FB,BB,JD,KIDS,OTHERS,DIGITAL,GUIDE,VIDEO,VR)", required = true)
     private String fileSectionCode;
 
     /**
