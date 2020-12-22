@@ -39,4 +39,14 @@ public class ContentsMailSendDTO {
     @ApiModelProperty(name = "contentsUrl", value = "컨텐츠 url", example = "/contents/detail/4")
     private String contentsUrl;
 
+    /**
+     * The Comment
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "comment", value = "코멘트", example = "SP21 시즌에서는 이 자료를 활용해주세요.")
+    private String comment;
+
+
+
 }

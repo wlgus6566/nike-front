@@ -11,12 +11,14 @@ import com.nike.dnp.dto.user.UserAuthSearchDTO;
 import com.nike.dnp.dto.user.UserContentsSaveDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
+import com.nike.dnp.entity.contents.ContentsNotificationMail;
 import com.nike.dnp.entity.user.UserAuth;
 import com.nike.dnp.entity.user.UserContents;
 import com.nike.dnp.exception.CodeMessageHandleErrorException;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
+import com.nike.dnp.repository.contents.ContentsNotificationMailRepository;
 import com.nike.dnp.repository.contents.ContentsRepository;
 import com.nike.dnp.repository.user.UserAuthRepository;
 import com.nike.dnp.service.DeviceService;
@@ -77,6 +79,13 @@ public class ContentsService {
      * @author [이소정]
      */
     private final ContentsFileRepository contentsFileRepository;
+
+    /**
+     * The Contents notification mail repository
+     *
+     * @author [이소정]
+     */
+    private final ContentsNotificationMailRepository contentsNotificationMailRepository;
 
     /**
      * The Mail service.
@@ -600,14 +609,24 @@ public class ContentsService {
         final SendDTO sendDTO = new SendDTO();
         sendDTO.setEmails(emailList);
         sendDTO.setContentsUrl(PC_DOMAIN + contentsMailSendDTO.getContentsUrl());
-
+        sendDTO.setMailComment(contentsMailSendDTO.getComment());
         sendDTO.setContentsName(contents.get().getFolderName());
+
         mailService.sendMails(
                 ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.toString(),
                 ServiceCode.EmailTypeEnumCode.CONTENTS_UPDATE.getMessage(),
                 sendDTO
         );
+
+//        컨텐츠 알림 메일 저장
+        ContentsNotificationMail mail = new ContentsNotificationMail();
+        mail.setContentsSeq(contentsMailSendDTO.getContentsSeq());
+        mail.setContentsUrl(contentsMailSendDTO.getContentsUrl());
+        mail.setMailComment(contentsMailSendDTO.getComment());
+        contentsNotificationMailRepository.save(mail);
+
     }
+
 
     /**
      * Check contents validation.
