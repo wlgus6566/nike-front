@@ -288,12 +288,12 @@ export default {
                     );
                 });
             });
-            if (mergeArray.length + this.uploadFileList.length > 10) {
-                alert('10개 이상 등록 할 수 없습니다.');
-                if (this.uploadFileList.length === 10) return;
-                let maxNum = 10;
+            if (mergeArray.length + this.uploadFileList.length > 30) {
+                alert('30 이상 등록 할 수 없습니다.');
+                if (this.uploadFileList.length === 30) return;
+                let maxNum = 30;
                 if (this.uploadFileList.length > 0) {
-                    maxNum = 10 - this.uploadFileList.length;
+                    maxNum = 30 - this.uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
