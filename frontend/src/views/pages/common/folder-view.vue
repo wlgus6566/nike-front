@@ -84,8 +84,8 @@ export default {
                             title: 'ATTRACT',
                         },
                         {
-                            value: 'ENGAGEMENT',
-                            title: 'ENGAGEMENT',
+                            value: 'ENGAGE',
+                            title: 'ENGAGE',
                         },
                         {
                             value: 'RN',
@@ -134,8 +134,8 @@ export default {
                             title: 'ATTRACT',
                         },
                         {
-                            value: 'ENGAGEMENT',
-                            title: 'ENGAGEMENT',
+                            value: 'ENGAGE',
+                            title: 'ENGAGE',
                         },
                         {
                             value: 'RN',
@@ -184,8 +184,8 @@ export default {
                             title: 'ATTRACT',
                         },
                         {
-                            value: 'ENGAGEMENT',
-                            title: 'ENGAGEMENT',
+                            value: 'ENGAGE',
+                            title: 'ENGAGE',
                         },
                         {
                             value: 'RN',
@@ -234,8 +234,8 @@ export default {
                             title: 'ATTRACT',
                         },
                         {
-                            value: 'ENGAGEMENT',
-                            title: 'ENGAGEMENT',
+                            value: 'ENGAGE',
+                            title: 'ENGAGE',
                         },
                         {
                             value: 'RN',
