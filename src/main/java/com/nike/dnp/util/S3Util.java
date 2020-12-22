@@ -234,7 +234,7 @@ public class S3Util {
 		client.copyObject(copyObjectRequest);
 		final URL url = client.getUrl(bucketPath, awsNewPath);
 		// 기존 파일 삭제
-		if(oldFileDelete){
+		if(privateBucket && oldFileDelete){
 			client.deleteObject(bucketPath, awsOldPath);
 		}
 		log.debug("url.toString() {}", url.toString());
