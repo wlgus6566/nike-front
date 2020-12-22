@@ -3,8 +3,10 @@ package com.nike.dnp.service.notice;
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.notice.*;
+import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
 import com.nike.dnp.entity.notice.NoticeFile;
+import com.nike.dnp.entity.report.ReportFile;
 import com.nike.dnp.exception.CodeMessageHandleException;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.notice.NoticeFileRepository;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.nike.dnp.common.variable.ServiceCode.NoticeArticleSectionEnumCode;
 
@@ -69,7 +72,7 @@ public class NoticeService {
      * The Editor url
      */
     @Value("${nike.url.pc.domain:}")
-    private String editorUrl;
+    private String cdnUrl;
 
     /**
      * Find notice pages page.
@@ -114,9 +117,13 @@ public class NoticeService {
         // NOTICE, NEW 인 경우에만 fileList 조회
         if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(result.getNoticeArticleSectionCode())
             || NoticeArticleSectionEnumCode.NEWS.toString().equals(result.getNoticeArticleSectionCode())) {
-            result.setFileList(
-                    ObjectMapperUtil.mapAll(noticeFileRepository.findAllByNoticeArticleSeqAndUseYn(noticeSeq, "Y"), CustomerFileResultDTO.class)
-            );
+
+            List<CustomerFileResultDTO> fileList = ObjectMapperUtil.mapAll(noticeFileRepository.findAllByNoticeArticleSeqAndUseYn(noticeSeq, "Y"), CustomerFileResultDTO.class);
+            for (CustomerFileResultDTO customerFileResultDTO : fileList) {
+                customerFileResultDTO.setFilePhysicalName(cdnUrl + customerFileResultDTO.getFilePhysicalName());
+            }
+
+            result.setFileList( fileList );
         }
         return result;
     }
@@ -241,10 +248,74 @@ public class NoticeService {
         this.checkNoticeYn(customerUpdateDTO.getNoticeArticleSectionCode(),
                 customerUpdateDTO.getNoticeYn(), customerUpdateDTO.getNoticeArticleSeq());
 
-        return noticeRepository
+        NoticeArticle updatedNoticeArticle = noticeRepository
                 .findById(noticeSeq)
                 .map(i -> i.update(customerUpdateDTO))
                 .orElseThrow(NotFoundHandleException::new);
+
+
+        final List<NoticeFile> beforeFileList = noticeFileRepository.findAllByNoticeArticleSeqAndUseYn(noticeSeq, "Y");
+
+        final List<NoticeFile> lastBeforeFileList  = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()) {
+            for (NoticeFile reportFile : beforeFileList) {
+                lastBeforeFileList.add(reportFile);
+            }
+        }
+        final List<CustomerFileSaveDTO> newFileList = customerUpdateDTO.getFileList();
+
+        if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
+                && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
+            for (final NoticeFile beforeFile : beforeFileList) {
+                for (final CustomerFileSaveDTO newFile : newFileList) {
+                    if (beforeFile.getNoticeFileSeq().equals(newFile.getNoticeFileSeq())) {
+                        lastBeforeFileList.remove(beforeFile);
+                    }
+                }
+            }
+        }
+
+        if (!ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
+            for (final CustomerFileSaveDTO reportFileSaveDTO : newFileList) {
+                final Long reportFileSeq = null != reportFileSaveDTO.getNoticeFileSeq() ? reportFileSaveDTO.getNoticeFileSeq() : 0l;
+                final Optional<NoticeFile> reportFile = noticeFileRepository.findById(reportFileSeq);
+
+//                this.checkReportFileValidation(reportFileSaveDTO);
+                this.s3FileCopySave(reportFileSaveDTO);
+                reportFileSaveDTO.setNoticeArticleSeq(noticeSeq);
+                final NoticeFile saveReportFile = reportFile.orElse(
+                    new NoticeFile().saveNoticeFile(this.s3FileCopySave(reportFileSaveDTO))
+                );
+
+                if (0l != reportFileSeq) {
+//                    기존에 있던 파이 수정될 일이 없을듯.
+//                    reportFile.ifPresent(value -> value.update(reportFileSaveDTO));
+                } else {
+                    noticeFileRepository.save(saveReportFile);
+                }
+            }
+        }
+
+        // 사용하지 않는 파일목록 삭제
+        this.deleteNoticeFile(lastBeforeFileList);
+
+        return updatedNoticeArticle;
+    }
+
+    /**
+     * Delete notice file.
+     *
+     * @param noticeFileList the notice file list
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @since 2020. 12. 22. 오후 7:30:10
+     */
+    public void deleteNoticeFile(final List<NoticeFile> noticeFileList) {
+        if (!ObjectUtils.isEmpty(noticeFileList) && !noticeFileList.isEmpty()) {
+            for (final NoticeFile reportFile : noticeFileList) {
+                reportFile.updateUseYn("N");
+            }
+        }
     }
 
     /**
@@ -289,7 +360,7 @@ public class NoticeService {
             throw (CodeMessageHandleException) new CodeMessageHandleException(FailCode.ConfigureError.INVALID_FILE.name(), MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name()));
         }
 
-        return editorUrl + uploadUrl;
+        return cdnUrl + uploadUrl;
     }
 
     /**

@@ -1,8 +1,10 @@
 package com.nike.dnp.dto.notice;
 
 import com.nike.dnp.dto.BasicDTO;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.util.List;
 import java.util.Locale;
 
 
@@ -96,6 +98,14 @@ public class CustomerUpdateDTO extends BasicDTO {
      * @author [정주희]
      */
     private String useYn;
+
+    /**
+     * The Notice file save list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileList", value = "게시글 파일목록")
+    private List<CustomerFileSaveDTO> fileList;
 
     public void setNoticeArticleCategoryCode(String noticeArticleCategoryCode) {
         this.noticeArticleCategoryCode = noticeArticleCategoryCode.toUpperCase(Locale.KOREA);

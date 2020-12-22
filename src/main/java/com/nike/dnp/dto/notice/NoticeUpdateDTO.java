@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * The Class Notice save dto.
@@ -70,5 +71,13 @@ public class NoticeUpdateDTO extends BasicDTO {
      */
     @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
+
+    /**
+     * The Notice file save list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileList", value = "게시글 파일목록")
+    private List<CustomerFileSaveDTO> fileList;
 
 }
