@@ -128,6 +128,12 @@ public class SendDTO {
     private String contentsUrl;
 
     /**
+     * mail comment
+     * 메일 코멘트
+     */
+    private String mailComment;
+
+    /**
      * The Product list
      * 상품 목록
      *
