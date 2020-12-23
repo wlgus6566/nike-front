@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Component
 public class CustomerResultDTO {
 
@@ -141,7 +142,7 @@ public class CustomerResultDTO {
      * The File list
      */
     @ApiModelProperty(name = "fileList", value = "게시물 파일 목록")
-    private List<CustomerFileResultDTO> fileList;
+    private List<CustomerFileResultDTO> fileList = new ArrayList<>();
 
     /**
      * Gets thumbnail file physical name.
