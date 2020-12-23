@@ -20,16 +20,23 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="noticeDetail.contents"></div>
-            <div class="detail-file">
-              <ul class="detail-file-list">
-                <li>
-                  <a href="#">첨부파첨부파일첨부파일첨부파일 첨부파일.png</a>
-                </li>
-                <li>
-                  <a href="#">첨부파일.png</a>
-                </li>
-              </ul>
-            </div>
+            <template v-if="noticeDetail.fileList">
+                <div
+                    class="detail-file"
+                    v-if="noticeDetail.fileList.length > 0"
+                >
+                    <ul class="detail-file-list">
+                        <li
+                            v-for="(item, index) in noticeDetail.fileList"
+                            :key="index"
+                        >
+                            <a :href="item.filePhysicalName">{{
+                                item.fileName
+                            }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </template>
         </div>
         <div class="btn-area">
             <button type="button" class="btn-s-black" @click="listRoute">

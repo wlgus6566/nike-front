@@ -83,7 +83,7 @@
                                 }"
                             >
                                 <li
-                                    v-for="item in noticeDetail.noticeFileSaveDTOList"
+                                    v-for="item in noticeDetail.fileList"
                                     :key="item.fileOrder"
                                 >
                                     <label>
@@ -163,7 +163,7 @@ export default {
                 contents: '',
                 noticeYn: 'N',
                 noticeArticleSeq: null,
-                noticeFileSaveDTOList: [],
+                fileList: [],
             },
             // 에디터 업로드 설정
             editorConfig: {
@@ -217,7 +217,7 @@ export default {
             if (!files.length) return;
 
             let mergeArray = Array.from(files).filter(item => {
-                return this.noticeDetail.noticeFileSaveDTOList.every(el => {
+                return this.noticeDetail.fileList.every(el => {
                     return (
                         item.name !== el.fileName && item.size !== el.fileSize
                     );
@@ -235,8 +235,8 @@ export default {
             }
 
             mergeArray.forEach(el => {
-                this.noticeDetail.noticeFileSaveDTOList.push({
-                    fileOrder: this.noticeDetail.noticeFileSaveDTOList.length,
+                this.noticeDetail.fileList.push({
+                    fileOrder: this.noticeDetail.fileList.length,
                     fileName: el.name,
                     fileSize: el.size,
                     fileContentType: el.type,
@@ -259,17 +259,15 @@ export default {
                                     (progressEvent.loaded * 100) /
                                         progressEvent.total
                                 );
-                                this.noticeDetail.noticeFileSaveDTOList.forEach(
-                                    item => {
-                                        if (
-                                            item.fileName === el.name &&
-                                            item.fileContentType === el.type &&
-                                            item.fileSize === el.size
-                                        ) {
-                                            item.progress = percentCompleted;
-                                        }
+                                this.noticeDetail.fileList.forEach(item => {
+                                    if (
+                                        item.fileName === el.name &&
+                                        item.fileContentType === el.type &&
+                                        item.fileSize === el.size
+                                    ) {
+                                        item.progress = percentCompleted;
                                     }
-                                );
+                                });
                             },
                         };
                         formData.append('menuCode', 'notice');
@@ -278,7 +276,7 @@ export default {
                         if (response.existMsg) {
                             alert(response.msg);
                         }
-                        this.noticeDetail.noticeFileSaveDTOList.forEach(
+                        this.noticeDetail.fileList.forEach(
                             (item, idx, array) => {
                                 if (
                                     item.fileName === el.name &&
@@ -298,12 +296,17 @@ export default {
                     }
                 })
             );
-            await this.saveData();
+            if (this.$route.meta.modify) {
+                await this.modifyData();
+            } else {
+                await this.saveData();
+            }
+
             this.uploadFileList = [];
         },
         removeFile() {
             this.checkedFile.forEach(a => {
-                this.noticeDetail.noticeFileSaveDTOList = this.noticeDetail.noticeFileSaveDTOList.filter(
+                this.noticeDetail.fileList = this.noticeDetail.fileList.filter(
                     b => b.fileOrder !== a
                 );
             });
@@ -312,7 +315,7 @@ export default {
         },
         fileOrderSet() {
             this.uploadFileList = this.uploadFileList.filter(a => {
-                return this.noticeDetail.noticeFileSaveDTOList.some(b => {
+                return this.noticeDetail.fileList.some(b => {
                     return (
                         a.name === b.fileName &&
                         a.type === b.fileContentType &&
@@ -320,18 +323,26 @@ export default {
                     );
                 });
             });
-            this.noticeDetail.noticeFileSaveDTOList.forEach((el, index) => {
+            this.noticeDetail.fileList.forEach((el, index) => {
                 el.fileOrder = index;
             });
         },
         submitData() {
             if (this.$route.meta.modify) {
-                this.modifyData();
+                this.$store.state.saveFolder = false;
+                if (!confirm('수정하시겠습니까?')) {
+                    return false;
+                }
+                if (this.noticeDetail.fileList.length > 0) {
+                    this.uploadFiles();
+                } else {
+                    this.modifyData();
+                }
             } else {
                 if (!confirm('저장하시겠습니까?')) {
                     return false;
                 }
-                if (this.noticeDetail.noticeFileSaveDTOList.length > 0) {
+                if (this.noticeDetail.fileList.length > 0) {
                     this.uploadFiles();
                 } else {
                     this.saveData();
@@ -342,7 +353,7 @@ export default {
             try {
                 const response = await postNotice({
                     contents: this.noticeDetail.contents,
-                    fileList: this.noticeDetail.noticeFileSaveDTOList,
+                    fileList: this.noticeDetail.fileList,
                     noticeArticleSectionCode: 'NOTICE',
                     noticeYn: this.noticeDetail.noticeYn,
                     title: this.noticeDetail.title,
@@ -364,14 +375,11 @@ export default {
 
         //공지사항 수정
         async modifyData() {
-            this.$store.state.saveFolder = false;
-            if (!confirm('수정하시겠습니까?')) {
-                return false;
-            }
             if (this.$route.meta.modify) {
                 try {
                     const response = await putNotice(this.$route.params.id, {
                         contents: this.noticeDetail.contents,
+                        fileList: this.noticeDetail.fileList,
                         noticeArticleSectionCode: 'NOTICE',
                         noticeArticleSeq: this.noticeArticleSeq,
                         noticeYn: this.noticeDetail.noticeYn,
@@ -386,9 +394,6 @@ export default {
                     } else {
                         alert(response.data.msg);
                     }
-                    /* console.log(response);
-          console.log('시퀀스');
-          console.log(this.noticeArticleSeq);*/
                 } catch (error) {
                     this.$store.state.saveFolder = false;
                     console.error(error);
