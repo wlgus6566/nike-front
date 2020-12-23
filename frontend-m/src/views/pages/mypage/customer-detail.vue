@@ -16,6 +16,23 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="customerData.contents"></div>
+            <template v-if="customerData.fileList">
+                <div
+                    class="detail-file"
+                    v-if="customerData.fileList.length > 0"
+                >
+                    <ul class="detail-file-list">
+                        <li
+                            v-for="(item, index) in customerData.fileList"
+                            :key="index"
+                        >
+                            <a :href="item.filePhysicalName">{{
+                                item.fileName
+                            }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </template>
         </div>
         <div class="btn-area">
             <button
