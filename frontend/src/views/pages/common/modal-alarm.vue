@@ -22,14 +22,21 @@
                 <h3 class="sub-title mt30">COMMENT</h3>
                 <div class="mt10">
                     <span class="textarea">
-                        <textarea style="height: 80px;" />
+                        <textarea
+                            style="height: 80px;"
+                            v-model="alarmComment"
+                        />
                     </span>
                 </div>
             </div>
         </el-scrollbar>
 
         <div slot="footer" class="dialog-footer">
-            <button type="button" class="btn-s-black">
+            <button
+                type="button"
+                class="btn-s-black"
+                @click="$emit('sendEmail', alarmComment)"
+            >
                 <span>알림메일 전송</span>
             </button>
         </div>
@@ -38,6 +45,12 @@
 <script>
 export default {
     name: 'modalAlarm',
+    data() {
+        return {
+            alarmComment: null,
+        };
+    },
+
     props: ['visible'],
 };
 </script>

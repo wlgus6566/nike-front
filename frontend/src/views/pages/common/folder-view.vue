@@ -9,15 +9,11 @@
                 <button
                     type="button"
                     class="btn-o-gray"
-                    @click="sendEmail"
+                    @click="alarmOpen"
                     v-if="folderAuthCheck('CREATE')"
                 >
                     <i class="icon-mail"></i>
                     <span>알림메일전송</span>
-                </button>
-                <button type="button" class="btn-o-gray" @click="alarmOpen">
-                    <i class="icon-mail"></i>
-                    <span>알림메일전송2</span>
                 </button>
             </template>
         </BtnArea>
@@ -39,7 +35,10 @@
             @checkContentsFile="checkContentsFile"
             @addContBasket="addContBasket"
         ></fileItem>
-        <ModalAlarm :visible.sync="visible.alarm"></ModalAlarm>
+        <ModalAlarm
+            :visible.sync="visible.alarm"
+            @sendEmail="sendEmail"
+        ></ModalAlarm>
     </div>
 </template>
 <script>
@@ -567,13 +566,14 @@ export default {
         alarmOpen() {
             this.visible.alarm = true;
         },
-        async sendEmail() {
+        async sendEmail(alarmComment) {
             const sendAlert = confirm(
                 `${this.folderDetail.recipientsCount}개의 계정에 E-MAIL을 전송하시겠습니까?`
             );
             if (sendAlert) {
                 try {
                     const response = await sendMail({
+                        comment: alarmComment,
                         contentsSeq: this.$route.params.id,
                         contentsUrl: this.$route.fullPath,
                         // contentsUrl: `/contents/detail/${this.$route.params.id}`,
@@ -581,6 +581,7 @@ export default {
                     if (response.data.existMsg) {
                         alert(response.data.msg);
                     }
+                    this.visible.alarm = false;
                 } catch (error) {
                     if (error.data.existMsg) {
                         alert(error.data.msg);

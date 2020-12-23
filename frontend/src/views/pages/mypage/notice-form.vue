@@ -438,6 +438,7 @@ export default {
                 //console.log(response);
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
+                this.fileOrderSet();
             } catch (error) {
                 console.error(error);
             }
