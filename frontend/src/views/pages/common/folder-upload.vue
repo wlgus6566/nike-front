@@ -149,7 +149,7 @@
                                 class="date-picker-range"
                                 v-if="
                                     folderDetail.campaignPeriodSectionCode ===
-                                    'SELECT'
+                                        'SELECT'
                                 "
                             >
                                 <div class="date-picker">
@@ -213,7 +213,7 @@
                                 class="date-picker-range"
                                 v-if="
                                     folderDetail.campaignPeriodSectionCode ===
-                                    'SELECT'
+                                        'SELECT'
                                 "
                             >
                                 <div class="date-picker">
@@ -336,10 +336,62 @@ export default {
                     folderOptionName: '캠페인',
                     menuCodeList: ['SP', 'SU', 'FA', 'HO'],
                     fileSectionCodeName: {
-                        SP: ['ASSET', 'GUIDE'],
-                        SU: ['ASSET', 'GUIDE'],
-                        FA: ['ASSET', 'GUIDE'],
-                        HO: ['ASSET', 'GUIDE'],
+                        SP: [
+                            'ATTRACT',
+                            'ENGAGE',
+                            'RN',
+                            'TR',
+                            'NSW',
+                            'FB',
+                            'BB',
+                            'JD',
+                            'KIDS',
+                            'OTHERS',
+                            'DIGITAL',
+                            'GUIDE',
+                        ],
+                        SU: [
+                            'ATTRACT',
+                            'ENGAGE',
+                            'RN',
+                            'TR',
+                            'NSW',
+                            'FB',
+                            'BB',
+                            'JD',
+                            'KIDS',
+                            'OTHERS',
+                            'DIGITAL',
+                            'GUIDE',
+                        ],
+                        FA: [
+                            'ATTRACT',
+                            'ENGAGE',
+                            'RN',
+                            'TR',
+                            'NSW',
+                            'FB',
+                            'BB',
+                            'JD',
+                            'KIDS',
+                            'OTHERS',
+                            'DIGITAL',
+                            'GUIDE',
+                        ],
+                        HO: [
+                            'ATTRACT',
+                            'ENGAGE',
+                            'RN',
+                            'TR',
+                            'NSW',
+                            'FB',
+                            'BB',
+                            'JD',
+                            'KIDS',
+                            'OTHERS',
+                            'DIGITAL',
+                            'GUIDE',
+                        ],
                     },
                 },
                 toolkit: {
@@ -408,12 +460,12 @@ export default {
             },
             pickerBeginOption: {
                 firstDayOfWeek: 7,
-                cellClassName: (date) => {
+                cellClassName: date => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: (time) => {
+                disabledDate: time => {
                     if (this.EndDt) {
                         return time.getTime() > this.EndDt.getTime();
                     }
@@ -421,12 +473,12 @@ export default {
             },
             pickerEndOption: {
                 firstDayOfWeek: 7,
-                cellClassName: (date) => {
+                cellClassName: date => {
                     if (new Date(date).getDay() === 0) {
                         return 'el-holiday';
                     }
                 },
-                disabledDate: (time) => {
+                disabledDate: time => {
                     if (this.BeginDt) {
                         return time.getTime() < this.BeginDt.getTime();
                     }
@@ -449,7 +501,7 @@ export default {
                 .fileSectionCodeName[this.menuCode];
         },
         pageMenuCodeDisabled() {
-            return this.folderDetail.contentsFileList.some((el) => {
+            return this.folderDetail.contentsFileList.some(el => {
                 return (
                     (el.fileKindCode !== 'FILE' &&
                         (el.url !== '' || el.title !== '')) ||
@@ -529,19 +581,19 @@ export default {
         },
         pageMenuCodeAuth(topMenuCode, skillCodes) {
             const index = this.$store.state.gnbMenuListData.findIndex(
-                (el) => el.menuCode === topMenuCode
+                el => el.menuCode === topMenuCode
             );
             if (this.$store.state.gnbMenuListData[index]) {
                 const a = this.$store.state.gnbMenuListData[index].menus.filter(
-                    (aa) => {
-                        return aa.skillCodes.some((bb) => {
+                    aa => {
+                        return aa.skillCodes.some(bb => {
                             return (
                                 bb.code === skillCodes && bb.menuRoleSeq !== 0
                             );
                         });
                     }
                 );
-                this.pageMenuCode = a.map((el) => el.menuName);
+                this.pageMenuCode = a.map(el => el.menuName);
                 this.menuCode = this.pageMenuCode[0];
             }
         },

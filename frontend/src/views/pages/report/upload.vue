@@ -205,8 +205,8 @@ export default {
             //console.log(response);
         },
         fileOrderSet() {
-            this.uploadFileList = this.uploadFileList.filter((a) => {
-                return this.reportDetailData.reportFileSaveDTOList.some((b) => {
+            this.uploadFileList = this.uploadFileList.filter(a => {
+                return this.reportDetailData.reportFileSaveDTOList.some(b => {
                     return (
                         a.name === b.fileName &&
                         a.type === b.fileContentType &&
@@ -223,16 +223,16 @@ export default {
         },
 
         selectFile(seq) {
-            if (this.checkedFile.some((el) => el === seq)) {
-                this.checkedFile = this.checkedFile.filter((el) => el !== seq);
+            if (this.checkedFile.some(el => el === seq)) {
+                this.checkedFile = this.checkedFile.filter(el => el !== seq);
             } else {
                 this.checkedFile.push(seq);
             }
         },
         removeFile() {
-            this.checkedFile.forEach((a) => {
+            this.checkedFile.forEach(a => {
                 this.reportDetailData.reportFileSaveDTOList = this.reportDetailData.reportFileSaveDTOList.filter(
-                    (b) => b.fileOrder !== a
+                    b => b.fileOrder !== a
                 );
             });
             this.checkedFile = [];
@@ -281,27 +281,24 @@ export default {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
 
-            let mergeArray = Array.from(files).filter((item) => {
-                return this.reportDetailData.reportFileSaveDTOList.every(
-                    (el) => {
-                        return (
-                            item.name !== el.fileName &&
-                            item.size !== el.fileSize
-                        );
-                    }
-                );
+            let mergeArray = Array.from(files).filter(item => {
+                return this.reportDetailData.reportFileSaveDTOList.every(el => {
+                    return (
+                        item.name !== el.fileName && item.size !== el.fileSize
+                    );
+                });
             });
-            if (mergeArray.length + this.uploadFileList.length > 10) {
-                alert('10개 이상 등록 할 수 없습니다.');
-                if (this.uploadFileList.length === 10) return;
-                let maxNum = 10;
+            if (mergeArray.length + this.uploadFileList.length > 30) {
+                alert('30 이상 등록 할 수 없습니다.');
+                if (this.uploadFileList.length === 30) return;
+                let maxNum = 30;
                 if (this.uploadFileList.length > 0) {
-                    maxNum = 10 - this.uploadFileList.length;
+                    maxNum = 30 - this.uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
 
-            mergeArray.forEach((el) => {
+            mergeArray.forEach(el => {
                 this.reportDetailData.reportFileSaveDTOList.push({
                     fileOrder: this.reportDetailData.reportFileSaveDTOList
                         .length,
@@ -316,18 +313,18 @@ export default {
 
         async uploadFiles() {
             await Promise.all(
-                this.uploadFileList.map(async (el) => {
+                this.uploadFileList.map(async el => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
                         const config = {
-                            onUploadProgress: (progressEvent) => {
+                            onUploadProgress: progressEvent => {
                                 const percentCompleted = Math.round(
                                     (progressEvent.loaded * 100) /
                                         progressEvent.total
                                 );
                                 this.reportDetailData.reportFileSaveDTOList.forEach(
-                                    (item) => {
+                                    item => {
                                         if (
                                             item.fileName === el.name &&
                                             item.fileContentType === el.type &&
@@ -364,10 +361,10 @@ export default {
                     }
                 })
             );
-
             await this.submitData();
             this.uploadFileList = [];
         },
+
         async submitData() {
             //const uploadFn = this.$route.params.id ? putReport : postReport;
             let responseData = '';

@@ -20,6 +20,23 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="noticeDetail.contents"></div>
+            <template v-if="noticeDetail.fileList">
+                <div
+                    class="detail-file"
+                    v-if="noticeDetail.fileList.length > 0"
+                >
+                    <ul class="detail-file-list">
+                        <li
+                            v-for="(item, index) in noticeDetail.fileList"
+                            :key="index"
+                        >
+                            <a :href="item.filePhysicalName">{{
+                                item.fileName
+                            }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </template>
         </div>
         <div class="btn-area">
             <button type="button" class="btn-s-black" @click="listRoute">

@@ -1,6 +1,5 @@
 <template>
     <div v-if="mainData">
-      <a href="/down" target="_blank">down</a>
         <div class="main-banner">
             <div class="thumbnail">
                 <img
@@ -107,7 +106,9 @@
                         :key="noticeItem.noticeArticleSeq"
                     >
                         <router-link
-                            :to="`/mypage/notice/detail/${noticeItem.noticeArticleSeq}`"
+                            :to="
+                                `/mypage/notice/detail/${noticeItem.noticeArticleSeq}`
+                            "
                         >
                             <span class="title">
                                 {{ noticeItem.title }}
@@ -291,7 +292,7 @@ export default {
 
             if (body.childNodes[1]) {
                 body.classList.remove('pop-open');
-                cal.querySelectorAll('td').forEach((el) => {
+                cal.querySelectorAll('td').forEach(el => {
                     el.classList.remove('fc-active');
                 });
                 //body.removeChild(body.childNodes[1]);
@@ -307,7 +308,7 @@ export default {
             const cal = this.$refs.fullCalendar.$el;
             const td = cal.querySelector(`td[data-date="${date}"]`);
             body.classList.add('pop-open');
-            cal.querySelectorAll('td').forEach((el) => {
+            cal.querySelectorAll('td').forEach(el => {
                 el.classList.remove('fc-active');
             });
             td.classList.add('fc-active');
@@ -367,7 +368,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
                 let tarnsformContents;
                 if (item.calendarSectionCode === 'EDUCATION') {
@@ -396,9 +397,9 @@ export default {
         },
         distinctAndAddEvent() {
             let distinctEventList = [];
-            this.calendarOptions.events.forEach((item) => {
+            this.calendarOptions.events.forEach(item => {
                 let check = false;
-                distinctEventList.forEach((ele) => {
+                distinctEventList.forEach(ele => {
                     if (item.start === ele.start) {
                         check = true;
                     }
@@ -407,7 +408,7 @@ export default {
                     distinctEventList.push(item);
                 }
             });
-            distinctEventList.forEach((item) => {
+            distinctEventList.forEach(item => {
                 this.calendarOptions.events.unshift(item);
             });
         },
@@ -575,7 +576,7 @@ export default {
 .main-notice-list {
     margin-top: 20px;
     /*   height: 358px;
-    box-sizing: border-box;*/
+  box-sizing: border-box;*/
     border: 1px solid #eee;
     border-radius: 2px;
 }
@@ -768,16 +769,16 @@ export default {
 }
 ::v-deep .fc .fc-more-popover:before {
     /*position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: -5px;
-    z-index: 1;
-    content: '';
-    display: inline-block;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid #ccc;
-    border-top: 0;*/
+  left: 50%;
+  transform: translateX(-50%);
+  top: -5px;
+  z-index: 1;
+  content: '';
+  display: inline-block;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #ccc;
+  border-top: 0;*/
 }
 /*::v-deep .fc-active {*/
 /*    background-color: #fa5400;*/

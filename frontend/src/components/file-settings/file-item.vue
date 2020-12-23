@@ -12,8 +12,20 @@
                     <span class="label-title required">파일 구분</span>
                 </div>
                 <div class="form-column">
+                    <div class="filter-select" v-if="$route.path.split('/')[1] === 'asset'" >
+                      <el-select v-model="file.fileSectionCode" placeholder="Select">
+                        <el-option
+                            v-for="item in pageFileSectionCodeName"
+                            :key="item"
+                            :label="item"
+                            :value="item"
+                        >
+                        </el-option>
+                      </el-select>
+                    </div>
                     <label
                         class="check-label"
+                        v-else
                         v-for="item in pageFileSectionCodeName"
                         :key="item"
                     >
@@ -110,6 +122,7 @@ export default {
         listLength: Number,
         pageFileSectionCodeName: Array,
         menuCode: String,
+
     },
     watch: {
         'file.fileSectionCode'() {
