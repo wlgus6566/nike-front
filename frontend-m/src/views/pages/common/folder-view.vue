@@ -100,6 +100,9 @@
                             <strong class="title">
                                 {{ item.title || item.fileName }}
                             </strong>
+                            <span class="date">
+                              {{item.registrationDt}}
+                            </span>
                         </span>
                     </a>
                     <a href="#" @click.prevent="fileDetailModal(item)" v-else>
@@ -128,6 +131,9 @@
                             <strong class="title">
                                 {{ item.title || item.fileName }}
                             </strong>
+                            <span class="date">
+                              {{item.registrationDt}}
+                            </span>
                         </span>
                     </a>
                 </li>

@@ -91,6 +91,7 @@ import { postOrderSave } from '@/api/my-order';
 import { getExistMsg } from '@/utils/common';
 import OrderSheet from '@/views/pages/product/order-sheet.vue';
 import NoData from '@/components/no-data';
+import bus from '@/utils/bus';
 
 export default {
     name: 'OderItem',
@@ -119,11 +120,9 @@ export default {
         },
         totalPrice() {
             if (this.basketList.length) {
-                const quantityArr = this.basketList.map(
-                    (el) => el.orderQuantity
-                );
+                const quantityArr = this.basketList.map(el => el.orderQuantity);
                 const priceArr = this.basketList.map(
-                    (el) => el.product.unitPrice
+                    el => el.product.unitPrice
                 );
                 return quantityArr
                     .map((el, index) => el * priceArr[index])
@@ -147,10 +146,10 @@ export default {
         // },
         showOrderSheet() {
             this.visible.orderSheet = true;
-            this.orderSeq = this.basketList.map((el) => {
+            this.orderSeq = this.basketList.map(el => {
                 return el.goodsSeq;
             });
-            this.orderQuan = this.basketList.map((el) => {
+            this.orderQuan = this.basketList.map(el => {
                 return el.orderQuantity;
             });
         },
@@ -174,26 +173,18 @@ export default {
         },
 
         // 주문서 발송
-        async orderSave(orderComment) {
-            //console.log(this.orderSeq);
-            //console.log(this.orderQuan);
-            /*console.log({
-                goodsSeqList: this.orderSeq,
-                orderDescription: orderComment,
-                orderQuantityList: this.orderQuan,
-                totalAmount: this.totalPrice,
-            });*/
+        async orderSave(orderComment, orderProductList) {
             try {
                 const { data: response } = await postOrderSave({
-                    goodsSeqList: this.orderSeq,
                     orderDescription: orderComment,
-                    orderQuantityList: this.orderQuan,
+                    orderProductList: orderProductList,
                     totalAmount: this.totalPrice,
                 });
                 //console.log(response);
                 if (response.existMsg) {
                     await getExistMsg(response);
                 } else {
+                    bus.$emit('pageLoading', false);
                     this.visible.orderSheet = false;
                     await this.$router.push('/order/complete');
                 }
