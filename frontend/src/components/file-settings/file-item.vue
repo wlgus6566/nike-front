@@ -188,7 +188,6 @@ export default {
                 `<div id="select-width">${this.cloneTxt}</div>`
             );
             const widthGuideTxt = selectDiv.querySelector('#select-width');
-            console.log(widthGuideTxt.offsetWidth);
             input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) +
                 30}px`;
             widthGuideTxt.parentNode.removeChild(widthGuideTxt);
