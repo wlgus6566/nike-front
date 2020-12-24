@@ -383,7 +383,7 @@ export default {
                     },
                     {
                         value: 'UPLOAD',
-                        label: '최신파일 순',
+                        label: '최신 업로 순',
                     },
                 ],
                 value: 'ORDER',
