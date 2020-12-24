@@ -26,7 +26,7 @@ export default {
         };
     },
     watch: {
-       //todo src/components/file-settings/file-item.vue에도 동일한 함수등 사용 수정시 같이
+        //todo src/components/file-settings/file-item.vue에도 동일한 함수등 사용 수정시 같이
         'listSortSelect.value'() {
             this.selectWidthSet();
         },
@@ -37,7 +37,6 @@ export default {
             const cloneTxt = this.listSortSelect.listSortOptions.find(
                 element => element.value === this.listSortSelect.value
             );
-            console.log(cloneTxt);
             return cloneTxt.label;
         },
     },
