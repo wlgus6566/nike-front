@@ -12,7 +12,7 @@
                 <h3 class="form-title mt0">알림메일 전송</h3>
                 <hr class="hr-black mt10" />
                 <h4 class="alarm-title">
-                    NIKE SPACE<br />컨텐츠 업데이트 알림
+                    <span>NIKE SPACE</span><br />컨텐츠 업데이트 알림
                 </h4>
                 <p class="alarm-txt">
                     <strong>ASSET(SP21 NSW MULTI AM EXCEE)</strong><br />
@@ -23,7 +23,7 @@
                 <div class="mt10">
                     <span class="textarea">
                         <textarea
-                            style="height: 80px;"
+                            style="height: 60px;"
                             v-model="alarmComment"
                         />
                     </span>
@@ -62,6 +62,9 @@ export default {
     line-height: 43px;
     font-weight: bold;
     color: #000;
+}
+.alarm-title span {
+    letter-spacing: -0.5px;
 }
 .alarm-txt {
     display: block;
