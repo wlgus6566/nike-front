@@ -150,7 +150,6 @@ export default {
             const cloneTxt = this.pageFileSectionCodeName.find(
                 element => element === this.file.fileSectionCode
             );
-            console.log(cloneTxt);
             return cloneTxt;
         },
         emptyCheck() {
@@ -192,7 +191,7 @@ export default {
             console.log(widthGuideTxt.offsetWidth);
             input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) +
                 30}px`;
-            //widthGuideTxt.parentNode.removeChild(widthGuideTxt);
+            widthGuideTxt.parentNode.removeChild(widthGuideTxt);
             this.complete = 1;
         },
     },
