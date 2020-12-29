@@ -38,11 +38,16 @@ const router = new VueRouter({
         {
             path: '/down',
             component: pages('mail'),
-            meta: { layout: 'Clean',},
+            meta: { layout: 'Clean' },
         },
         {
             path: '/',
             component: pages('main-page'),
+            meta: { layout: 'Default', aside: 'Default' },
+        },
+        {
+            path: '/mainTest',
+            component: pages('main-page_test'),
             meta: { layout: 'Default', aside: 'Default' },
         },
         ...LoginRoutes,

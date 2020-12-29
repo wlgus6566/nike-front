@@ -15,7 +15,11 @@
                             class="right"
                             v-if="
                                 calendarDetail.calendarSeq &&
-                                    folderAuthCheck('DELETE')
+                                    folderAuthCheck(
+                                        'DELETE',
+                                        'INFORMATION',
+                                        'INFORMATION_CALENDAR'
+                                    )
                             "
                         >
                             <button

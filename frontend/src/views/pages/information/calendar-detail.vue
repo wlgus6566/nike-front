@@ -5,7 +5,6 @@
         :class="className"
         :modal="false"
         :visible="visible"
-        :append-to-body="true"
         @close="$emit('update:visible', false)"
     >
         <el-scrollbar view-class="view-box" :native="false">
@@ -34,6 +33,13 @@
                 type="button"
                 class="link-txt"
                 @click="$emit('onClickToEdit', calendarData)"
+                v-if="
+                    folderAuthCheck(
+                        'CREATE',
+                        'INFORMATION',
+                        'INFORMATION_CALENDAR'
+                    )
+                "
             >
                 <span>수정하기</span>
             </button>
@@ -42,15 +48,25 @@
 </template>
 
 <script>
+import { authCheck } from '@/utils/authCheck';
 export default {
+    mixins: [authCheck],
     props: ['visible', 'calendarData'],
     data() {
         return {
             className: null,
         };
     },
+    created() {
+        this.classNameFn();
+    },
     watch: {
         calendarData() {
+            this.classNameFn();
+        },
+    },
+    methods: {
+        classNameFn() {
             if (this.calendarData.classNames) {
                 const className = this.calendarData.classNames[0];
                 if (className === 'edu') {
@@ -65,12 +81,10 @@ export default {
             }
         },
     },
-    methods: {},
 };
 </script>
 <style scoped>
 .calendar-modal {
-    display: flex;
     justify-content: center;
     align-items: center;
     background: none;
@@ -80,6 +94,9 @@ export default {
     max-width: 386px;
     margin: 0 !important;
     padding-bottom: 0;
+    background: #f7f7f7;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
 }
 
 ::v-deep.calendar-modal .el-scrollbar__wrap {
