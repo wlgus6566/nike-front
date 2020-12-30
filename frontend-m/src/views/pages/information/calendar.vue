@@ -46,6 +46,11 @@
                 드립니다.
             </p>
         </div>
+        <CalendarModal
+            v-if="visible.calendar"
+            :visible.sync="visible.calendar"
+            :calendarData="calendarDetailData"
+        ></CalendarModal>
     </div>
 </template>
 
@@ -61,11 +66,15 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
+import CalendarModal from '@/views/pages/information/calendar-detail.vue';
 
 export default {
     name: 'calendar',
     data() {
         return {
+            visible: {
+                calendar: false,
+            },
             calendarDialogInitData: {
                 calendarSectionCode: 'EDUCATION',
                 scheduleName: null,
@@ -86,11 +95,13 @@ export default {
             calendarDetail: {},
             calenderSectionCodeList: [],
             calendarData: [],
+            calendarDetailData: null,
             todayData: [],
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
-                dateClick: this.handleDateClick,
+                //dateClick: this.handleDateClick,
+                eventClick: this.eventClickEvent,
                 height: 'auto',
                 events: [],
                 headerToolbar: {
@@ -133,6 +144,7 @@ export default {
     },
     components: {
         FullCalendar,
+        CalendarModal,
     },
     mounted() {
         this.fetchData();
@@ -140,6 +152,11 @@ export default {
         calendarApi.gotoDate(this.searchDt.replace(/\./gi, '-'));
     },
     methods: {
+        eventClickEvent(e) {
+            console.log(e.event);
+            this.calendarDetailData = e.event;
+            this.visible.calendar = true;
+        },
         async fetchData() {
             this.loadingData = true;
             try {
@@ -182,6 +199,7 @@ export default {
                 } else {
                     className = 'official';
                 }
+
                 this.calendarOptions.events.push({
                     ...item,
                     title: item.scheduleName,
@@ -189,11 +207,13 @@ export default {
                     start: item.beginDt.replace(/\./gi, '-'),
                     end: item.viewEndDt.replace(/\./gi, '-'),
                     className: className,
+                    id: item.calendarSeq,
+                    constraint: item.contents,
                 });
             });
         },
         // 달력에 일자 클릭시
-        handleDateClick(arg) {
+        /*handleDateClick(arg) {
             this.getTodayCalendar(
                 this.$moment(arg.dateStr).format('YYYY.MM.DD')
             );
@@ -204,7 +224,7 @@ export default {
                 el.classList.remove('fc-active');
             });
             td.classList.add('fc-active');
-        },
+        },*/
         // 캘린더 코드 목록 조회
         async loadCalendarCode() {
             const {
