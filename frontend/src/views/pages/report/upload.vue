@@ -57,6 +57,7 @@
                             <textarea
                                 rows="5"
                                 v-model="reportDetailData.reportName"
+                                placeholder="파트너_시즌_캠페인명_매장명"
                             ></textarea>
                         </span>
                     </div>
@@ -289,7 +290,7 @@ export default {
                 });
             });
             if (mergeArray.length + this.uploadFileList.length > 30) {
-                alert('30 이상 등록 할 수 없습니다.');
+                alert('파일은 최대 30개까지 등록 가능합니다.');
                 if (this.uploadFileList.length === 30) return;
                 let maxNum = 30;
                 if (this.uploadFileList.length > 0) {
