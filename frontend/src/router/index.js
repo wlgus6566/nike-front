@@ -36,20 +36,15 @@ const router = new VueRouter({
             meta: { layout: 'Clean', unauthorized: true },
         },*/
         {
-            path: '/down',
-            component: pages('mail'),
-            meta: { layout: 'Clean' },
-        },
-        {
             path: '/',
             component: pages('main-page'),
             meta: { layout: 'Default', aside: 'Default' },
         },
-        {
+        /*{
             path: '/mainTest',
             component: pages('main-page_test'),
             meta: { layout: 'Default', aside: 'Default' },
-        },
+        },*/
         ...LoginRoutes,
         ...AssetRoutes,
         ...ToolkitRoutes,
