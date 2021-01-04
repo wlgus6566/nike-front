@@ -173,11 +173,11 @@ export default {
         },
 
         // 주문서 발송
-        async orderSave(orderComment, orderProductList) {
+        async orderSave(orderComment) {
             try {
                 const { data: response } = await postOrderSave({
                     orderDescription: orderComment,
-                    orderProductList: orderProductList,
+                    orderProductList: this.basketList,
                     totalAmount: this.totalPrice,
                 });
                 //console.log(response);
