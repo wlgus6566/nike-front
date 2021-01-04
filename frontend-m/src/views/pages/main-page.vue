@@ -75,10 +75,9 @@
             </li>
         </ul>
         <h2 class="main-title">CALENDAR</h2>
-        <div>
+        <div class="fullCalendar-wrap">
             <FullCalendar
                 ref="fullCalendar"
-                class="main-fc"
                 :options="calendarOptions"
                 defaultView="month"
                 :editable="false"
@@ -138,6 +137,11 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
+        <CalendarModal
+            v-if="visible.calendar"
+            :visible.sync="visible.calendar"
+            :calendarData="calendarData"
+        ></CalendarModal>
     </div>
 </template>
 <script>
@@ -150,11 +154,16 @@ import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
-
+import CalendarModal from '@/views/pages/information/calendar-detail.vue';
+import { getCalendarList } from '@/api/calendar';
 export default {
     name: 'MainPage',
     data() {
         return {
+            calendarData: null,
+            visible: {
+                calendar: false,
+            },
             swiperOptions: {
                 pagination: {
                     el: '.swiper-pagination',
@@ -176,13 +185,14 @@ export default {
             todayData: [],
             yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
+                height: 'auto',
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
-                dateClick: this.handleDateClick,
-                moreLinkClick: this.calClickEvent,
-                height: 440,
+                //moreLinkClick: this.calClickEvent,
+                eventClick: this.eventClickEvent,
+                //eventMouseEnter:this.mouserOverEvent,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -194,14 +204,13 @@ export default {
                     right: 'next',
                 },
                 titleFormat: 'yyyy.MM',
-
                 customButtons: {
                     prev: {
                         // this overrides the prev button
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarEachList(
+                            this.getCalendarList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -213,7 +222,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarEachList(
+                            this.getCalendarList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -225,7 +234,7 @@ export default {
         };
     },
     created() {
-        this.loadCalendar();
+        this.calLendarFetchData();
     },
     mounted() {
         this.fetchData();
@@ -246,11 +255,16 @@ export default {
             return this.reportList.slice(start, end);
         },
     },
-    components: { FullCalendar, Swiper, SwiperSlide },
+    components: { FullCalendar, Swiper, SwiperSlide, CalendarModal },
     directives: {
         swiper: directive,
     },
     methods: {
+        eventClickEvent(e) {
+            this.calendarData = e.event;
+            console.log(e.event);
+            this.visible.calendar = true;
+        },
         onClickDetail(item, url) {
             if (item.detailAuthYn === 'N') {
                 alert('접근 권한이 없습니다.');
@@ -280,7 +294,7 @@ export default {
                 console.log(error);
             }
         },
-        handleScroll() {
+        /* handleScroll() {
             const body = document.querySelector('.fc-daygrid-body');
             const cal = this.$refs.fullCalendar.$el;
             console.log(cal);
@@ -293,107 +307,62 @@ export default {
                 window.removeEventListener('scroll', this.handleScroll);
                 window.removeEventListener('resize', this.handleScroll);
             }
-        },
-        calClickEvent(e) {
-            const body = document.querySelector('.fc-daygrid-body');
-            const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
-            const date = this.$moment(e.date).format('YYYY-MM-DD');
-            const cal = this.$refs.fullCalendar.$el;
-            const td = cal.querySelector(`td[data-date="${date}"]`);
-            body.classList.add('pop-open');
-            cal.querySelectorAll('td').forEach(el => {
-                el.classList.remove('fc-active');
-            });
-            td.classList.add('fc-active');
-            window.addEventListener('scroll', this.handleScroll);
-            window.addEventListener('resize', this.handleScroll);
+        },*/
+        /*  calClickEvent(e) {
+        const body = document.querySelector('.fc-daygrid-body');
+        const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2;
+        const date = this.$moment(e.date).format('YYYY-MM-DD');
+        const cal = this.$refs.fullCalendar.$el;
+        const td = cal.querySelector(`td[data-date="${date}"]`);
+        body.classList.add('pop-open');
+        cal.querySelectorAll('td').forEach(el => {
+            el.classList.remove('fc-active');
+        });
+        td.classList.add('fc-active');
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleScroll);
 
-            setTimeout(() => {
-                const modal = document.querySelector('.fc-more-popover');
-                const close = modal.querySelector('.fc-popover-close');
-                const body = modal.querySelector('.fc-popover-body');
-                const a = document.createElement('a');
-                const txt = document.createTextNode('자세히 보기');
-                //modal.style.marginLeft = `${tdWidth}px`;
-                a.href =
-                    '/information/calendar?yyyyMm=' +
-                    this.yyyyMm +
-                    '&searchDt=' +
-                    this.$moment(e.date).format('YYYY.MM.DD');
-                a.classList.add('fc-more');
-                a.appendChild(txt);
-                body.appendChild(a);
-                close.addEventListener('click', () => {
-                    td.classList.remove('fc-active');
-                });
-            }, 0);
-        },
+        setTimeout(() => {
+            const modal = document.querySelector('.fc-more-popover');
+            const close = modal.querySelector('.fc-popover-close');
+            const body = modal.querySelector('.fc-popover-body');
+            const a = document.createElement('a');
+            const txt = document.createTextNode('자세히 보기');
+            //modal.style.marginLeft = `${tdWidth}px`;
+            a.href =
+                '/information/calendar?yyyyMm=' +
+                this.yyyyMm +
+                '&searchDt=' +
+                this.$moment(e.date).format('YYYY.MM.DD');
+            a.classList.add('fc-more');
+            a.appendChild(txt);
+            body.appendChild(a);
+            close.addEventListener('click', () => {
+                td.classList.remove('fc-active');
+            });
+        }, 0);
+    },*/
         // 달력 초기 목록 호출
-        async loadCalendar() {
+        async calLendarFetchData() {
             this.loadingData = true;
             try {
-                await this.getCalendarEachList(this.yyyyMm);
+                await this.getCalendarList(this.yyyyMm);
+                await this.getTodayCalendar(this.searchDt);
                 this.loadingData = false;
             } catch (error) {
-                alert(error.response.data.msg);
+                console.error(error);
             }
         },
         // 한달 일정 조회
-        async getCalendarEachList(yyyyMm) {
+        async getCalendarList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
         },
-        // 달력에 맞게 변수명 변경
-        transformData() {
-            this.calendarOptions.events = [];
-            this.calendarData.forEach(item => {
-                let className;
-                let tarnsformContents;
-                if (item.calendarSectionCode === 'EDUCATION') {
-                    className = 'edu';
-                    tarnsformContents = '[교육] ' + item.scheduleName;
-                } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    className = 'campaign';
-                    tarnsformContents = '[캠페인 런칭] ' + item.scheduleName;
-                } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
-                    className = 'upload';
-                    tarnsformContents = '[자료 업로드일] ' + item.scheduleName;
-                } else {
-                    className = 'official';
-                    tarnsformContents = '[기타] ' + item.scheduleName;
-                }
-                this.calendarOptions.events.push({
-                    ...item,
-                    title: tarnsformContents,
-                    description: item.contents,
-                    start: item.beginDt.replace(/\./gi, '-'),
-                    end: item.viewEndDt.replace(/\./gi, '-'),
-                    className: className,
-                });
-            });
-            this.distinctAndAddEvent();
-        },
-        distinctAndAddEvent() {
-            let distinctEventList = [];
-            this.calendarOptions.events.forEach(item => {
-                let check = false;
-                distinctEventList.forEach(ele => {
-                    if (item.start === ele.start) {
-                        check = true;
-                    }
-                });
-                if (!check) {
-                    distinctEventList.push(item);
-                }
-            });
-            distinctEventList.forEach(item => {
-                this.calendarOptions.events.unshift(item);
-            });
-        },
+        // 해당 날짜 일정 조회
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
             const {
@@ -401,13 +370,74 @@ export default {
             } = await getTodayCalendar({ searchDt: this.searchDt });
             this.todayData = response;
         },
+        // 달력에 맞게 변수명 변경
+        transformData() {
+            this.calendarOptions.events = [];
+            this.calendarData.forEach(item => {
+                let className;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    className = 'edu';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    className = 'campaign';
+                } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
+                    className = 'upload';
+                } else {
+                    className = 'official';
+                }
+
+                this.calendarOptions.events.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: item.viewEndDt.replace(/\./gi, '-'),
+                    className: className,
+                    id: item.calendarSeq,
+                    constraint: item.contents,
+                });
+            });
+        },
+        /*    distinctAndAddEvent() {
+        let distinctEventList = [];
+        this.calendarOptions.events.forEach(item => {
+            let check = false;
+            distinctEventList.forEach(ele => {
+                if (item.start === ele.start) {
+                    check = true;
+                }
+            });
+            if (!check) {
+                distinctEventList.push(item);
+            }
+        });
+        distinctEventList.forEach(item => {
+            this.calendarOptions.events.unshift(item);
+        });
+    },*/
+        /*
+    calendar-management 관련 메소드
+ */
+        /*  async createCalendar(data) {
+            try {
+                const { data: response } = await postCalendar(data);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },*/
     },
 };
 </script>
 <style scoped>
+/*
 ::v-deep .fc .fc-more-popover {
     margin-top: 41px;
-    /*transform: translateX(-50%);*/
+    !*transform: translateX(-50%);*!
 }
 ::v-deep .fc {
     margin: 15px -20px 0;
@@ -471,7 +501,7 @@ export default {
     display: block;
     width: 100%;
     height: 40px;
-    /*font: 0/0 a;*/
+    !*font: 0/0 a;*!
     text-indent: -99999px;
 }
 ::v-deep .fc-daygrid-more-link:before {
@@ -486,11 +516,11 @@ export default {
     border-radius: 50%;
     background: #fa5400;
 }
-/*fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-past*/
+!*fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-past*!
 ::v-deep .fc .fc-daygrid-day .fc-daygrid-event-harness .fc-daygrid-event {
-    /*display: none;*/
+    !*display: none;*!
 }
 ::v-deep .fc .fc-daygrid-day .fc-daygrid-event-harness {
     visibility: hidden;
-}
+}*/
 </style>

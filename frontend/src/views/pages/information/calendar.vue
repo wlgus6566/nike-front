@@ -44,7 +44,7 @@
                 </a>
             </div>
         </div>
-        <h3 class="schedule-title">{{ searchDt }}</h3>
+        <!--<h3 class="schedule-title">{{ searchDt }}</h3>
         <template v-if="todayData">
             <ul class="schedule-list" v-if="todayData.length !== 0">
                 <li
@@ -87,7 +87,13 @@
                     </div>
                 </li>
             </ul>
-        </template>
+        </template>-->
+        <CalendarModal
+            v-if="visible.calendar"
+            :visible.sync="visible.calendar"
+            :calendarData="calendarDataModal"
+            @onClickToEdit="onClickToEdit"
+        ></CalendarModal>
     </div>
 </template>
 
@@ -109,6 +115,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
 
 import calendarManagement from '@/views/pages/information/calendar-management';
+import CalendarModal from '@/views/pages/information/calendar-detail.vue';
 import { authCheck } from '@/utils/authCheck';
 
 export default {
@@ -117,7 +124,9 @@ export default {
         return {
             visible: {
                 calendarManagement: false,
+                calendar: false,
             },
+            calendarDataModal: null,
             calendarDialogInitData: {
                 calendarSectionCode: 'EDUCATION',
                 scheduleName: null,
@@ -143,7 +152,8 @@ export default {
                 height: 'auto',
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
-                dateClick: this.handleDateClick,
+                //dateClick: this.handleDateClick,
+                eventClick: this.eventClickEvent,
                 events: [],
                 headerToolbar: {
                     left: 'prev',
@@ -187,6 +197,7 @@ export default {
     components: {
         FullCalendar,
         calendarManagement,
+        CalendarModal,
     },
     mounted() {
         this.fetchData();
@@ -194,6 +205,11 @@ export default {
         calendarApi.gotoDate(this.searchDt.replace(/\./gi, '-'));
     },
     methods: {
+        eventClickEvent(e) {
+            console.log(e);
+            this.calendarDataModal = e.event;
+            this.visible.calendar = true;
+        },
         // 초기 데이타 조회
         async fetchData() {
             this.loadingData = true;
@@ -226,7 +242,7 @@ export default {
         // 달력에 맞게 변수명 변경
         transformData() {
             this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
+            this.calendarData.forEach(item => {
                 let className;
                 if (item.calendarSectionCode === 'EDUCATION') {
                     className = 'edu';
@@ -244,6 +260,8 @@ export default {
                     start: item.beginDt.replace(/\./gi, '-'),
                     end: item.viewEndDt.replace(/\./gi, '-'),
                     className: className,
+                    id: item.calendarSeq,
+                    constraint: item.contents,
                 });
             });
         },
@@ -271,8 +289,34 @@ export default {
         // 일정 수정 클릭시
         onClickToEdit(item) {
             this.statusCode = 'EDIT';
-            this.calendarDetail = item;
-            this.calendarSeq = item.calendarSeq;
+            let className = '';
+            if (item.classNames[0] === 'edu') {
+                className = 'EDUCATION';
+            } else if (item.classNames[0] === 'campaign') {
+                className = 'CAMPAIGN';
+            } else if (item.classNames[0] === 'upload') {
+                className = 'UPLOAD_DATE';
+            } else {
+                className = 'ETC';
+            }
+
+            const beginyear = item.startStr.substr(0, 4);
+            const beginmonth = item.startStr.substr(5, 2);
+            const beginday = item.startStr.substr(8, 2);
+
+            const endnyear = item.endStr.substr(0, 4);
+            const endnmonth = item.endStr.substr(5, 2);
+            const endnday = item.endStr.substr(8, 2);
+
+            this.calendarDetail.beginDt =
+                beginyear + '.' + beginmonth + '.' + beginday;
+            this.calendarDetail.endDt =
+                endnyear + '.' + endnmonth + '.' + endnday;
+            this.calendarDetail.calendarSectionCode = className;
+            this.calendarDetail.calendarSeq = Number(item.id);
+            this.calendarDetail.contents = item.constraint;
+            this.calendarDetail.scheduleName = item.title;
+            this.calendarSeq = Number(item.id);
             this.visible.calendarManagement = true;
         },
         // 캘린더 코드 목록 조회

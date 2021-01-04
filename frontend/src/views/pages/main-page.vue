@@ -1,6 +1,5 @@
 <template>
     <div v-if="mainData">
-      <a href="/down" target="_blank">down</a>
         <div class="main-banner">
             <div class="thumbnail">
                 <img
@@ -97,39 +96,40 @@
             </li>
         </ul>
 
-        <div class="board-box">
-            <div class="inner">
-                <h2 class="main-title">NOTICE</h2>
-                <ul class="main-notice-list">
-                    <li
-                        :class="{ noti: noticeItem.noticeYn === 'Y' }"
-                        v-for="noticeItem in mainData.noticeArticleList"
-                        :key="noticeItem.noticeArticleSeq"
-                    >
-                        <router-link
-                            :to="`/mypage/notice/detail/${noticeItem.noticeArticleSeq}`"
-                        >
-                            <span class="title">
-                                {{ noticeItem.title }}
-                            </span>
-                            <span class="date">
-                                {{ noticeItem.updateDt }}
-                            </span>
-                        </router-link>
-                    </li>
-                </ul>
-            </div>
-            <div class="inner">
-                <h2 class="main-title">CALENDAR</h2>
-                <div class="main-fc">
-                    <FullCalendar
-                        ref="fullCalendar"
-                        :options="calendarOptions"
-                        defaultView="month"
-                        :editable="false"
-                    />
-                </div>
-            </div>
+        <h2 class="main-title">NOTICE</h2>
+        <ul class="main-notice-list">
+            <li
+                :class="{ noti: noticeItem.noticeYn === 'Y' }"
+                v-for="noticeItem in mainData.noticeArticleList"
+                :key="noticeItem.noticeArticleSeq"
+            >
+                <router-link
+                    :to="`/mypage/notice/detail/${noticeItem.noticeArticleSeq}`"
+                >
+                    <span class="title">
+                        {{ noticeItem.title }}
+                    </span>
+                    <span class="date">
+                        {{ noticeItem.updateDt }}
+                    </span>
+                </router-link>
+            </li>
+        </ul>
+
+        <h2 class="main-title">CALENDAR</h2>
+        <div class="fullCalendar-wrap">
+            <ul class="schedule-type">
+                <li class="campaign">캠페인 런칭</li>
+                <li class="upload">자료 업로드일</li>
+                <li class="edu">교육</li>
+                <li class="official">기타</li>
+            </ul>
+            <FullCalendar
+                ref="fullCalendar"
+                :options="calendarOptions"
+                defaultView="month"
+                :editable="false"
+            />
         </div>
 
         <h2 class="main-title">REPORT</h2>
@@ -189,35 +189,71 @@
                 </router-link>
             </li>
         </ul>
+        <CalendarModal
+            :visible.sync="visible.calendar"
+            :calendarData="calendarData"
+            @onClickToEdit="onClickToEdit"
+        ></CalendarModal>
+        <calendarManagement
+            v-if="visible.calendarManagement"
+            :visible.sync="visible.calendarManagement"
+            :statusCode="statusCode"
+            :calendarDetail="calendarDetail"
+            :calendarSeq="calendarSeq"
+            :calenderSectionCodeList="calenderSectionCodeList"
+            @createCalendar="createCalendar"
+            @modifyCalendar="modifyCalendar"
+            @delCalendar="delCalendar"
+            @closeDialog="closeDialog"
+        />
     </div>
 </template>
 <script>
 import { getMain } from '@/api/main';
 import {
-    getCalendarEachList, // CALENDAR 목록 조회
-    getTodayCalendar, // CALENDAR 오늘 조회
+    delCalendar,
+    getCalendarList, // CALENDAR 목록 조회
+    getTodayCalendar,
+    postCalendar,
+    putCalendar, // CALENDAR 오늘 조회
 } from '@/api/calendar';
 
 import FullCalendar from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
+import CalendarModal from '@/views/pages/information/calendar-detail.vue';
+import calendarManagement from '@/views/pages/information/calendar-management';
+import { authCheck } from '@/utils/authCheck';
+import { getCode } from '@/api/code';
 
 export default {
     name: 'MainPage',
     data() {
         return {
+            hoverState: false,
+            setTime: null,
+            visible: {
+                calendar: false,
+                calendarManagement: false,
+            },
+            calendarSeq: null,
+            statusCode: null,
+            calendarDetail: {},
+            calenderSectionCodeList: [],
+            calendarData: null,
             mainData: null,
             todayData: [],
             yyyyMm: this.$moment(new Date()).format('YYYY.MM'),
             calendarOptions: {
+                height: 'auto',
                 plugins: [dayGridPlugin, interactionPlugin, momentPlugin],
                 initialView: 'dayGridMonth',
                 // 일자 클릭시
                 // dateClick: this.handleDateClick,
-                dateClick: this.handleDateClick,
-                moreLinkClick: this.calClickEvent,
-                height: 336,
+                //moreLinkClick: this.calClickEvent,
+                eventMouseEnter: this.mouserOverEvent,
+                //eventMouseLeave: this.mouserLeaveEvent,
                 events: [],
                 dayMaxEventRows: true,
                 timeGrid: {
@@ -233,9 +269,10 @@ export default {
                     prev: {
                         // this overrides the prev button
                         click: () => {
+                            this.calDetailClose();
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarEachList(
+                            this.getCalendarList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -245,9 +282,10 @@ export default {
                     next: {
                         // this overrides the next button
                         click: () => {
+                            this.calDetailClose();
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarEachList(
+                            this.getCalendarList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -258,17 +296,169 @@ export default {
             },
         };
     },
+    mixins: [authCheck],
     components: {
         FullCalendar,
+        CalendarModal,
+        calendarManagement,
     },
     created() {
         this.main();
-        this.loadCalendar();
+        this.calLendarFetchData();
+    },
+    mounted() {
+        this.trCheck();
     },
     activated() {
         this.main();
+        window.addEventListener('scroll', this.calDetailClose);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.calDetailClose);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.calDetailClose);
     },
     methods: {
+        trCheck() {
+            document.querySelector('body').setAttribute('data-index', 'dd');
+            document
+                .querySelectorAll(
+                    '.fullCalendar-wrap .fc-scrollgrid-sync-table tbody tr'
+                )
+                .forEach((el, index) => {
+                    el.setAttribute('data-index', index);
+                });
+        },
+        calDetailClose() {
+            this.visible.calendar = false;
+            this.openClassRemove();
+        },
+        calDetailOpen() {
+            this.visible.calendar = true;
+        },
+        mouserLeaveEvent() {
+            setTimeout(() => {
+                if (!this.hoverState) {
+                    this.calDetailOpen();
+                }
+            }, 10);
+        },
+        hoverStateEvent(state) {
+            this.hoverState = state;
+        },
+        openClassRemove() {
+            document.querySelectorAll('.open-tr').forEach(el => {
+                el.classList.remove('open-tr');
+            });
+            document.querySelectorAll('.fullCalendar-wrap open').forEach(el => {
+                el.classList.remove('open');
+            });
+        },
+        mouserOverEvent(e) {
+            console.log(e);
+            clearTimeout(this.setTime);
+            this.setTime = setTimeout(() => {
+                this.calendarData = e.event;
+                this.calDetailOpen();
+                const clientLeft = e.jsEvent.clientX;
+                const modal = document.querySelector('.calendar-modal');
+                const fullCalendar = document.querySelector(
+                    '.fullCalendar-wrap'
+                );
+                const gnbLeft = 300;
+                const titleHeight = 72;
+                const theadHeight = 25;
+                const tr = e.el.closest('tr');
+                const elWrapTop = e.el.closest('.fc-daygrid-day-events')
+                    .offsetTop;
+                const elItemBoxTop = e.el.closest('.fc-daygrid-event-harness ')
+                    .offsetTop;
+                tr.classList.add('open-tr');
+                e.el.classList.add('open');
+                fullCalendar.appendChild(modal);
+                modal.removeEventListener('mouseover', this.hoverStateEvent);
+                modal.removeEventListener('mouseleave', this.hoverStateEvent);
+                modal.addEventListener('mouseover', this.hoverStateEvent, true);
+                modal.addEventListener(
+                    'mouseleave',
+                    this.hoverStateEvent,
+                    false
+                );
+                modal.style.position = 'absolute';
+                modal.style.display = 'inline-flex';
+                modal.style.top = 'auto';
+                modal.style.left = 'auto';
+                modal.style.right = 'auto';
+                modal.style.bottom = 'auto';
+                modal.style.maxWidth = '386px';
+                modal.style.width = 'auto';
+                modal.style.minWidth = 'auto';
+                modal.style.height = 'auto';
+                modal.style.top =
+                    titleHeight +
+                    theadHeight +
+                    elWrapTop +
+                    elItemBoxTop +
+                    100 * tr.getAttribute('data-index') +
+                    'px';
+                // top css
+                if (tr.getAttribute('data-index') > 2) {
+                    if (
+                        tr.getAttribute('data-index') > 3 ||
+                        modal.clientHeight > 290
+                    ) {
+                        modal.style.top = 'auto';
+                        modal.style.bottom = '0px';
+                    } else {
+                        modal.style.bottom = 'auto';
+                        modal.style.top =
+                            titleHeight +
+                            theadHeight +
+                            elWrapTop +
+                            elItemBoxTop +
+                            100 * tr.getAttribute('data-index') -
+                            5 +
+                            'px';
+                    }
+                } else {
+                    modal.style.bottom = 'auto';
+                    modal.style.top =
+                        titleHeight +
+                        theadHeight +
+                        elWrapTop +
+                        elItemBoxTop +
+                        100 * tr.getAttribute('data-index') -
+                        5 +
+                        'px';
+                }
+                // left css
+
+                if (clientLeft + 100 > fullCalendar.clientWidth) {
+                    modal.style.left = 'auto';
+                    modal.style.right = '0px';
+                } else {
+                    modal.style.right = 'auto';
+                    modal.style.left = clientLeft - gnbLeft + 40 + 'px';
+                }
+
+                document
+                    .querySelector('.calendar-modal')
+                    .removeEventListener('mouseleave', this.calDetailClose);
+                document
+                    .querySelector('.calendar-modal')
+                    .addEventListener('mouseleave', this.calDetailClose);
+            }, 100);
+            document.querySelectorAll('.fc-daygrid-day').forEach(el => {
+                el.removeEventListener('mouseleave', this.mouserLeaveEvent);
+                el.addEventListener('mouseleave', this.mouserLeaveEvent);
+            });
+            document.querySelectorAll('.fc-daygrid-day').forEach(el => {
+                el.removeEventListener('mouseleave', this.mouserLeaveEvent);
+                el.addEventListener('mouseleave', this.mouserLeaveEvent);
+            });
+            this.trCheck();
+        },
         alertMsg(item) {
             if (item.detailAuthYn === 'N') {
                 alert('접근 권한이 없습니다.');
@@ -291,7 +481,7 @@ export default {
 
             if (body.childNodes[1]) {
                 body.classList.remove('pop-open');
-                cal.querySelectorAll('td').forEach((el) => {
+                cal.querySelectorAll('td').forEach(el => {
                     el.classList.remove('fc-active');
                 });
                 //body.removeChild(body.childNodes[1]);
@@ -299,41 +489,40 @@ export default {
                 window.removeEventListener('resize', this.handleScroll);
             }
         },
-        calClickEvent(e) {
-            //console.log('e / ', e);
-            const body = document.querySelector('.fc-daygrid-body');
-            //const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2; IE 지원 안함
-            const date = this.$moment(e.date).format('YYYY-MM-DD');
-            const cal = this.$refs.fullCalendar.$el;
-            const td = cal.querySelector(`td[data-date="${date}"]`);
-            body.classList.add('pop-open');
-            cal.querySelectorAll('td').forEach((el) => {
-                el.classList.remove('fc-active');
-            });
-            td.classList.add('fc-active');
-            window.addEventListener('scroll', this.handleScroll);
-            window.addEventListener('resize', this.handleScroll);
-            setTimeout(() => {
-                const modal = document.querySelector('.fc-more-popover');
-                const close = modal.querySelector('.fc-popover-close');
-                const body = modal.querySelector('.fc-popover-body');
-                const a = document.createElement('a');
-                const txt = document.createTextNode('자세히 보기');
-                // modal.style.marginLeft = `${tdWidth}px`;
-                a.href =
-                    '/information/calendar?yyyyMm=' +
-                    this.yyyyMm +
-                    '&searchDt=' +
-                    this.$moment(e.date).format('YYYY.MM.DD');
-                a.classList.add('fc-more');
-                a.appendChild(txt);
-                body.appendChild(a);
-                close.addEventListener('click', () => {
-                    td.classList.remove('fc-active');
-                });
-            }, 0);
-        },
-
+        /*  calClickEvent(e) {
+      //console.log('e / ', e);
+      const body = document.querySelector('.fc-daygrid-body');
+      //const tdWidth = e.jsEvent.target.closest('td').offsetWidth / 2; IE 지원 안함
+      const date = this.$moment(e.date).format('YYYY-MM-DD');
+      const cal = this.$refs.fullCalendar.$el;
+      const td = cal.querySelector(`td[data-date="${date}"]`);
+      body.classList.add('pop-open');
+      cal.querySelectorAll('td').forEach((el) => {
+          el.classList.remove('fc-active');
+      });
+      td.classList.add('fc-active');
+      window.addEventListener('scroll', this.handleScroll);
+      window.addEventListener('resize', this.handleScroll);
+      setTimeout(() => {
+          const modal = document.querySelector('.fc-more-popover');
+          const close = modal.querySelector('.fc-popover-close');
+          const body = modal.querySelector('.fc-popover-body');
+          const a = document.createElement('a');
+          const txt = document.createTextNode('자세히 보기');
+          // modal.style.marginLeft = `${tdWidth}px`;
+          a.href =
+              '/information/calendar?yyyyMm=' +
+              this.yyyyMm +
+              '&searchDt=' +
+              this.$moment(e.date).format('YYYY.MM.DD');
+          a.classList.add('fc-more');
+          a.appendChild(txt);
+          body.appendChild(a);
+          close.addEventListener('click', () => {
+              td.classList.remove('fc-active');
+          });
+      }, 0);
+  },*/
         async main() {
             try {
                 const {
@@ -345,78 +534,172 @@ export default {
                 console.error(error);
             }
         },
-        // 달력 초기 목록 호출
-        async loadCalendar() {
+        // 캘린더 초기 데이타 조회
+        async calLendarFetchData() {
             this.loadingData = true;
             try {
-                await this.getCalendarEachList(this.yyyyMm);
+                await this.getCalendarList(this.yyyyMm);
+                await this.getTodayCalendar(this.searchDt);
                 this.loadingData = false;
+                await this.loadCalendarCode();
             } catch (error) {
                 console.error(error);
             }
         },
         // 한달 일정 조회
-        async getCalendarEachList(yyyyMm) {
+        async getCalendarList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
         },
-        // 달력에 맞게 변수명 변경
-        transformData() {
-            this.calendarOptions.events = [];
-            this.calendarData.forEach((item) => {
-                let className;
-                let tarnsformContents;
-                if (item.calendarSectionCode === 'EDUCATION') {
-                    className = 'edu';
-                    tarnsformContents = '[교육] ' + item.scheduleName;
-                } else if (item.calendarSectionCode === 'CAMPAIGN') {
-                    className = 'campaign';
-                    tarnsformContents = '[캠페인 런칭] ' + item.scheduleName;
-                } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
-                    className = 'upload';
-                    tarnsformContents = '[자료 업로드일] ' + item.scheduleName;
-                } else {
-                    className = 'official';
-                    tarnsformContents = '[기타] ' + item.scheduleName;
-                }
-                this.calendarOptions.events.push({
-                    ...item,
-                    title: tarnsformContents,
-                    description: item.contents,
-                    start: item.beginDt.replace(/\./gi, '-'),
-                    end: item.viewEndDt.replace(/\./gi, '-'),
-                    className: className,
-                });
-            });
-            this.distinctAndAddEvent();
-        },
-        distinctAndAddEvent() {
-            let distinctEventList = [];
-            this.calendarOptions.events.forEach((item) => {
-                let check = false;
-                distinctEventList.forEach((ele) => {
-                    if (item.start === ele.start) {
-                        check = true;
-                    }
-                });
-                if (!check) {
-                    distinctEventList.push(item);
-                }
-            });
-            distinctEventList.forEach((item) => {
-                this.calendarOptions.events.unshift(item);
-            });
-        },
+        // 해당 날짜 일정 조회
         async getTodayCalendar(searchDt) {
             this.searchDt = !!searchDt ? searchDt : this.searchDt;
             const {
                 data: { data: response },
             } = await getTodayCalendar({ searchDt: this.searchDt });
             this.todayData = response;
+        },
+        // 달력에 맞게 변수명 변경
+        transformData() {
+            this.calendarOptions.events = [];
+            this.calendarData.forEach(item => {
+                let className;
+                if (item.calendarSectionCode === 'EDUCATION') {
+                    className = 'edu';
+                } else if (item.calendarSectionCode === 'CAMPAIGN') {
+                    className = 'campaign';
+                } else if (item.calendarSectionCode === 'UPLOAD_DATE') {
+                    className = 'upload';
+                } else {
+                    className = 'official';
+                }
+                this.calendarOptions.events.push({
+                    ...item,
+                    title: item.scheduleName,
+                    description: item.contents,
+                    start: item.beginDt.replace(/\./gi, '-'),
+                    end: item.viewEndDt.replace(/\./gi, '-'),
+                    className: className,
+                    id: item.calendarSeq,
+                    constraint: item.contents,
+                });
+            });
+        },
+        /*distinctAndAddEvent() {
+      let distinctEventList = [];
+      this.calendarOptions.events.forEach((item) => {
+          let check = false;
+          distinctEventList.forEach((ele) => {
+              if (item.start === ele.start) {
+                  check = true;
+              }
+          });
+          if (!check) {
+              distinctEventList.push(item);
+          }
+      });
+      distinctEventList.forEach((item) => {
+          this.calendarOptions.events.unshift(item);
+      });
+  },*/
+        // 일정 수정 클릭시
+        onClickToEdit(item) {
+            this.statusCode = 'EDIT';
+            let className = '';
+            if (item.classNames[0] === 'edu') {
+                className = 'EDUCATION';
+            } else if (item.classNames[0] === 'campaign') {
+                className = 'CAMPAIGN';
+            } else if (item.classNames[0] === 'upload') {
+                className = 'UPLOAD_DATE';
+            } else {
+                className = 'ETC';
+            }
+
+            const beginyear = item.startStr.substr(0, 4);
+            const beginmonth = item.startStr.substr(5, 2);
+            const beginday = item.startStr.substr(8, 2);
+
+            const endnyear = item.endStr.substr(0, 4);
+            const endnmonth = item.endStr.substr(5, 2);
+            const endnday = item.endStr.substr(8, 2);
+
+            this.calendarDetail.beginDt =
+                beginyear + '.' + beginmonth + '.' + beginday;
+            this.calendarDetail.endDt =
+                endnyear + '.' + endnmonth + '.' + endnday;
+            this.calendarDetail.calendarSectionCode = className;
+            this.calendarDetail.calendarSeq = Number(item.id);
+            this.calendarDetail.contents = item.constraint;
+            this.calendarDetail.scheduleName = item.title;
+            this.calendarSeq = Number(item.id);
+            this.visible.calendarManagement = true;
+        },
+        // 캘린더 코드 목록 조회
+        async loadCalendarCode() {
+            const {
+                data: { data: response },
+            } = await getCode('CALANDAR_TYPE');
+            this.calenderSectionCodeList = response;
+        },
+
+        /*
+  calendar-management 관련 메소드
+*/
+        async createCalendar(data) {
+            try {
+                const { data: response } = await postCalendar(data);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async modifyCalendar(calendarSeq, data) {
+            try {
+                const { data: response } = await putCalendar(calendarSeq, data);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async delCalendar(calendarSeq) {
+            try {
+                const { data: response } = await delCalendar(calendarSeq);
+                if (response.existMsg) {
+                    alert(response.msg);
+                }
+
+                if (response.success) {
+                    this.processAfterSuccess();
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async processAfterSuccess() {
+            await this.getCalendarList();
+            await this.getTodayCalendar();
+            this.closeDialog();
+        },
+        // 다이얼로드 닫기
+        closeDialog() {
+            this.visible.calendar = false;
+            this.visible.calendarManagement = false;
         },
     },
 };
@@ -575,7 +858,7 @@ export default {
 .main-notice-list {
     margin-top: 20px;
     /*   height: 358px;
-    box-sizing: border-box;*/
+box-sizing: border-box;*/
     border: 1px solid #eee;
     border-radius: 2px;
 }
@@ -768,16 +1051,16 @@ export default {
 }
 ::v-deep .fc .fc-more-popover:before {
     /*position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: -5px;
-    z-index: 1;
-    content: '';
-    display: inline-block;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid #ccc;
-    border-top: 0;*/
+left: 50%;
+transform: translateX(-50%);
+top: -5px;
+z-index: 1;
+content: '';
+display: inline-block;
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-bottom: 5px solid #ccc;
+border-top: 0;*/
 }
 /*::v-deep .fc-active {*/
 /*    background-color: #fa5400;*/

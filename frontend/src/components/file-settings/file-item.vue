@@ -12,8 +12,27 @@
                     <span class="label-title required">파일 구분</span>
                 </div>
                 <div class="form-column">
+                    <div
+                        class="filter-select"
+                        v-if="$route.path.split('/')[1] === 'asset'"
+                    >
+                        <el-select
+                            v-model="file.fileSectionCode"
+                            placeholder="Select"
+                            ref="select"
+                        >
+                            <el-option
+                                v-for="item in pageFileSectionCodeName"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            >
+                            </el-option>
+                        </el-select>
+                    </div>
                     <label
                         class="check-label"
+                        v-else
                         v-for="item in pageFileSectionCodeName"
                         :key="item"
                     >
@@ -104,6 +123,11 @@
 <script>
 export default {
     name: 'file-item',
+    data() {
+        return {
+            complete: 0,
+        };
+    },
     props: {
         file: Object,
         errorFile: Array,
@@ -114,9 +138,20 @@ export default {
     watch: {
         'file.fileSectionCode'() {
             //this.file.fileKindCode = 'FILE';
+            // asset 일때 select width 조정 (components filter-select 동일)
+            if (this.$route.path.split('/')[1] === 'asset') {
+                this.selectWidthSet();
+            }
         },
     },
     computed: {
+        // asset 일때 select width 조정을 위한 data (components filter-select 동일)
+        cloneTxt() {
+            const cloneTxt = this.pageFileSectionCodeName.find(
+                element => element === this.file.fileSectionCode
+            );
+            return cloneTxt;
+        },
         emptyCheck() {
             return this.file.fileName || this.file.title || this.file.url;
             /*return (
@@ -142,6 +177,35 @@ export default {
                       { label: '동영상(URL)', value: 'VIDEO' },
                   ];
         },
+    },
+    methods: {
+        // asset 일때 select width 조정을 위한 함수 (components filter-select 동일)
+        selectWidthSet() {
+            const selectDiv = this.$refs.select.$el;
+            const input = selectDiv.querySelector('input');
+            input.insertAdjacentHTML(
+                'afterend',
+                `<div id="select-width">${this.cloneTxt}</div>`
+            );
+            const widthGuideTxt = selectDiv.querySelector('#select-width');
+            input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) +
+                30}px`;
+            widthGuideTxt.parentNode.removeChild(widthGuideTxt);
+            this.complete = 1;
+        },
+    },
+    mounted() {
+        // asset 일때 select width 조정을 위한 폰트 (components filter-select 동일)
+        if (this.$route.path.split('/')[1] === 'asset') {
+            const FontFaceObserver = require('fontfaceobserver');
+            const NotoSans = new FontFaceObserver('Noto Sans KR', {
+                weight: 700,
+            });
+            const Roboto = new FontFaceObserver('Roboto', { weight: 700 });
+            Promise.all([NotoSans.load(), Roboto.load()]).then(() => {
+                this.selectWidthSet();
+            });
+        }
     },
 };
 </script>

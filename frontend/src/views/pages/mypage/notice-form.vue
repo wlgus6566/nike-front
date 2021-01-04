@@ -68,18 +68,61 @@
                             style="width: 100%;"
                         />
                     </div>
-                    <!--                    <div class="form-column">-->
-                    <!--                        <span class="textarea">-->
-                    <!--                            <textarea-->
-                    <!--                                required-->
-                    <!--                                cols="100"-->
-                    <!--                                rows="2"-->
-                    <!--                                style="height: 300px;"-->
-                    <!--                                v-model="noticeDetail.contents"-->
-                    <!--                                id="p_content"-->
-                    <!--                            ></textarea>-->
-                    <!--                        </span>-->
-                    <!--                    </div>-->
+                </li>
+                <li class="form-row">
+                    <div class="form-column">
+                        <label class="label-title">파일 찾기</label>
+                    </div>
+                    <div class="form-column">
+                        <div class="upload-file-box">
+                            <!--active-->
+                            <ul
+                                class="upload-file-list"
+                                :class="{
+                                    'is-file': uploadFileList.length > 0,
+                                }"
+                            >
+                                <li
+                                    v-for="item in noticeDetail.fileList"
+                                    :key="item.fileOrder"
+                                >
+                                    <label>
+                                        <span class="checkbox">
+                                            <input
+                                                type="checkbox"
+                                                :value="item.fileOrder"
+                                                v-model="checkedFile"
+                                            />
+                                            <i></i>
+                                        </span>
+                                        <span class="txt">
+                                            {{ item.fileName }}
+                                        </span>
+                                    </label>
+                                </li>
+                            </ul>
+                            <div class="btn-box">
+                                <div class="fine-file">
+                                    <span class="btn-form-gray"
+                                        ><span>찾기</span></span
+                                    >
+                                    <input
+                                        type="file"
+                                        ref="fileInput"
+                                        multiple
+                                        @change="uploadIptChange"
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    class="btn-form"
+                                    @click="removeFile"
+                                >
+                                    <span>삭제</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <hr class="hr-gray" />
@@ -104,6 +147,8 @@ import {
 } from '@/api/customer';
 
 import { getAuthFromCookie } from '@/utils/cookies';
+import { fileUpLoad } from '@/api/file';
+import bus from '@/utils/bus';
 
 export default {
     name: 'notice-form',
@@ -118,6 +163,7 @@ export default {
                 contents: '',
                 noticeYn: 'N',
                 noticeArticleSeq: null,
+                fileList: [],
             },
             // 에디터 업로드 설정
             editorConfig: {
@@ -128,6 +174,8 @@ export default {
                     Authorization: '',
                 },
             },
+            checkedFile: [],
+            uploadFileList: [],
         };
     },
     created() {
@@ -163,20 +211,149 @@ export default {
         this.detailDataReset();
     },
     methods: {
+        //file 업로드
+        uploadIptChange(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+
+            let mergeArray = Array.from(files).filter(item => {
+                return this.noticeDetail.fileList.every(el => {
+                    return (
+                        item.name !== el.fileName && item.size !== el.fileSize
+                    );
+                });
+            });
+            console.log(mergeArray.length);
+            if (mergeArray.length + this.uploadFileList.length > 5) {
+                alert('5개 이상 등록 할 수 없습니다.');
+                if (this.uploadFileList.length === 5) return;
+                let maxNum = 5;
+                if (this.uploadFileList.length > 0) {
+                    maxNum = 5 - this.uploadFileList.length;
+                }
+                mergeArray.splice(maxNum, 9999);
+            }
+
+            mergeArray.forEach(el => {
+                this.noticeDetail.fileList.push({
+                    fileOrder: this.noticeDetail.fileList.length,
+                    fileName: el.name,
+                    fileSize: el.size,
+                    fileContentType: el.type,
+                    progress: 0,
+                });
+            });
+            this.uploadFileList = this.uploadFileList.concat(mergeArray);
+        },
+        async uploadFiles() {
+            bus.$emit('pageLoading', true);
+            await Promise.all(
+                this.uploadFileList.map(async el => {
+                    try {
+                        const formData = new FormData();
+
+                        formData.append('uploadFile', el);
+                        const config = {
+                            onUploadProgress: progressEvent => {
+                                const percentCompleted = Math.round(
+                                    (progressEvent.loaded * 100) /
+                                        progressEvent.total
+                                );
+                                this.noticeDetail.fileList.forEach(item => {
+                                    if (
+                                        item.fileName === el.name &&
+                                        item.fileContentType === el.type &&
+                                        item.fileSize === el.size
+                                    ) {
+                                        item.progress = percentCompleted;
+                                    }
+                                });
+                            },
+                        };
+                        formData.append('menuCode', 'notice');
+                        const response = await fileUpLoad(formData, config);
+                        //console.log(response);
+                        if (response.existMsg) {
+                            alert(response.msg);
+                        }
+                        this.noticeDetail.fileList.forEach(
+                            (item, idx, array) => {
+                                if (
+                                    item.fileName === el.name &&
+                                    item.fileContentType === el.type &&
+                                    item.fileSize === el.size
+                                ) {
+                                    array[idx] = {
+                                        progress: 100,
+                                        fileOrder: idx,
+                                        ...response.data.data,
+                                    };
+                                }
+                            }
+                        );
+                    } catch (error) {
+                        console.log(error);
+                    }
+                })
+            );
+            if (this.$route.meta.modify) {
+                await this.modifyData();
+            } else {
+                await this.saveData();
+            }
+
+            this.uploadFileList = [];
+        },
+        removeFile() {
+            this.checkedFile.forEach(a => {
+                this.noticeDetail.fileList = this.noticeDetail.fileList.filter(
+                    b => b.fileOrder !== a
+                );
+            });
+            this.checkedFile = [];
+            this.fileOrderSet();
+        },
+        fileOrderSet() {
+            this.uploadFileList = this.uploadFileList.filter(a => {
+                return this.noticeDetail.fileList.some(b => {
+                    return (
+                        a.name === b.fileName &&
+                        a.type === b.fileContentType &&
+                        a.size === b.fileSize
+                    );
+                });
+            });
+            this.noticeDetail.fileList.forEach((el, index) => {
+                el.fileOrder = index;
+            });
+        },
         submitData() {
             if (this.$route.meta.modify) {
-                this.modifyData();
+                this.$store.state.saveFolder = false;
+                if (!confirm('수정하시겠습니까?')) {
+                    return false;
+                }
+                if (this.noticeDetail.fileList.length > 0) {
+                    this.uploadFiles();
+                } else {
+                    this.modifyData();
+                }
             } else {
-                this.saveData();
+                if (!confirm('저장하시겠습니까?')) {
+                    return false;
+                }
+                if (this.noticeDetail.fileList.length > 0) {
+                    this.uploadFiles();
+                } else {
+                    this.saveData();
+                }
             }
         },
         async saveData() {
-            if (!confirm('저장하시겠습니까?')) {
-                return false;
-            }
             try {
                 const response = await postNotice({
                     contents: this.noticeDetail.contents,
+                    fileList: this.noticeDetail.fileList,
                     noticeArticleSectionCode: 'NOTICE',
                     noticeYn: this.noticeDetail.noticeYn,
                     title: this.noticeDetail.title,
@@ -198,14 +375,11 @@ export default {
 
         //공지사항 수정
         async modifyData() {
-            this.$store.state.saveFolder = false;
-            if (!confirm('수정하시겠습니까?')) {
-                return false;
-            }
             if (this.$route.meta.modify) {
                 try {
                     const response = await putNotice(this.$route.params.id, {
                         contents: this.noticeDetail.contents,
+                        fileList: this.noticeDetail.fileList,
                         noticeArticleSectionCode: 'NOTICE',
                         noticeArticleSeq: this.noticeArticleSeq,
                         noticeYn: this.noticeDetail.noticeYn,
@@ -220,9 +394,6 @@ export default {
                     } else {
                         alert(response.data.msg);
                     }
-                    /* console.log(response);
-                    console.log('시퀀스');
-                    console.log(this.noticeArticleSeq);*/
                 } catch (error) {
                     this.$store.state.saveFolder = false;
                     console.error(error);
@@ -240,7 +411,7 @@ export default {
                     size: 20,
                     keyword: '',
                 });
-                this.noticeYnLength = response.content.filter((el) => {
+                this.noticeYnLength = response.content.filter(el => {
                     //console.log(el.noticeArticleSeq);
                     //console.log(this.$route.params.id * 1);
                     return (
@@ -267,6 +438,7 @@ export default {
                 //console.log(response);
                 this.noticeDetail = response;
                 this.noticeArticleSeq = response.noticeArticleSeq;
+                this.fileOrderSet();
             } catch (error) {
                 console.error(error);
             }
@@ -290,7 +462,7 @@ export default {
             this.noticeDetail.contents = '';
             this.noticeDetail.noticeYn = null;
         },
-        onEditorInput: function (e) {
+        onEditorInput: function(e) {
             this.noticeDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },

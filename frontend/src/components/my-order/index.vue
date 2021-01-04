@@ -17,25 +17,29 @@
                     주문상세보기
                 </span>
             </button>
-            <div class="cont">
+            <template v-if="item.orderProductMapping[0]">
+              <div class="cont" v-if="item.orderProductMapping[0].product">
                 <span class="thumbnail">
-                    <img
-                        :src="
+                  <img
+                      :src="
                             item.orderProductMapping[0].product
                                 .imageFilePhysicalName
                         "
-                        :alt="item.orderProductMapping[0].product.imageFileName"
-                    />
+                      :alt="item.orderProductMapping[0].product.imageFileName"
+                      v-if="item.orderProductMapping[0].product
+                                .imageFilePhysicalName"
+                  />
                 </span>
                 <span class="info-box">
                     <strong class="title">
                         {{ item.orderProductMapping[0].product.goodsName }}
-                        <span v-if="item.orderProductMapping.length - 1 !== 0">
+                       <!-- <span v-if="item.orderProductMapping.length - 1 !== 0">
                             외 {{ item.orderProductMapping.length - 1 }}개
-                        </span>
+                        </span>-->
                     </strong>
                 </span>
             </div>
+            </template>
         </li>
     </ul>
 </template>

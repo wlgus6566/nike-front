@@ -26,6 +26,7 @@ export default {
         };
     },
     watch: {
+        //todo src/components/file-settings/file-item.vue에도 동일한 함수등 사용 수정시 같이
         'listSortSelect.value'() {
             this.selectWidthSet();
         },
@@ -34,9 +35,8 @@ export default {
     computed: {
         cloneTxt() {
             const cloneTxt = this.listSortSelect.listSortOptions.find(
-                (element) => element.value === this.listSortSelect.value
+                element => element.value === this.listSortSelect.value
             );
-            //console.log(cloneTxt);
             return cloneTxt.label;
         },
     },
@@ -50,9 +50,8 @@ export default {
                 `<div id="select-width">${this.cloneTxt}</div>`
             );
             const widthGuideTxt = selectDiv.querySelector('#select-width');
-            input.style.width = `${
-                Math.ceil(widthGuideTxt.offsetWidth) + 30
-            }px`;
+            input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) +
+                30}px`;
             widthGuideTxt.parentNode.removeChild(widthGuideTxt);
             this.complete = 1;
         },
@@ -68,16 +67,6 @@ export default {
 };
 </script>
 <style>
-#select-width {
-    opacity: 0;
-    font-size: 12px;
-    font-weight: bold;
-    position: absolute;
-    display: inline;
-    top: 0;
-    left: 0;
-    white-space: nowrap;
-}
 .el-input__suffix {
     right: 0;
 }
