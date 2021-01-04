@@ -5,7 +5,6 @@ import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class OrderProductSaveDTO extends BasicDTO {
+public class OrderProductSaveDTO_del extends BasicDTO {
 
 	/**
 	 * The Goods seq
