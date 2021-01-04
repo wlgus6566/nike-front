@@ -18,9 +18,9 @@
                         <div class="form-column">
                             <span class="form-val">
                                 {{ userNickname }}
-                                <span class="val-dec">
+                                <!-- <span class="val-dec">
                                     {{ userIdVal }}
-                                </span>
+                                </span>-->
                             </span>
                         </div>
                     </li>
@@ -77,9 +77,9 @@
                                 <em>{{ item.orderQuantity }}</em>
                                 개
                             </span>
-                            <span class="add-file">
+                            <!--  <span class="add-file">
                                 <div class="upload-file-box">
-                                    <!--active-->
+                                    &lt;!&ndash;active&ndash;&gt;
                                     <ul
                                         style="height:96px;"
                                         class="upload-file-list"
@@ -155,7 +155,7 @@
                                         "
                                     ></textarea>
                                 </span>
-                            </span>
+                            </span>-->
                         </li>
                     </ul>
                 </el-scrollbar>
@@ -177,7 +177,7 @@
                     <button
                         type="button"
                         class="btn-s-black"
-                        @click="uploadFiles"
+                        @click="orderSave"
                     >
                         <span>주문서 발송</span>
                     </button>
@@ -209,21 +209,17 @@ export default {
     },
     props: ['visible', 'basketList', 'totalPrice'],
     created() {
-        this.basketArray();
+        //this.basketArray();
     },
     watch: {
         basketList() {
-            this.basketArray();
+            //this.basketArray();
         },
     },
     methods: {
-        /* orderSave(){
-     this.uploadFiles();
-   this.basketList.forEach((el, index) =>{
-       this.uploadFiles(index);
-     })
-     this.$emit('orderSave' , this.orderComment, this.orderList);
-    },*/
+        orderSave() {
+            this.$emit('orderSave', this.orderComment);
+        },
 
         // basketList add file , comment
         basketArray() {
