@@ -3,6 +3,7 @@ package com.nike.dnp.service.order;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.OrderProductSaveDTO;
 import com.nike.dnp.dto.order.OrderSaveDTO;
+import com.nike.dnp.dto.order.OrderSaveDTO_del;
 import com.nike.dnp.dto.order.OrderSearchDTO;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.repository.order.OrderRepository;
@@ -76,6 +77,16 @@ public class OrderService {
 	 */
 	@Transactional
 	public OrderEntity saveOrder(final OrderSaveDTO orderSaveDTO) {
+		log.info("OrderService.saveOrder");
+		final OrderEntity orderEntity = new OrderEntity();
+		orderEntity.setOrderDescription(orderSaveDTO.getOrderDescription());
+		orderEntity.setTotalAmount(orderSaveDTO.getTotalAmount());
+		orderEntity.setUseYn(ServiceCode.YesOrNoEnumCode.Y.name());
+		return orderRepository.save(orderEntity);
+	}
+
+	@Transactional
+	public OrderEntity saveOrder_del(final OrderSaveDTO_del orderSaveDTO) {
 		log.info("OrderService.saveOrder");
 		final OrderEntity orderEntity = new OrderEntity();
 		orderEntity.setOrderDescription(orderSaveDTO.getOrderDescription());
