@@ -153,8 +153,19 @@ export default {
     },
     methods: {
         eventClickEvent(e) {
-            console.log(e.event);
             this.calendarDetailData = e.event;
+            const beginyear = e.event.startStr.substr(0, 4);
+            const beginmonth = e.event.startStr.substr(5, 2);
+            const beginday = e.event.startStr.substr(8, 2);
+
+            const endnyear = e.event.endStr.substr(0, 4);
+            const endnmonth = e.event.endStr.substr(5, 2);
+            const endnday = e.event.endStr.substr(8, 2);
+
+            this.calendarDetailData.beginDt =
+                beginyear + '.' + beginmonth + '.' + beginday;
+            this.calendarDetailData.endDt =
+                endnyear + '.' + endnmonth + '.' + endnday;
             this.visible.calendar = true;
         },
         async fetchData() {

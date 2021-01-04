@@ -262,7 +262,18 @@ export default {
     methods: {
         eventClickEvent(e) {
             this.calendarData = e.event;
-            console.log(e.event);
+            const beginyear = e.event.startStr.substr(0, 4);
+            const beginmonth = e.event.startStr.substr(5, 2);
+            const beginday = e.event.startStr.substr(8, 2);
+
+            const endnyear = e.event.endStr.substr(0, 4);
+            const endnmonth = e.event.endStr.substr(5, 2);
+            const endnday = e.event.endStr.substr(8, 2);
+
+            this.calendarData.beginDt =
+                beginyear + '.' + beginmonth + '.' + beginday;
+            this.calendarData.endDt =
+                endnyear + '.' + endnmonth + '.' + endnday;
             this.visible.calendar = true;
         },
         onClickDetail(item, url) {
