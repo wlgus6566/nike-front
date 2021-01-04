@@ -49,12 +49,13 @@ public class OrderProductSaveDTO extends BasicDTO {
 	@ApiModelProperty(name = "productDescription", value = "상품 설명", example = "상품 설명입니다.")
 	private String productDescription;
 
-	/**
-	 * The File list
-	 *
-	 * @author [이소정]
-	 */
-	@ApiModelProperty(name = "fileList", value = "파일 목록")
-	private List<OrderProductFileSaveDTO> fileList;
+	// TODO lsj 2차오픈
+//	/**
+//	 * The File list
+//	 *
+//	 * @author [이소정]
+//	 */
+//	@ApiModelProperty(name = "fileList", value = "파일 목록")
+//	private List<OrderProductFileSaveDTO> fileList;
 
 }
