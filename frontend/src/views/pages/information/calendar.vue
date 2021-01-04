@@ -14,10 +14,23 @@
                 defaultView="month"
                 :editable="false"
             />
-            <p class="desc">
-                * 각 해당일은 예정일로 일부 변경, 지연 될 수 있는 점 감안 부탁
-                드립니다.
-            </p>
+            <div class="btn-tbl-box">
+                <p class="desc">
+                    * 각 해당일은 예정일로 일부 변경, 지연 될 수 있는 점 감안
+                    부탁 드립니다.
+                </p>
+                <div class="right">
+                    <a
+                        href="#"
+                        size="small"
+                        @click.prevent="onClickToCreate"
+                        class="btn-form-gray"
+                        v-if="folderAuthCheck('CREATE')"
+                    >
+                        <span>등록</span>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <calendarManagement
@@ -31,19 +44,7 @@
             @delCalendar="delCalendar"
             @closeDialog="closeDialog"
         />
-        <div class="btn-tbl-box">
-            <div class="right">
-                <a
-                    href="#"
-                    size="small"
-                    @click.prevent="onClickToCreate"
-                    class="btn-form-gray"
-                    v-if="folderAuthCheck('CREATE')"
-                >
-                    <span>등록</span>
-                </a>
-            </div>
-        </div>
+
         <!--<h3 class="schedule-title">{{ searchDt }}</h3>
         <template v-if="todayData">
             <ul class="schedule-list" v-if="todayData.length !== 0">
@@ -206,8 +207,20 @@ export default {
     },
     methods: {
         eventClickEvent(e) {
-            console.log(e);
             this.calendarDataModal = e.event;
+            const beginyear = e.event.startStr.substr(0, 4);
+            const beginmonth = e.event.startStr.substr(5, 2);
+            const beginday = e.event.startStr.substr(8, 2);
+
+            const endnyear = e.event.endStr.substr(0, 4);
+            const endnmonth = e.event.endStr.substr(5, 2);
+            const endnday = e.event.endStr.substr(8, 2);
+
+            this.calendarDataModal.beginDt =
+                beginyear + '.' + beginmonth + '.' + beginday;
+            this.calendarDataModal.endDt =
+                endnyear + '.' + endnmonth + '.' + endnday;
+
             this.visible.calendar = true;
         },
         // 초기 데이타 조회
@@ -300,18 +313,8 @@ export default {
                 className = 'ETC';
             }
 
-            const beginyear = item.startStr.substr(0, 4);
-            const beginmonth = item.startStr.substr(5, 2);
-            const beginday = item.startStr.substr(8, 2);
-
-            const endnyear = item.endStr.substr(0, 4);
-            const endnmonth = item.endStr.substr(5, 2);
-            const endnday = item.endStr.substr(8, 2);
-
-            this.calendarDetail.beginDt =
-                beginyear + '.' + beginmonth + '.' + beginday;
-            this.calendarDetail.endDt =
-                endnyear + '.' + endnmonth + '.' + endnday;
+            this.calendarDetail.beginDt = item.beginDt;
+            this.calendarDetail.endDt = item.endDt;
             this.calendarDetail.calendarSectionCode = className;
             this.calendarDetail.calendarSeq = Number(item.id);
             this.calendarDetail.contents = item.constraint;
