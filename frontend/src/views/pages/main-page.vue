@@ -360,6 +360,18 @@ export default {
             clearTimeout(this.setTime);
             this.setTime = setTimeout(() => {
                 this.calendarData = e.event;
+                const beginyear = e.event.startStr.substr(0, 4);
+                const beginmonth = e.event.startStr.substr(5, 2);
+                const beginday = e.event.startStr.substr(8, 2);
+
+                const endnyear = e.event.endStr.substr(0, 4);
+                const endnmonth = e.event.endStr.substr(5, 2);
+                const endnday = e.event.endStr.substr(8, 2);
+
+                this.calendarData.beginDt =
+                    beginyear + '.' + beginmonth + '.' + beginday;
+                this.calendarData.endDt =
+                    endnyear + '.' + endnmonth + '.' + endnday;
                 this.calDetailOpen();
                 const clientLeft = e.jsEvent.clientX;
                 const modal = document.querySelector('.calendar-modal');
@@ -385,6 +397,7 @@ export default {
                     this.hoverStateEvent,
                     false
                 );
+                modal.style.boxShadow = '0 5px 5px 0 rgba(0, 0, 0, 0.1)';
                 modal.style.position = 'absolute';
                 modal.style.display = 'inline-flex';
                 modal.style.top = 'auto';
@@ -619,19 +632,9 @@ export default {
             } else {
                 className = 'ETC';
             }
-
-            const beginyear = item.startStr.substr(0, 4);
-            const beginmonth = item.startStr.substr(5, 2);
-            const beginday = item.startStr.substr(8, 2);
-
-            const endnyear = item.endStr.substr(0, 4);
-            const endnmonth = item.endStr.substr(5, 2);
-            const endnday = item.endStr.substr(8, 2);
-
-            this.calendarDetail.beginDt =
-                beginyear + '.' + beginmonth + '.' + beginday;
-            this.calendarDetail.endDt =
-                endnyear + '.' + endnmonth + '.' + endnday;
+            this.calendarDetail.beginDt = item.beginDt;
+            this.calendarDetail.endDt = item.endDt;
+            this.calendarDetail.calendarSectionCode = className;
             this.calendarDetail.calendarSectionCode = className;
             this.calendarDetail.calendarSeq = Number(item.id);
             this.calendarDetail.contents = item.constraint;
