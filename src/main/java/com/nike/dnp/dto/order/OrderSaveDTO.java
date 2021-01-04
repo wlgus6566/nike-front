@@ -21,24 +21,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderSaveDTO extends BasicDTO {
 
-//	/**
-//	 * 상품 리스트
-//	 *
-//	 * @author [윤태호]
-//	 */
-//	@ApiModelProperty(name="goodsSeqList",value="상품 시퀀스", allowableValues="28,30,31")
-//	@NotNull(message = "order.goodsSeqList")
-//	private List<Long> goodsSeqList;
-//
-//	/**
-//	 * 상품 수량
-//	 *
-//	 * @author [윤태호]
-//	 */
-//	@ApiModelProperty(name = "orderQuantityList", value = "상품 시퀀스별 수량", allowableValues = "10,20,30")
-//	@NotNull(message = "order.orderQuantityList")
-//	private List<Long> orderQuantityList;
-
 	/**
 	 * 총 금액
 	 *
