@@ -146,13 +146,14 @@ public class OrderController {
 							.build()
 			);
 
+			// TODO lsj 2차오픈
 			// 파일 저장
-			if (!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
-				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
-					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
-					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);
-				}
-			}
+//			if (!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
+//				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
+//					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
+//					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);
+//				}
+//			}
 
 			// 장바구니 삭제
 			goodsBasketService.deleteByGoodsSeqAndUserSeq(
