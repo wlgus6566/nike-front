@@ -186,7 +186,7 @@ public class ContentsFileResultDTO {
      */
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
     @ApiModelProperty(name = "registrationDt", value = "최초 작성일", hidden = true)
     private LocalDateTime registrationDt;
 
