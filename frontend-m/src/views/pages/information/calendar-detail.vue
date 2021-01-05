@@ -14,7 +14,7 @@
                         <div class="row">
                             <span class="key">일정</span>
                             <span class="val">
-                                {{ calendarData.beginDt }} ~
+                                {{ calendarData.beginDt }} -
                                 {{ calendarData.endDt }}
                             </span>
                         </div>
@@ -135,7 +135,7 @@ export default {
     background: #2c0fb4;
 }
 ::v-deep.calendar-modal .el-dialog__body {
-    padding: 15px 25px;
+    padding: 15px 15px 15px 25px;
 }
 .calendar-info-box .row {
     overflow: hidden;
