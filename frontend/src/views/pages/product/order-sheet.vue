@@ -24,6 +24,20 @@
                             </span>
                         </div>
                     </li>
+
+                    <li class="form-row">
+                        <div class="form-column">
+                            <span class="label-title">수신자</span>
+                        </div>
+                        <div class="form-column">
+                            <span class="form-val">
+                                <CascaderSelect
+                                    :listCascader="authority"
+                                    :multiple="true"
+                                />
+                            </span>
+                        </div>
+                    </li>
                     <li class="form-row">
                         <div class="form-column">
                             <span class="label-title">총 예상 금액</span>
@@ -51,7 +65,8 @@
                     <ul class="sheet-list">
                         <li
                             class="sheet-item"
-                            v-for="(item, index) in orderProductFileList"
+                            v-for="(item,
+                            index) in orderList.orderProductFileList"
                             :key="index"
                         >
                             <span class="thumbnail">
@@ -77,49 +92,41 @@
                                 <em>{{ item.orderQuantity }}</em>
                                 개
                             </span>
-                            <div style="display:none"></div>
-                            {{ fileList[index] }}
+
                             <span class="add-file">
-                                <div class="upload-file-box">
+                                <div class="order-upload-file-box">
                                     <!--active-->
-                                    <ul
-                                        style="height:96px;"
-                                        class="upload-file-list"
-                                        :class="{
-                                            'is-file':
-                                                item.uploadFileList.length > 0,
-                                        }"
-                                    >
+                                    <ul class="order-upload-file-list">
                                         <template
-                                            v-if="
-                                                item.uploadFileList.length > 0
-                                            "
+                                            v-if="item.fileList.length > 0"
                                         >
                                             <li
-                                                v-for="orderFile in fileList[
-                                                    index
-                                                ]"
+                                                v-for="orderFile in item.fileList"
                                                 :key="orderFile.fileOrder"
                                             >
-                                                <label>
-                                                    <span class="checkbox">
-                                                        <input
-                                                            type="checkbox"
-                                                            :value="
+                                                <span class="txt">
+                                                    {{ orderFile.fileName }}
+                                                    <button
+                                                        type="button"
+                                                        class="del"
+                                                        @click="
+                                                            removeFile(
+                                                                index,
                                                                 orderFile.fileOrder
-                                                            "
-                                                            v-model="
-                                                                item.checkedFile
-                                                            "
-                                                        />
-                                                        <i></i>
-                                                    </span>
-                                                    <span class="txt">
-                                                        {{ orderFile.fileName }}
-                                                    </span>
-                                                </label>
+                                                            )
+                                                        "
+                                                    >
+                                                        <span>삭제</span>
+                                                    </button>
+                                                </span>
                                             </li>
                                         </template>
+                                        <li v-else>
+                                            <span class="txt"
+                                                >첨부 파일은 최대 3장까지
+                                                가능합니다.</span
+                                            >
+                                        </li>
                                     </ul>
                                     <div class="btn-box">
                                         <div class="fine-file">
@@ -139,13 +146,6 @@
                                                 "
                                             />
                                         </div>
-                                        <button
-                                            type="button"
-                                            class="btn-form"
-                                            @click="removeFile(index)"
-                                        >
-                                            <span>삭제</span>
-                                        </button>
                                     </div>
                                 </div>
                                 <span class="textarea">
@@ -163,7 +163,7 @@
                         <textarea
                             style="height: 80px;"
                             placeholder="에이전시에서 오더 확인 후 연락 가능한 매장 연락처, 업무용 이메일, 배송 받으실 주소를 기재하시길 바랍니다."
-                            v-model="orderProductFileList.orderComment"
+                            v-model="orderList.orderDescription"
                         />
                     </span>
                 </div>
@@ -186,6 +186,7 @@
 </template>
 
 <script>
+import CascaderSelect from '@/components/cascader-select';
 import { getUserIdFromCookie, getUserNickFromCookie } from '@/utils/cookies';
 import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
@@ -193,8 +194,45 @@ import bus from '@/utils/bus';
 export default {
     data() {
         return {
-            orderProductFileList: [],
+            orderList: {
+                orderProductFileList: [],
+                totalAmount: '',
+                orderDescription: null,
+            },
             fileList: [],
+            authority: {
+                value: [null],
+                options: [
+                    {
+                        value: null,
+                        label: '전체 권한그룹',
+                    },
+                    {
+                        value: '그룹2',
+                        label: '그룹2',
+                    },
+                    {
+                        value: '그룹1',
+                        label: '그룹1',
+                    },
+                    {
+                        value: 'nakeSpace1',
+                        label: 'nakeSpace@nakeSpace.co.kr',
+                    },
+                    {
+                        value: 'nakeSpace2',
+                        label: 'nakeSpace2@nakeSpace.co.kr',
+                    },
+                    {
+                        value: 'nakeSpace3',
+                        label: 'nakeSpace3@nakeSpace.co.kr',
+                    },
+                    {
+                        value: 'nakeSpace4',
+                        label: 'nakeSpace4@nakeSpace.co.kr',
+                    },
+                ],
+            },
         };
     },
     computed: {
@@ -205,47 +243,67 @@ export default {
             return getUserIdFromCookie();
         },
     },
+    components: {
+        CascaderSelect,
+    },
     props: ['visible', 'basketList', 'totalPrice'],
     created() {
         this.basketArray();
     },
     watch: {
-        orderProductFileList(val) {
+        orderList(val) {
             console.log(val);
-            this.orderProductFileList = val;
+            console.log(1);
+            //this.orderList = val;
+        },
+        fileList: {
+            handler(val) {
+                console.log(val);
+            },
+            deep: true,
         },
     },
     methods: {
         orderSave() {
-            console.log(this.orderProductFileList);
+            console.log(this.orderList);
             //this.$emit('orderSave', this.orderComment);
         },
 
         // basketList add file , comment
         basketArray() {
+            this.orderList.totalAmount = this.totalPrice;
             this.basketList.forEach((el, index) => {
-                this.orderProductFileList[index] = {};
-                this.orderProductFileList[index].fileList = [];
-                this.orderProductFileList[index].goodsSeq = el.goodsSeq;
-                this.orderProductFileList[index].orderQuantity =
+                this.orderList.orderProductFileList[index] = {};
+                this.orderList.orderProductFileList[index].fileList = [
+                    /* {
+              fileContentType: 'image/jpeg',
+              fileName: 'KakaoTalk_Photo_2020-12-26-19-51-42.jpeg',
+              fileOrder: 0,
+              fileSize: 8407198,
+              progress: 0,
+          },*/
+                ];
+                this.orderList.orderProductFileList[index].goodsSeq =
+                    el.goodsSeq;
+                this.orderList.orderProductFileList[index].orderQuantity =
                     el.orderQuantity;
-                this.orderProductFileList[index].productDescription = null;
-                this.orderProductFileList[index].uploadFileList = [];
-                this.orderProductFileList[index].checkedFile = [];
-                this.orderProductFileList.totalPrice = el.totalPrice;
-                this.orderProductFileList.orderComment = null;
-                this.orderProductFileList[index].product = el.product;
-                this.fileList[index] = {};
+                this.orderList.orderProductFileList[
+                    index
+                ].productDescription = null;
+                this.orderList.orderProductFileList[index].uploadFileList = [];
+
+                this.orderList.orderProductFileList[index].product = el.product;
             });
         },
         //file 업로드
         uploadIptChange(e, index) {
-            this.fileList[index] = this.orderProductFileList[index].fileList;
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
 
             let mergeArray = Array.from(files).filter(item => {
-                return this.orderProductFileList[index].fileList.every(el => {
+                return this.orderList.orderProductFileList[
+                    index
+                ].fileList.every(el => {
                     return (
                         item.name !== el.fileName && item.size !== el.fileSize
                     );
@@ -253,45 +311,50 @@ export default {
             });
             if (
                 mergeArray.length +
-                    this.orderProductFileList[index].uploadFileList.length >
+                    this.orderList.orderProductFileList[index].uploadFileList
+                        .length >
                 3
             ) {
                 alert('3개 이상 등록 할 수 없습니다.');
                 if (
-                    this.orderProductFileList[index].uploadFileList.length === 3
+                    this.orderList.orderProductFileList[index].uploadFileList
+                        .length === 3
                 )
                     return;
                 let maxNum = 3;
                 if (
-                    this.orderProductFileList[index].uploadFileList.length > 0
+                    this.orderList.orderProductFileList[index].uploadFileList
+                        .length > 0
                 ) {
                     maxNum =
                         3 -
-                        this.orderProductFileList[index].uploadFileList.length;
+                        this.orderList.orderProductFileList[index]
+                            .uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
 
             mergeArray.forEach(el => {
-                this.orderProductFileList[index].fileList.push({
-                    fileOrder: this.orderProductFileList[index].fileList.length,
+                this.orderList.orderProductFileList[index].fileList.push({
+                    fileOrder: this.orderList.orderProductFileList[index]
+                        .fileList.length,
                     fileName: el.name,
                     fileSize: el.size,
                     fileContentType: el.type,
                     progress: 0,
                 });
             });
-            this.orderProductFileList[
+            this.orderList.orderProductFileList[
                 index
-            ].uploadFileList = this.orderProductFileList[
+            ].uploadFileList = this.orderList.orderProductFileList[
                 index
-            ].uploadFileList.concat(mergeArray);
+            ].uploadFileList.concat(mergeArray); //
         },
 
         async uploadFiles() {
             bus.$emit('pageLoading', true);
             await Promise.all(
-                this.orderProductFileList.map(async basket => {
+                this.orderList.orderProductFileList.map(async basket => {
                     await Promise.all(
                         basket.uploadFileList.map(async el => {
                             try {
@@ -344,36 +407,37 @@ export default {
                     );
                 })
             );
-            await this.$emit('orderSave', this.orderProductFileList);
+            await this.$emit('orderSave', this.orderList);
         },
-        removeFile(index) {
-            this.orderProductFileList[index].checkedFile.forEach(a => {
-                this.orderProductFileList[
-                    index
-                ].fileList = this.orderProductFileList[index].fileList.filter(
-                    b => b.fileOrder !== a
-                );
-            });
-            this.orderProductFileList[index].checkedFile = [];
+        removeFile(index, fileOrder) {
+            this.orderList.orderProductFileList[
+                index
+            ].fileList = this.orderList.orderProductFileList[
+                index
+            ].fileList.filter(b => b.fileOrder !== fileOrder);
             this.fileOrderSet(index);
         },
         fileOrderSet(index) {
-            this.orderProductFileList[
+            this.orderList.orderProductFileList[
                 index
-            ].uploadFileList = this.orderProductFileList[
+            ].uploadFileList = this.orderList.orderProductFileList[
                 index
             ].uploadFileList.filter(a => {
-                return this.orderProductFileList[index].fileList.some(b => {
-                    return (
-                        a.name === b.fileName &&
-                        a.type === b.fileContentType &&
-                        a.size === b.fileSize
-                    );
-                });
+                return this.orderList.orderProductFileList[index].fileList.some(
+                    b => {
+                        return (
+                            a.name === b.fileName &&
+                            a.type === b.fileContentType &&
+                            a.size === b.fileSize
+                        );
+                    }
+                );
             });
-            this.orderProductFileList[index].fileList.forEach((el, index) => {
-                el.fileOrder = index;
-            });
+            this.orderList.orderProductFileList[index].fileList.forEach(
+                (el, index) => {
+                    el.fileOrder = index;
+                }
+            );
         },
     },
 };

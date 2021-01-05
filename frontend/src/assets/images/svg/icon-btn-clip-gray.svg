@@ -3,9 +3,11 @@
         <g stroke="#888" stroke-width="1.2">
             <g>
                 <g>
-                    <path d="M6.417 6.854H.65c-1.325 0-2.4 1.045-2.4 2.333 0 1.29 1.075 2.334 2.4 2.334h1.538" transform="translate(-535 -460) translate(535 460) rotate(45 4.95 11.95) rotate(-90 2.333 9.188)"/>
-                    <path stroke-linecap="round" d="M-.583 8.167h4.802c1.858 0 3.364-1.567 3.364-3.5s-1.506-3.5-3.364-3.5h-2.17" transform="translate(-535 -460) translate(535 460) rotate(45 4.95 11.95) rotate(-90 3.5 4.667)"/>
-                    <path stroke-linecap="round" d="M.34 8.41h5.087c.681 0 1.234-.521 1.234-1.166 0-.644-.553-1.166-1.234-1.166H1.358" transform="translate(-535 -460) translate(535 460) rotate(45 4.95 11.95) rotate(-90 3.5 7.244)"/>
+                    <g>
+                        <path d="M6.417 6.854H.65c-1.325 0-2.4 1.045-2.4 2.333 0 1.29 1.075 2.334 2.4 2.334h1.538" transform="translate(-550 -508) translate(535 500) translate(15 8) rotate(45 4.95 11.95) rotate(-90 2.333 9.188)"/>
+                        <path stroke-linecap="round" d="M-.583 8.167h4.802c1.858 0 3.364-1.567 3.364-3.5s-1.506-3.5-3.364-3.5h-2.17" transform="translate(-550 -508) translate(535 500) translate(15 8) rotate(45 4.95 11.95) rotate(-90 3.5 4.667)"/>
+                        <path stroke-linecap="round" d="M.34 8.41h5.087c.681 0 1.234-.521 1.234-1.166 0-.644-.553-1.166-1.234-1.166H1.358" transform="translate(-550 -508) translate(535 500) translate(15 8) rotate(45 4.95 11.95) rotate(-90 3.5 7.244)"/>
+                    </g>
                 </g>
             </g>
         </g>

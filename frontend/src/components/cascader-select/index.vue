@@ -4,8 +4,16 @@
             ref="select"
             v-model="listCascader.value"
             :options="listCascader.options"
+            :props="{ multiple: true }"
+            v-if="multiple"
+        />
+        <el-cascader
+            ref="select"
+            v-model="listCascader.value"
+            :options="listCascader.options"
             :props="{ checkStrictly: true }"
             clearable
+            v-else
         />
     </div>
 </template>
@@ -18,14 +26,14 @@ export default {
             cloneTxt: '',
         };
     },
-    props: ['listCascader'],
+    props: ['listCascader', 'multiple'],
     watch: {
         'listCascader.value'(val) {
             // if (val.length === 0) {
             //     this.listCascader.value = [null];
             // }
             this.cloneTxt = '';
-            val.forEach((el) => {
+            val.forEach(el => {
                 this.testArr(this.listCascader.options, el);
             });
             this.selectWidthSet();
@@ -42,7 +50,7 @@ export default {
     },
     methods: {
         testArr(arr, sep) {
-            arr.forEach((el) => {
+            arr.forEach(el => {
                 if (el.value === sep) {
                     this.cloneTxt = this.cloneTxt + ' / ' + el.label;
                 }
@@ -59,9 +67,8 @@ export default {
                 `<div id="select-width">${this.cloneTxt}</div>`
             );
             const widthGuideTxt = selectDiv.querySelector('#select-width');
-            input.style.width = `${
-                Math.ceil(widthGuideTxt.offsetWidth) + 30
-            }px`;
+            input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) +
+                30}px`;
             widthGuideTxt.parentNode.removeChild(widthGuideTxt);
             this.complete = 1;
         },
