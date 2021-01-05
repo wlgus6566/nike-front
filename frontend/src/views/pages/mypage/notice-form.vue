@@ -482,4 +482,8 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .check-label {
+    margin-right: 50px;
+}
+</style>
