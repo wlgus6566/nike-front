@@ -1,13 +1,13 @@
 package com.nike.dnp.service.order;
 
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.order.OrderProductSaveDTO;
-import com.nike.dnp.dto.order.OrderSaveDTO;
-import com.nike.dnp.dto.order.OrderSaveDTO_del;
-import com.nike.dnp.dto.order.OrderSearchDTO;
+import com.nike.dnp.dto.order.*;
+import com.nike.dnp.dto.user.UserDTO;
+import com.nike.dnp.entity.auth.Auth;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.repository.order.OrderRepository;
 import com.nike.dnp.service.DeviceService;
+import com.nike.dnp.service.auth.AuthService;
 import com.nike.dnp.service.user.UserService;
 import com.nike.dnp.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The Class Order service.
@@ -59,6 +60,13 @@ public class OrderService {
 	private final UserService userService;
 
 	/**
+	 * The Auth service
+	 *
+	 *  @author [이소정]
+	 */
+	private final AuthService authService;
+
+	/**
 	 * The Editor url
 	 *
 	 * @author [이소정]
@@ -85,6 +93,15 @@ public class OrderService {
 		return orderRepository.save(orderEntity);
 	}
 
+	/**
+	 * Save order del order entity.
+	 *
+	 * @param orderSaveDTO the order save dto
+	 * @return the order entity
+	 * @author [이소정]
+	 * @implNote [method 설명]
+	 * @since 2021. 1. 5. 오후 3:26:13
+	 */
 	@Transactional
 	public OrderEntity saveOrder_del(final OrderSaveDTO_del orderSaveDTO) {
 		log.info("OrderService.saveOrder");
@@ -150,5 +167,30 @@ public class OrderService {
 				orderSearchDTO,
 				PageRequest.of(orderSearchDTO.getPage(), orderSearchDTO.getSize(), Sort.by("orderSeq").descending()));
 
+	}
+
+	/**
+	 * Find recipient list list.
+	 *
+	 * @return the list
+	 * @author [이소정]
+	 * @implNote 3depth일 경우 상위 계정 목록 조회
+	 * @since 2021. 1. 5. 오후 3:26:13
+	 */
+	public OrderRecipientResultDTO findRecipientList() {
+		log.info("OrderService.findRecipientList");
+		OrderRecipientResultDTO resultDTO = new OrderRecipientResultDTO();
+
+		Optional<Auth> authOptional = authService.findById(SecurityUtil.currentUser().getAuthSeq());
+		Auth auth = authOptional.get();
+		if (auth.getAuthDepth() == 3) {
+			// 3depth 일 경우 상위 2depth 회원 목록 조회
+			resultDTO.setUserList(userService.findAllByAuthSeq(auth.getUpperAuthSeq()));
+			resultDTO.setDepthCheckYn("Y");
+		} else {
+			resultDTO.setDepthCheckYn("N");
+		}
+		
+		return resultDTO;
 	}
 }

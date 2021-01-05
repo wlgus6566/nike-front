@@ -2,10 +2,12 @@ package com.nike.dnp.dto.order;
 
 
 import com.nike.dnp.dto.BasicDTO;
+import com.nike.dnp.dto.user.UserDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,4 +57,10 @@ public class OrderSaveDTO extends BasicDTO {
 	 */
 	@ApiModelProperty(name = "orderProductList", value = "주문 상품 목록")
 	private List<OrderProductSaveDTO> orderProductList;
+
+	/**
+	 * The Recipient list
+	 */
+	@ApiModelProperty(name = "recipientList", value = "수신자 메일 목록")
+	private List<UserDTO> recipientList = new ArrayList<>();
 }

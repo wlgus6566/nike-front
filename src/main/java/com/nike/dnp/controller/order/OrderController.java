@@ -117,7 +117,7 @@ public class OrderController {
 
 	/**
 	 * 주문 등록
-	 * 1차 오픈(1/8이후) 후 삭제 예정 
+	 * 1차 오픈(1/8이후) 후 삭제 예정
 	 *
 	 * @param orderSaveDTO the order save dto
 	 * @param result       the result
@@ -153,7 +153,7 @@ public class OrderController {
 					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
 			);
 		}
-			orderProductMappingService.orderSheetSend(orderEntity);
+			orderProductMappingService.orderSheetSend_del(orderEntity);
 			return responseService.getSingleResult(orderEntity);
 	}
 
@@ -166,6 +166,7 @@ public class OrderController {
 	 * @param result       the result
 	 * @return the single result
 	 * @author [윤태호]
+	 * @implNote [method 설명]
 	 * @apiNote 주문 등록
 	 * @since 2020. 7. 1. 오후 2:48:06
 	 */
@@ -203,7 +204,7 @@ public class OrderController {
 					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
 			);
 		}
-		orderProductMappingService.orderSheetSend(orderEntity);
+		orderProductMappingService.orderSheetSend(orderEntity, orderSaveDTO.getRecipientList());
 		return responseService.getSingleResult(orderEntity);
 	}
 
@@ -239,6 +240,21 @@ public class OrderController {
 	public SingleResult<OrderEntity> view(@ApiParam(name = "orderSeq", value = "주문 시퀀스", defaultValue = "48") @PathVariable final Long orderSeq) {
 		log.info("OrderController.view");
 		return responseService.getSingleResult(orderService.findByOrderSeqAndUseYn(orderSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
+	}
+
+	/**
+	 * Find recipient list single result.
+	 *
+	 * @return the single result
+	 * @author [이소정]
+	 * @implNote 상위 2depth 수신자 목록 조회
+	 * @since 2021. 1. 5. 오후 3:20:23
+	 */
+	@ApiOperation(value = "수신자 목록 조회", notes = BASIC_CHARACTER)
+	@GetMapping(value = "/order/recipientList", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<OrderRecipientResultDTO> findRecipientList() {
+		log.info("OrderController.findRecipientList");
+		return responseService.getSingleResult(orderService.findRecipientList());
 	}
 
 }
