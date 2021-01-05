@@ -1629,13 +1629,14 @@
 }
 
 .el-dialog__body .form-row {
-    padding: 15px 0;
+    padding: 10px 0;
 }
 .el-dialog__body .form-column {
     align-items: center;
+    flex-basis: 70px;
 }
 .el-dialog__body .label-title {
-    font-size: 14px;
+    font-size: 12px;
     color: #333;
     line-height: 18px;
 }
@@ -4314,6 +4315,64 @@ img.image-grayscale {
 }
 .sheet-item .add-file textarea::placeholder {
     font-size: 11px;
+}
+.sheet-item .add-order-list {
+    width: 100%;
+    margin-top: 10px;
+}
+.sheet-item .add-order-list li {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 18px;
+}
+.sheet-item .add-order-list li + li {
+    margin-top: 8px;
+}
+.sheet-item .add-order-list .key {
+    float: left;
+    display: block;
+    width: 70px;
+    color: #888;
+}
+.sheet-item .add-order-list .val {
+    float: left;
+    display: block;
+    width: calc(100% - 70px);
+    color: #333;
+}
+.sheet-item .add-order-list .name {
+    display: flex;
+}
+.sheet-item .add-order-list .name em {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    padding-left: 6px;
+}
+.sheet-item .add-order-list .name em:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
+}
+.sheet-item .add-order-list .file-list li {
+    position: relative;
+    padding-left: 19px;
+}
+.sheet-item .add-order-list .file-list li:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    display: block;
+    width: 14px;
+    height: 14px;
+    background: url(../images/svg/icon-btn-clip-gray.svg) no-repeat center;
 }
 .sheet-list-scroll {
     box-sizing: border-box;

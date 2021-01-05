@@ -11,7 +11,7 @@
                 <div>
                     <h3 class="form-title mt0">ORDER</h3>
                     <hr class="hr-black mt10" />
-                    <ul class="form-list-colunm">
+                    <ul class="form-list">
                         <li class="form-row">
                             <div class="form-column">
                                 <span class="label-title">주문자</span>
@@ -19,16 +19,9 @@
                             <div class="form-column">
                                 <span class="form-val">
                                     {{ userNickname }}
-                                </span>
-                            </div>
-                        </li>
-                        <li class="form-row">
-                            <div class="form-column">
-                                <span class="label-title">주문일시</span>
-                            </div>
-                            <div class="form-column">
-                                <span class="form-val">
-                                    {{ orderDetailData.registrationDt }}
+                                    <span class="val-dec">
+                                        {{ userIdVal }}
+                                    </span>
                                 </span>
                             </div>
                         </li>
@@ -45,6 +38,16 @@
                                         }}
                                     </em>
                                     원
+                                </span>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <span class="label-title">주문일시</span>
+                            </div>
+                            <div class="form-column">
+                                <span class="form-val">
+                                    {{ orderDetailData.registrationDt }}
                                 </span>
                             </div>
                         </li>
@@ -91,6 +94,41 @@
                                     <em> {{ item.orderQuantity }}</em>
                                     개
                                 </span>
+                                <ul class="add-order-list">
+                                    <li>
+                                        <span class="key">받는사람</span>
+                                        <span class="val">
+                                            <span class="name">
+                                                NIKE
+                                                <em>nike@nikespace.co.kr</em>
+                                            </span>
+                                        </span>
+                                    </li>
+                                    <li
+                                        v-if="
+                                            item.orderProductFileList.length > 0
+                                        "
+                                    >
+                                        <span class="key">첨부파일</span>
+                                        <span class="val">
+                                            <ul class="file-list">
+                                                <li
+                                                    v-for="(fileItem,
+                                                    fileIndex) in item.orderProductFileList"
+                                                    :key="fileIndex"
+                                                >
+                                                    {{ fileItem.fileName }}
+                                                </li>
+                                            </ul>
+                                        </span>
+                                    </li>
+                                    <li v-if="item.productDescription">
+                                        <span class="key">요청사항</span>
+                                        <span class="val">
+                                            {{ item.productDescription }}
+                                        </span>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </el-scrollbar>
@@ -140,6 +178,9 @@ export default {
     computed: {
         userNickname() {
             return this.$store.state.nick || getUserNickFromCookie();
+        },
+        userIdVal() {
+            return getUserIdFromCookie();
         },
     },
     mounted() {},
