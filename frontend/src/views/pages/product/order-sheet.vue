@@ -18,9 +18,9 @@
                         <div class="form-column">
                             <span class="form-val">
                                 {{ userNickname }}
-                                <!-- <span class="val-dec">
+                                <span class="val-dec">
                                     {{ userIdVal }}
-                                </span>-->
+                                </span>
                             </span>
                         </div>
                     </li>
@@ -51,7 +51,7 @@
                     <ul class="sheet-list">
                         <li
                             class="sheet-item"
-                            v-for="(item, index) in basketList"
+                            v-for="(item, index) in orderProductFileList"
                             :key="index"
                         >
                             <span class="thumbnail">
@@ -77,9 +77,11 @@
                                 <em>{{ item.orderQuantity }}</em>
                                 개
                             </span>
-                            <!--  <span class="add-file">
+                            <div style="display:none"></div>
+                            {{ fileList[index] }}
+                            <span class="add-file">
                                 <div class="upload-file-box">
-                                    &lt;!&ndash;active&ndash;&gt;
+                                    <!--active-->
                                     <ul
                                         style="height:96px;"
                                         class="upload-file-list"
@@ -90,14 +92,13 @@
                                     >
                                         <template
                                             v-if="
-                                                item.orderProductFileList
-                                                    .fileList
+                                                item.uploadFileList.length > 0
                                             "
                                         >
                                             <li
-                                                v-for="orderFile in item
-                                                    .orderProductFileList
-                                                    .fileList"
+                                                v-for="orderFile in fileList[
+                                                    index
+                                                ]"
                                                 :key="orderFile.fileOrder"
                                             >
                                                 <label>
@@ -149,13 +150,10 @@
                                 </div>
                                 <span class="textarea">
                                     <textarea
-                                        v-model="
-                                            item.orderProductFileList
-                                                .productDescription
-                                        "
+                                        v-model="item.productDescription"
                                     ></textarea>
                                 </span>
-                            </span>-->
+                            </span>
                         </li>
                     </ul>
                 </el-scrollbar>
@@ -165,7 +163,7 @@
                         <textarea
                             style="height: 80px;"
                             placeholder="에이전시에서 오더 확인 후 연락 가능한 매장 연락처, 업무용 이메일, 배송 받으실 주소를 기재하시길 바랍니다."
-                            v-model="orderComment"
+                            v-model="orderProductFileList.orderComment"
                         />
                     </span>
                 </div>
@@ -195,8 +193,8 @@ import bus from '@/utils/bus';
 export default {
     data() {
         return {
-            orderComment: '',
-            orderList: [],
+            orderProductFileList: [],
+            fileList: [],
         };
     },
     computed: {
@@ -209,39 +207,45 @@ export default {
     },
     props: ['visible', 'basketList', 'totalPrice'],
     created() {
-        //this.basketArray();
+        this.basketArray();
     },
     watch: {
-        basketList() {
-            //this.basketArray();
+        orderProductFileList(val) {
+            console.log(val);
+            this.orderProductFileList = val;
         },
     },
     methods: {
         orderSave() {
-            this.$emit('orderSave', this.orderComment);
+            console.log(this.orderProductFileList);
+            //this.$emit('orderSave', this.orderComment);
         },
 
         // basketList add file , comment
         basketArray() {
-            this.basketList.forEach(el => {
-                el.orderProductFileList = {};
-                el.orderProductFileList.fileList = [];
-                el.orderProductFileList.goodsSeq = el.goodsSeq;
-                el.orderProductFileList.orderQuantity = el.orderQuantity;
-                el.orderProductFileList.productDescription = null;
-                el.uploadFileList = [];
-                el.checkedFile = [];
+            this.basketList.forEach((el, index) => {
+                this.orderProductFileList[index] = {};
+                this.orderProductFileList[index].fileList = [];
+                this.orderProductFileList[index].goodsSeq = el.goodsSeq;
+                this.orderProductFileList[index].orderQuantity =
+                    el.orderQuantity;
+                this.orderProductFileList[index].productDescription = null;
+                this.orderProductFileList[index].uploadFileList = [];
+                this.orderProductFileList[index].checkedFile = [];
+                this.orderProductFileList.totalPrice = el.totalPrice;
+                this.orderProductFileList.orderComment = null;
+                this.orderProductFileList[index].product = el.product;
+                this.fileList[index] = {};
             });
         },
         //file 업로드
         uploadIptChange(e, index) {
+            this.fileList[index] = this.orderProductFileList[index].fileList;
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
 
             let mergeArray = Array.from(files).filter(item => {
-                return this.basketList[
-                    index
-                ].orderProductFileList.fileList.every(el => {
+                return this.orderProductFileList[index].fileList.every(el => {
                     return (
                         item.name !== el.fileName && item.size !== el.fileSize
                     );
@@ -249,36 +253,45 @@ export default {
             });
             if (
                 mergeArray.length +
-                    this.basketList[index].uploadFileList.length >
+                    this.orderProductFileList[index].uploadFileList.length >
                 3
             ) {
                 alert('3개 이상 등록 할 수 없습니다.');
-                if (this.basketList[index].uploadFileList.length === 3) return;
+                if (
+                    this.orderProductFileList[index].uploadFileList.length === 3
+                )
+                    return;
                 let maxNum = 3;
-                if (this.basketList[index].uploadFileList.length > 0) {
-                    maxNum = 3 - this.basketList[index].uploadFileList.length;
+                if (
+                    this.orderProductFileList[index].uploadFileList.length > 0
+                ) {
+                    maxNum =
+                        3 -
+                        this.orderProductFileList[index].uploadFileList.length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
 
             mergeArray.forEach(el => {
-                this.basketList[index].orderProductFileList.fileList.push({
-                    fileOrder: this.basketList[index].orderProductFileList
-                        .fileList.length,
+                this.orderProductFileList[index].fileList.push({
+                    fileOrder: this.orderProductFileList[index].fileList.length,
                     fileName: el.name,
                     fileSize: el.size,
                     fileContentType: el.type,
                     progress: 0,
                 });
             });
-            this.basketList[index].uploadFileList = this.basketList[
+            this.orderProductFileList[
+                index
+            ].uploadFileList = this.orderProductFileList[
                 index
             ].uploadFileList.concat(mergeArray);
         },
+
         async uploadFiles() {
             bus.$emit('pageLoading', true);
             await Promise.all(
-                this.basketList.map(async basket => {
+                this.orderProductFileList.map(async basket => {
                     await Promise.all(
                         basket.uploadFileList.map(async el => {
                             try {
@@ -290,18 +303,16 @@ export default {
                                             (progressEvent.loaded * 100) /
                                                 progressEvent.total
                                         );
-                                        basket.orderProductFileList.fileList.forEach(
-                                            item => {
-                                                if (
-                                                    item.fileName === el.name &&
-                                                    item.fileContentType ===
-                                                        el.type &&
-                                                    item.fileSize === el.size
-                                                ) {
-                                                    item.progress = percentCompleted;
-                                                }
+                                        basket.fileList.forEach(item => {
+                                            if (
+                                                item.fileName === el.name &&
+                                                item.fileContentType ===
+                                                    el.type &&
+                                                item.fileSize === el.size
+                                            ) {
+                                                item.progress = percentCompleted;
                                             }
-                                        );
+                                        });
                                     },
                                 };
                                 formData.append('menuCode', 'order');
@@ -313,50 +324,46 @@ export default {
                                 if (response.existMsg) {
                                     alert(response.msg);
                                 }
-                                basket.orderProductFileList.fileList.forEach(
-                                    (item, idx, array) => {
-                                        if (
-                                            item.fileName === el.name &&
-                                            item.fileContentType === el.type &&
-                                            item.fileSize === el.size
-                                        ) {
-                                            array[idx] = {
-                                                progress: 100,
-                                                fileOrder: idx,
-                                                ...response.data.data,
-                                            };
-                                        }
+                                basket.fileList.forEach((item, idx, array) => {
+                                    if (
+                                        item.fileName === el.name &&
+                                        item.fileContentType === el.type &&
+                                        item.fileSize === el.size
+                                    ) {
+                                        array[idx] = {
+                                            progress: 100,
+                                            fileOrder: idx,
+                                            ...response.data.data,
+                                        };
                                     }
-                                );
+                                });
                             } catch (error) {
                                 console.log(error);
                             }
                         })
                     );
-                    this.orderList.push(basket.orderProductFileList);
                 })
             );
-            await console.log(this.orderList);
-            await this.$emit('orderSave', this.orderComment, this.orderList);
+            await this.$emit('orderSave', this.orderProductFileList);
         },
         removeFile(index) {
-            this.basketList[index].checkedFile.forEach(a => {
-                this.basketList[
+            this.orderProductFileList[index].checkedFile.forEach(a => {
+                this.orderProductFileList[
                     index
-                ].orderProductFileList.fileList = this.basketList[
-                    index
-                ].orderProductFileList.fileList.filter(b => b.fileOrder !== a);
+                ].fileList = this.orderProductFileList[index].fileList.filter(
+                    b => b.fileOrder !== a
+                );
             });
-            this.basketList[index].checkedFile = [];
+            this.orderProductFileList[index].checkedFile = [];
             this.fileOrderSet(index);
         },
         fileOrderSet(index) {
-            this.basketList[index].uploadFileList = this.basketList[
+            this.orderProductFileList[
+                index
+            ].uploadFileList = this.orderProductFileList[
                 index
             ].uploadFileList.filter(a => {
-                return this.basketList[
-                    index
-                ].orderProductFileList.fileList.some(b => {
+                return this.orderProductFileList[index].fileList.some(b => {
                     return (
                         a.name === b.fileName &&
                         a.type === b.fileContentType &&
@@ -364,11 +371,9 @@ export default {
                     );
                 });
             });
-            this.basketList[index].orderProductFileList.fileList.forEach(
-                (el, index) => {
-                    el.fileOrder = index;
-                }
-            );
+            this.orderProductFileList[index].fileList.forEach((el, index) => {
+                el.fileOrder = index;
+            });
         },
     },
 };
