@@ -207,6 +207,7 @@ export default {
     },
     methods: {
         eventClickEvent(e) {
+            console.log(e.event);
             this.calendarDataModal = e.event;
             const beginyear = e.event.startStr.substr(0, 4);
             const beginmonth = e.event.startStr.substr(5, 2);

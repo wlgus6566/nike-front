@@ -36,7 +36,9 @@
             @addContBasket="addContBasket"
         ></fileItem>
         <ModalAlarm
+            v-if="folderDetail"
             :visible.sync="visible.alarm"
+            :title="folderDetail.folderName"
             @sendEmail="sendEmail"
         ></ModalAlarm>
     </div>
