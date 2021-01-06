@@ -263,14 +263,25 @@ public class NoticeService {
             }
         }
         final List<CustomerFileSaveDTO> newFileList = customerUpdateDTO.getFileList();
+        List<Long> keepFileSeqList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
                 && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final NoticeFile beforeFile : beforeFileList) {
                 for (final CustomerFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getNoticeFileSeq().equals(newFile.getNoticeFileSeq())) {
-                        lastBeforeFileList.remove(beforeFile);
+//                        lastBeforeFileList.remove(beforeFile);
+                        keepFileSeqList.add(beforeFile.getNoticeFileSeq());
                     }
+                }
+            }
+        }
+
+        for (Long fileSeq : keepFileSeqList) {
+            for (int i = 0; i < lastBeforeFileList.size(); i++) {
+                if (fileSeq == lastBeforeFileList.get(i).getNoticeFileSeq()) {
+                    lastBeforeFileList.remove(i);
+                    break;
                 }
             }
         }

@@ -431,6 +431,7 @@ public class ContentsService {
             notUseFileList.add(contentsFile);
         }
         List<ContentsFileSaveDTO> newFileList = this.checkAndRemoveFile(contentsSaveDTO.getContentsFileList());
+        List<Long> keepFileSeqList = new ArrayList<>();
 
         // 기존에 있는 파일 목록과 DTO받은 파일 목록 비교해서
         // case1.기본목록O, 새로운목록X : useYn = 'N' update
@@ -441,8 +442,18 @@ public class ContentsService {
             for (final ContentsFile beforeFile : beforeFileList) {
                 for (final ContentsFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getContentsFileSeq().equals(newFile.getContentsFileSeq())) {
-                        notUseFileList.remove(beforeFile);
+//                        notUseFileList.remove(beforeFile);
+                        keepFileSeqList.add(beforeFile.getContentsFileSeq());
                     }
+                }
+            }
+        }
+
+        for (Long fileSeq : keepFileSeqList) {
+            for (int i = 0; i < notUseFileList.size(); i++) {
+                if (fileSeq == notUseFileList.get(i).getContentsFileSeq()) {
+                    notUseFileList.remove(i);
+                    break;
                 }
             }
         }
