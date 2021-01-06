@@ -114,8 +114,10 @@ public class OrderController {
 	 */
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
+
 	/**
 	 * 주문 등록
+	 * 1차 오픈(1/8이후) 후 삭제 예정
 	 *
 	 * @param orderSaveDTO the order save dto
 	 * @param result       the result
@@ -127,6 +129,49 @@ public class OrderController {
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/order/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@Transactional
+	@ValidField
+	public SingleResult<OrderEntity> saveOrder(
+			@RequestBody @Valid final OrderSaveDTO_del orderSaveDTO
+			, @ApiIgnore final BindingResult result) {
+		log.info("OrderController.saveOrder");
+		final OrderEntity orderEntity = orderService.saveOrder_del(orderSaveDTO);
+		for (OrderProductSaveDTO_del orderProductSaveDTO : orderSaveDTO.getOrderProductList()) {
+			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeq());
+			OrderProductMapping orderProduct = orderProductMappingService.saveOrderProductMapping(
+					OrderProductMappingSaveDTO.builder()
+							.goodsSeq(orderProductSaveDTO.getGoodsSeq())
+							.orderSeq(orderEntity.getOrderSeq())
+							.agencySeq(product.getAgencySeq())
+							.orderQuantity(orderProductSaveDTO.getOrderQuantity())
+							.productDescription(orderProductSaveDTO.getProductDescription())
+							.build()
+			);
+
+			// 장바구니 삭제
+			goodsBasketService.deleteByGoodsSeqAndUserSeq(
+					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
+			);
+		}
+			orderProductMappingService.orderSheetSend_del(orderEntity);
+			return responseService.getSingleResult(orderEntity);
+	}
+
+
+	/**
+	 * 주문 등록
+	 * 2차 오픈 내용
+	 *
+	 * @param orderSaveDTO the order save dto
+	 * @param result       the result
+	 * @return the single result
+	 * @author [윤태호]
+	 * @implNote [method 설명]
+	 * @apiNote 주문 등록
+	 * @since 2020. 7. 1. 오후 2:48:06
+	 */
+	@ApiOperation(value = "주문 등록(2차오픈)", notes = BASIC_CHARACTER)
+	@PostMapping(value = "/order/save/2nd", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	@ValidField
 	public SingleResult<OrderEntity> saveOrder(
@@ -146,22 +191,21 @@ public class OrderController {
 							.build()
 			);
 
-			// TODO lsj 2차오픈
 			// 파일 저장
-//			if (!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
-//				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
-//					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
-//					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);
-//				}
-//			}
+			if (!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
+				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
+					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
+					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);
+				}
+			}
 
 			// 장바구니 삭제
 			goodsBasketService.deleteByGoodsSeqAndUserSeq(
 					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
 			);
 		}
-			orderProductMappingService.orderSheetSend(orderEntity);
-			return responseService.getSingleResult(orderEntity);
+		orderProductMappingService.orderSheetSend(orderEntity, orderSaveDTO.getRecipientList());
+		return responseService.getSingleResult(orderEntity);
 	}
 
 	/**
@@ -196,6 +240,21 @@ public class OrderController {
 	public SingleResult<OrderEntity> view(@ApiParam(name = "orderSeq", value = "주문 시퀀스", defaultValue = "48") @PathVariable final Long orderSeq) {
 		log.info("OrderController.view");
 		return responseService.getSingleResult(orderService.findByOrderSeqAndUseYn(orderSeq, ServiceCode.YesOrNoEnumCode.Y.name()));
+	}
+
+	/**
+	 * Find recipient list single result.
+	 *
+	 * @return the single result
+	 * @author [이소정]
+	 * @implNote 상위 2depth 수신자 목록 조회
+	 * @since 2021. 1. 5. 오후 3:20:23
+	 */
+	@ApiOperation(value = "수신자 목록 조회", notes = BASIC_CHARACTER)
+	@GetMapping(value = "/order/recipientList", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SingleResult<OrderRecipientResultDTO> findRecipientList() {
+		log.info("OrderController.findRecipientList");
+		return responseService.getSingleResult(orderService.findRecipientList());
 	}
 
 }

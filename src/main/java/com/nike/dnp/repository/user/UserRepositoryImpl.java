@@ -1,6 +1,7 @@
 package com.nike.dnp.repository.user;
 
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.user.UserDTO;
 import com.nike.dnp.dto.user.UserListDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.entity.auth.QAuth;
@@ -163,5 +164,26 @@ public class UserRepositoryImpl extends QuerydslRepositorySupport implements Use
                         , CustomExpression.dateDiff(QUser.user.updateDt).gt(90)
                 )
                 .fetch();
+    }
+
+    @Override
+    public List<UserDTO> findAllByAuthSeq(Long authSeq) {
+        final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
+        final QUserAuth qUserAuth = QUserAuth.userAuth;
+        final QUser qUser = QUser.user;
+
+        final JPAQuery<UserDTO> jpaQuery = queryFactory
+                .select(Projections.bean(UserDTO.class
+                        , qUser.userSeq
+                        , qUser.nickname
+                        , qUser.userId
+                        )
+                )
+                .from(qUser)
+                .innerJoin(qUserAuth).on(qUser.userSeq.eq(qUserAuth.userSeq))
+                .where(qUserAuth.authSeq.eq(authSeq)
+                        , qUser.userStatusCode.eq("NORMAL"))
+                ;
+        return jpaQuery.fetch();
     }
 }

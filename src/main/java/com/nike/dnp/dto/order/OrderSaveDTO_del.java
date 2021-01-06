@@ -2,12 +2,10 @@ package com.nike.dnp.dto.order;
 
 
 import com.nike.dnp.dto.BasicDTO;
-import com.nike.dnp.dto.user.UserDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class OrderSaveDTO extends BasicDTO {
+public class OrderSaveDTO_del extends BasicDTO {
 
 	/**
 	 * 총 금액
@@ -56,11 +54,5 @@ public class OrderSaveDTO extends BasicDTO {
 	 * @author [이소정]
 	 */
 	@ApiModelProperty(name = "orderProductList", value = "주문 상품 목록")
-	private List<OrderProductSaveDTO> orderProductList;
-
-	/**
-	 * The Recipient list
-	 */
-	@ApiModelProperty(name = "recipientList", value = "수신자 메일 목록")
-	private List<UserDTO> recipientList = new ArrayList<>();
+	private List<OrderProductSaveDTO_del> orderProductList;
 }

@@ -1,5 +1,6 @@
 package com.nike.dnp.repository.user;
 
+import com.nike.dnp.dto.user.UserDTO;
 import com.nike.dnp.dto.user.UserListDTO;
 import com.nike.dnp.dto.user.UserSearchDTO;
 import com.nike.dnp.entity.user.User;
@@ -24,8 +25,8 @@ public interface UserRepositoryCustom {
      * @param pageRequest   the page request
      * @return the page
      * @author [오지훈]
+     * @implNote 조회(페이징) 설명]
      * @since 2020. 6. 22. 오후 3:20:59
-     * @implNote 조회(페이징)
      */
     Page<UserListDTO> findPages(final UserSearchDTO userSearchDTO, final PageRequest pageRequest);
 
@@ -35,8 +36,8 @@ public interface UserRepositoryCustom {
      * @param userSeq the user seq
      * @return the int
      * @author [오지훈]
-     * @since 2020. 7. 2. 오후 12:18:05
      * @implNote 90일 지난 패스워드 체크
+     * @since 2020. 7. 2. 오후 12:18:05
      */
     long countByPasswordChangePeriod(final Long userSeq);
 
@@ -71,5 +72,16 @@ public interface UserRepositoryCustom {
      * @since 2020. 10. 13. 오후 1:29:50
      */
     List<User> findByDormantDelete();
+
+    /**
+     * Find all by auth seq list.
+     *
+     * @param authSeq the auth seq
+     * @return the list
+     * @author [이소정]
+     * @implNote authSeq 에 맞는 사용자 목록 조회
+     * @since 2021. 1. 5. 오후 4:37:37
+     */
+    List<UserDTO> findAllByAuthSeq(Long authSeq);
 
 }
