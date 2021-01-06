@@ -43,6 +43,11 @@ spring:
 
 logging:
   config: classpath:logback-nikedev.xml
+  logging:
+    level:
+      org:
+        hibernate:
+          type: trace
 
 server:
   domain: https://devwww.nikespace.co.kr
