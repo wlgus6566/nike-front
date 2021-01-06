@@ -392,8 +392,8 @@ export default {
                 const {
                     data: { data: response },
                 } = await recipientList();
-                if (response.data.existMsg) {
-                    alert(response.data.msg);
+                if (response.existMsg) {
+                    alert(response.msg);
                     return;
                 }
                 if (response.depthCheckYn === 'Y') {
