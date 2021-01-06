@@ -27,6 +27,75 @@
                         </li>
                         <li class="form-row">
                             <div class="form-column">
+                                <span class="label-title">수신자</span>
+                            </div>
+                            <div class="form-column">
+                                <div class="check-select" ref="checkSelect">
+                                    <button
+                                        type="button"
+                                        class="txt txt-click user-item"
+                                        @click="accordion"
+                                        v-if="userList.length > 1"
+                                    >
+                                        <span class="nickname">
+                                            {{ userList[0].nickname }}
+                                        </span>
+                                        <span class="mail">
+                                            {{ userList[0].userId }} </span
+                                        >,외5명
+                                    </button>
+                                    <span class="txt user-item" v-else>
+                                        <span class="nickname">
+                                            {{ userList[0].nickname }}
+                                        </span>
+                                        <span class="mail">
+                                            {{ userList[0].userId }}
+                                        </span>
+                                    </span>
+                                    <div class="bottom-fixed">
+                                        <transition
+                                            @enter="itemOpen"
+                                            @leave="itemClose"
+                                            :css="false"
+                                        >
+                                            <el-scrollbar
+                                                class="check-list-wrap"
+                                                view-class="check-list-scroll"
+                                                :native="false"
+                                                v-if="userListOpen"
+                                            >
+                                                <ul
+                                                    class="check-list"
+                                                    ref="checkList"
+                                                >
+                                                    <li
+                                                        v-for="user in userList"
+                                                        :key="user.userSeq"
+                                                    >
+                                                        <div class="user-item">
+                                                            <span
+                                                                class="nickname"
+                                                            >
+                                                                {{
+                                                                    user.nickname
+                                                                }}
+                                                            </span>
+                                                            <span class="mail">
+                                                                {{
+                                                                    user.userId
+                                                                }}
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </el-scrollbar>
+                                        </transition>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
                                 <span class="label-title">총 예상 금액</span>
                             </div>
                             <div class="form-column">
@@ -95,15 +164,6 @@
                                     개
                                 </span>
                                 <ul class="add-order-list">
-                                    <li>
-                                        <span class="key">받는사람</span>
-                                        <span class="val">
-                                            <span class="name">
-                                                NIKE
-                                                <em>nike@nikespace.co.kr</em>
-                                            </span>
-                                        </span>
-                                    </li>
                                     <li
                                         v-if="
                                             item.orderProductFileList.length > 0
@@ -166,10 +226,91 @@ import {
     getUserIdFromCookie,
     getUserNickFromCookie,
 } from '@/utils/cookies';
+import { Cubic, gsap } from 'gsap/all';
 
 export default {
     data() {
-        return {};
+        return {
+            userListOpen: false,
+            userList: [
+                {
+                    nickname: '테스트계정',
+                    userId:
+                        ' test@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.kr',
+                    userSeq: 0,
+                },
+                {
+                    nickname: '테스트계정1',
+                    userId: 'test@nike.co.kr1',
+                    userSeq: 1,
+                },
+                {
+                    nickname: '테스트계정2',
+                    userId: 'test@nike.co.kr2',
+                    userSeq: 2,
+                },
+                {
+                    nickname: '테스트계정3',
+                    userId: 'test@nike.co.kr3',
+                    userSeq: 3,
+                },
+                {
+                    nickname: '테스트계정4',
+                    userId: 'test@nike.co.kr4',
+                    userSeq: 4,
+                },
+                {
+                    nickname: '테스트계정5',
+                    userId: 'test@nike.co.kr5',
+                    userSeq: 5,
+                },
+                {
+                    nickname: '테스트계정6',
+                    userId: 'test@nike.co.kr6',
+                    userSeq: 6,
+                },
+                {
+                    nickname: '테스트계정7',
+                    userId: 'test@nike.co.kr7',
+                    userSeq: 7,
+                },
+                {
+                    nickname: '테스트계정8',
+                    userId: 'test@nike.co.kr8',
+                    userSeq: 8,
+                },
+                {
+                    nickname: '테스트계정9',
+                    userId: 'test@nike.co.kr9',
+                    userSeq: 9,
+                },
+                {
+                    nickname: '테스트계정10',
+                    userId: 'test@nike.co.kr10',
+                    userSeq: 10,
+                },
+                {
+                    nickname: '테스트계정11',
+                    userId: 'test@nike.co.kr11',
+                    userSeq: 11,
+                },
+                {
+                    nickname: '테스트계정12',
+                    userId: 'test@nike.co.kr12',
+                    userSeq: 12,
+                },
+                {
+                    nickname: '테스트계정13',
+                    userId: 'test@nike.co.kr13',
+                    userSeq: 13,
+                },
+                {
+                    nickname: '테스트계정14',
+                    userId: 'test@nike.co.kr14',
+                    userSeq: 14,
+                },
+            ],
+        };
     },
     props: ['visible', 'orderDetailData'],
     created() {
@@ -184,7 +325,54 @@ export default {
         },
     },
     mounted() {},
-    methods: {},
+    methods: {
+        htmlClick(e) {
+            const target = e.target;
+            if (
+                !target.closest('.check-list') &&
+                !target.closest('.txt') &&
+                !target.closest('.view-list')
+            ) {
+                this.userListOpen = false;
+            }
+            /* if (
+            target.closest('.check-select') !== this.$refs.checkSelect &&
+            !target.closest('.txt')
+        ) {
+            this.userListOpen = false;
+        }*/
+        },
+        compMount() {
+            document
+                .querySelector('html')
+                .addEventListener('click', this.htmlClick);
+        },
+        itemOpen(el, done) {
+            gsap.set(el, {
+                height: 'auto',
+            });
+
+            gsap.from(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: function() {
+                    el.style.height = 'auto';
+                    done();
+                },
+            });
+        },
+        itemClose(el, done) {
+            gsap.to(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        accordion() {
+            this.userListOpen = !this.userListOpen;
+            this.compMount();
+        },
+    },
 };
 </script>
 <style scoped>

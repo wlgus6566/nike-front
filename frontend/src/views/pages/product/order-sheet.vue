@@ -33,10 +33,10 @@
                             <div class="check-select" ref="checkSelect">
                                 <button
                                     type="button"
-                                    class="txt"
+                                    class="txt txt-click"
                                     @click="accordion"
                                 >
-                                    선택
+                                    <strong>선택</strong>
                                 </button>
                                 <el-scrollbar
                                     class="view-list-wrap"
@@ -78,7 +78,7 @@
                                             class="check-list-wrap"
                                             view-class="check-list-scroll"
                                             :native="false"
-                                            v-if="listOpenEvent"
+                                            v-if="userListOpen"
                                         >
                                             <ul
                                                 class="check-list"
@@ -88,7 +88,7 @@
                                                     v-for="user in userList"
                                                     :key="user.userSeq"
                                                 >
-                                                    <label>
+                                                    <label class="user-item">
                                                         <span class="checkbox">
                                                             <input
                                                                 type="checkbox"
@@ -274,7 +274,7 @@ import { Cubic, gsap } from 'gsap/all';
 export default {
     data() {
         return {
-            listOpenEvent: false,
+            userListOpen: false,
             cheched: [],
             orderList: {
                 orderProductFileList: [],
@@ -313,23 +313,19 @@ export default {
                 !target.closest('.txt') &&
                 !target.closest('.view-list')
             ) {
-                console.log(1);
-                this.listOpenEvent = false;
+                this.userListOpen = false;
             }
             /* if (
                 target.closest('.check-select') !== this.$refs.checkSelect &&
                 !target.closest('.txt')
             ) {
-                this.listOpenEvent = false;
+                this.userListOpen = false;
             }*/
         },
         compMount() {
             document
                 .querySelector('html')
                 .addEventListener('click', this.htmlClick);
-            /*  document
-          .querySelector('.el-select')
-          .addEventListener('click', this.elSelectClick);*/
         },
         itemOpen(el, done) {
             gsap.set(el, {
@@ -353,7 +349,7 @@ export default {
             });
         },
         accordion() {
-            this.listOpenEvent = !this.listOpenEvent;
+            this.userListOpen = !this.userListOpen;
             this.compMount();
         },
         userDelEvent(user) {
@@ -385,7 +381,7 @@ export default {
                     data: { data: response },
                 } = await recipientList();
                 if (response.depthCheckYn === 'Y') {
-                    response.this.userList = response.userList;
+                    this.userList = response.userList;
                 }
                 /*       this.userList = [
                     {

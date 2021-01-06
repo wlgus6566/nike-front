@@ -4457,14 +4457,46 @@ img.image-grayscale {
     position: relative;
     width: 100%;
 }
-.check-select .txt {
+.check-select [class^='txt'] {
     display: inline-block;
-    padding-right: 25px;
+    box-sizing: border-box;
     font-size: 12px;
     line-height: 18px;
-    font-weight: bold;
     color: #333;
+}
+.check-select .txt-click {
+    padding-right: 25px;
     background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat right;
+}
+.check-select .user-item {
+    display: flex;
+    max-width: 100%;
+    font-size: 12px;
+    color: #000;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.check-select .user-item .mail {
+    position: relative;
+    display: block;
+    flex: 0 1 auto;
+    margin-left: 5px;
+    padding-left: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.check-select .user-item .mail:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 1px;
+    height: 10px;
+    margin-top: -5px;
+    background: #ddd;
 }
 .check-select .view-list-wrap {
     margin-top: 15px;
@@ -4569,41 +4601,14 @@ img.image-grayscale {
 .check-select .check-list li + li {
     margin-top: 20px;
 }
-.check-select .check-list li label {
-    display: flex;
-    font-size: 12px;
-    color: #000;
-    line-height: 20px;
-    overflow: hidden;
-}
 .check-select .check-list li .checkbox {
     margin-right: 5px;
 }
-.check-select .check-list li .nickname {
+.check-select .user-item .nickname {
     display: block;
     flex: 0 0 auto;
 }
-.check-select .check-list li .mail {
-    position: relative;
-    display: block;
-    flex: 0 1 auto;
-    margin-left: 5px;
-    padding-left: 5px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.check-select .check-list li .mail:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: block;
-    width: 1px;
-    height: 10px;
-    margin-top: -5px;
-    background: #ddd;
-}
+
 .sheet-list-scroll {
     box-sizing: border-box;
     overflow: hidden;
