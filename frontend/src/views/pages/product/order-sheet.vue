@@ -30,12 +30,96 @@
                             <span class="label-title">수신자</span>
                         </div>
                         <div class="form-column">
-                            <span class="form-val">
-                                <CascaderSelect
-                                    :listCascader="authority"
-                                    :multiple="true"
-                                />
-                            </span>
+                            <div class="check-select" ref="checkSelect">
+                                <button
+                                    type="button"
+                                    class="txt"
+                                    @click="accordion"
+                                >
+                                    선택
+                                </button>
+                                <el-scrollbar
+                                    class="view-list-wrap"
+                                    view-class="view-list-scroll"
+                                    :native="false"
+                                    v-if="
+                                        this.orderList.recipientList.length > 0
+                                    "
+                                >
+                                    <ul class="view-list">
+                                        <li
+                                            v-for="checkUser in this.orderList
+                                                .recipientList"
+                                            :key="checkUser.userSeq"
+                                            ref="list"
+                                        >
+                                            <span>
+                                                {{ checkUser.nickname }}
+                                            </span>
+                                            <span>
+                                                {{ checkUser.userId }}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                ref="viewBtn"
+                                                @click="userDelEvent(checkUser)"
+                                            >
+                                                삭제
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </el-scrollbar>
+                                <div class="bottom-fixed">
+                                    <transition
+                                        @enter="itemOpen"
+                                        @leave="itemClose"
+                                        :css="false"
+                                    >
+                                        <el-scrollbar
+                                            class="check-list-wrap"
+                                            view-class="check-list-scroll"
+                                            :native="false"
+                                            v-if="listOpenEvent"
+                                        >
+                                            <ul
+                                                class="check-list"
+                                                ref="checkList"
+                                            >
+                                                <li
+                                                    v-for="user in userList"
+                                                    :key="user.userSeq"
+                                                >
+                                                    <label>
+                                                        <span class="checkbox">
+                                                            <input
+                                                                type="checkbox"
+                                                                :value="
+                                                                    user.userSeq
+                                                                "
+                                                                v-model="
+                                                                    cheched
+                                                                "
+                                                                @change="
+                                                                    userCheckEvent(
+                                                                        user
+                                                                    )
+                                                                "
+                                                            />
+                                                            <i></i>
+                                                        </span>
+                                                        <span class="nickname">
+                                                            {{ user.nickname }}
+                                                        </span>
+                                                        <span class="mail">
+                                                            {{ user.userId }}
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </el-scrollbar>
+                                    </transition>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-row">
@@ -129,23 +213,18 @@
                                         </li>
                                     </ul>
                                     <div class="btn-box">
-                                        <div class="fine-file">
-                                            <span class="btn-form-gray"
-                                                ><span>찾기</span></span
-                                            >
-                                            <input
-                                                type="file"
-                                                ref="fileInput"
-                                                accept="image/*"
-                                                multiple
-                                                @change="
-                                                    uploadIptChange(
-                                                        $event,
-                                                        index
-                                                    )
-                                                "
-                                            />
-                                        </div>
+                                        <span class="btn-form-gray"
+                                            ><span>찾기</span></span
+                                        >
+                                        <input
+                                            type="file"
+                                            ref="fileInput"
+                                            accept="image/*"
+                                            multiple
+                                            @change="
+                                                uploadIptChange($event, index)
+                                            "
+                                        />
                                     </div>
                                 </div>
                                 <span class="textarea">
@@ -186,53 +265,26 @@
 </template>
 
 <script>
-import CascaderSelect from '@/components/cascader-select';
 import { getUserIdFromCookie, getUserNickFromCookie } from '@/utils/cookies';
+import { recipientList } from '@/api/product';
 import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
+import { getCustomerList } from '@/api/customer';
+import { Cubic, gsap } from 'gsap/all';
 
 export default {
     data() {
         return {
+            listOpenEvent: false,
+            cheched: [],
             orderList: {
                 orderProductFileList: [],
                 totalAmount: '',
                 orderDescription: null,
+                recipientList: [],
             },
             fileList: [],
-            authority: {
-                value: [null],
-                options: [
-                    {
-                        value: null,
-                        label: '전체 권한그룹',
-                    },
-                    {
-                        value: '그룹2',
-                        label: '그룹2',
-                    },
-                    {
-                        value: '그룹1',
-                        label: '그룹1',
-                    },
-                    {
-                        value: 'nakeSpace1',
-                        label: 'nakeSpace@nakeSpace.co.kr',
-                    },
-                    {
-                        value: 'nakeSpace2',
-                        label: 'nakeSpace2@nakeSpace.co.kr',
-                    },
-                    {
-                        value: 'nakeSpace3',
-                        label: 'nakeSpace3@nakeSpace.co.kr',
-                    },
-                    {
-                        value: 'nakeSpace4',
-                        label: 'nakeSpace4@nakeSpace.co.kr',
-                    },
-                ],
-            },
+            userList: [],
         };
     },
     computed: {
@@ -243,27 +295,184 @@ export default {
             return getUserIdFromCookie();
         },
     },
-    components: {
-        CascaderSelect,
-    },
+    components: {},
     props: ['visible', 'basketList', 'totalPrice'],
     created() {
         this.basketArray();
+        this.userListInit();
     },
     watch: {
-        orderList(val) {
-            console.log(val);
-            console.log(1);
-            //this.orderList = val;
-        },
-        fileList: {
-            handler(val) {
-                console.log(val);
-            },
-            deep: true,
+        basketList() {
+            this.basketArray();
         },
     },
     methods: {
+        htmlClick(e) {
+            const target = e.target;
+            console.log(target);
+            if (
+                !target.closest('.check-list') &&
+                !target.closest('.txt') &&
+                !target.closest('.view-list')
+            ) {
+                console.log(1);
+                this.listOpenEvent = false;
+            }
+            /* if (
+                target.closest('.check-select') !== this.$refs.checkSelect &&
+                !target.closest('.txt')
+            ) {
+                this.listOpenEvent = false;
+            }*/
+        },
+        compMount() {
+            document
+                .querySelector('html')
+                .addEventListener('click', this.htmlClick);
+            /*  document
+          .querySelector('.el-select')
+          .addEventListener('click', this.elSelectClick);*/
+        },
+        itemOpen(el, done) {
+            gsap.set(el, {
+                height: 'auto',
+            });
+
+            gsap.from(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: function() {
+                    el.style.height = 'auto';
+                    done();
+                },
+            });
+        },
+        itemClose(el, done) {
+            gsap.to(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        accordion() {
+            this.listOpenEvent = !this.listOpenEvent;
+            this.compMount();
+        },
+        userDelEvent(user) {
+            const checkIndex = this.cheched.findIndex(check => {
+                return check === user.userSeq;
+            });
+            this.cheched.splice(checkIndex, 1);
+            const userIndex = this.orderList.recipientList.findIndex(el => {
+                return el.userSeq === user.userSeq;
+            });
+            this.orderList.recipientList.splice(userIndex, 1);
+        },
+        userCheckEvent(user) {
+            const index = this.cheched.findIndex(check => {
+                return check === user.userSeq;
+            });
+            if (index !== -1) {
+                this.orderList.recipientList.push(user);
+            } else {
+                console.log(2);
+                const userIndex = this.orderList.recipientList.findIndex(el => {
+                    return el.userSeq === user.userSeq;
+                });
+                console.log(userIndex);
+                this.orderList.recipientList.splice(userIndex, 1);
+            }
+        },
+        async userListInit() {
+            try {
+                const {
+                    data: { data: response },
+                } = await recipientList({
+                    depthCheckYn: 'Y',
+                });
+                // this.userList = response.userList;
+                this.userList = [
+                    {
+                        nickname: '테스트계정',
+                        userId:
+                            ' test@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.kr',
+                        userSeq: 0,
+                    },
+                    {
+                        nickname: '테스트계정1',
+                        userId: 'test@nike.co.kr1',
+                        userSeq: 1,
+                    },
+                    {
+                        nickname: '테스트계정2',
+                        userId: 'test@nike.co.kr2',
+                        userSeq: 2,
+                    },
+                    {
+                        nickname: '테스트계정3',
+                        userId: 'test@nike.co.kr3',
+                        userSeq: 3,
+                    },
+                    {
+                        nickname: '테스트계정4',
+                        userId: 'test@nike.co.kr4',
+                        userSeq: 4,
+                    },
+                    {
+                        nickname: '테스트계정5',
+                        userId: 'test@nike.co.kr5',
+                        userSeq: 5,
+                    },
+                    {
+                        nickname: '테스트계정6',
+                        userId: 'test@nike.co.kr6',
+                        userSeq: 6,
+                    },
+                    {
+                        nickname: '테스트계정7',
+                        userId: 'test@nike.co.kr7',
+                        userSeq: 7,
+                    },
+                    {
+                        nickname: '테스트계정8',
+                        userId: 'test@nike.co.kr8',
+                        userSeq: 8,
+                    },
+                    {
+                        nickname: '테스트계정9',
+                        userId: 'test@nike.co.kr9',
+                        userSeq: 9,
+                    },
+                    {
+                        nickname: '테스트계정10',
+                        userId: 'test@nike.co.kr10',
+                        userSeq: 10,
+                    },
+                    {
+                        nickname: '테스트계정11',
+                        userId: 'test@nike.co.kr11',
+                        userSeq: 11,
+                    },
+                    {
+                        nickname: '테스트계정12',
+                        userId: 'test@nike.co.kr12',
+                        userSeq: 12,
+                    },
+                    {
+                        nickname: '테스트계정13',
+                        userId: 'test@nike.co.kr13',
+                        userSeq: 13,
+                    },
+                    {
+                        nickname: '테스트계정14',
+                        userId: 'test@nike.co.kr14',
+                        userSeq: 14,
+                    },
+                ];
+            } catch (error) {
+                console.error(error);
+            }
+        },
         orderSave() {
             console.log(this.orderList);
             //this.$emit('orderSave', this.orderComment);
@@ -273,26 +482,14 @@ export default {
         basketArray() {
             this.orderList.totalAmount = this.totalPrice;
             this.basketList.forEach((el, index) => {
-                this.orderList.orderProductFileList[index] = {};
-                this.orderList.orderProductFileList[index].fileList = [
-                    /* {
-              fileContentType: 'image/jpeg',
-              fileName: 'KakaoTalk_Photo_2020-12-26-19-51-42.jpeg',
-              fileOrder: 0,
-              fileSize: 8407198,
-              progress: 0,
-          },*/
-                ];
-                this.orderList.orderProductFileList[index].goodsSeq =
-                    el.goodsSeq;
-                this.orderList.orderProductFileList[index].orderQuantity =
-                    el.orderQuantity;
-                this.orderList.orderProductFileList[
-                    index
-                ].productDescription = null;
-                this.orderList.orderProductFileList[index].uploadFileList = [];
-
-                this.orderList.orderProductFileList[index].product = el.product;
+                this.orderList.orderProductFileList.push({
+                    fileList: [],
+                    goodsSeq: el.goodsSeq,
+                    orderQuantity: el.orderQuantity,
+                    productDescription: null,
+                    uploadFileList: [],
+                    product: el.product,
+                });
             });
         },
         //file 업로드
@@ -349,6 +546,9 @@ export default {
             ].uploadFileList = this.orderList.orderProductFileList[
                 index
             ].uploadFileList.concat(mergeArray); //
+            this.fileList[index] = this.orderList.orderProductFileList[
+                index
+            ].fileList;
         },
 
         async uploadFiles() {
@@ -442,7 +642,7 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;
@@ -460,5 +660,29 @@ export default {
 }
 .sub-title {
     line-height: 16px;
+}
+
+.drag-item {
+    opacity: 1 !important;
+    border: none !important;
+    background: transparent !important;
+}
+.drag-item .list {
+    padding: 0;
+}
+.drag-item .checkbox {
+    display: none;
+}
+.drag-item .thumbnail {
+    border: 1px solid #ddd;
+}
+.drag-item .info-box {
+    display: none;
+}
+.drag-item .btn-box {
+    display: none;
+}
+.drag-item ul {
+    display: none !important;
 }
 </style>

@@ -4,16 +4,8 @@
             ref="select"
             v-model="listCascader.value"
             :options="listCascader.options"
-            :props="{ multiple: true }"
-            v-if="multiple"
-        />
-        <el-cascader
-            ref="select"
-            v-model="listCascader.value"
-            :options="listCascader.options"
             :props="{ checkStrictly: true }"
             clearable
-            v-else
         />
     </div>
 </template>

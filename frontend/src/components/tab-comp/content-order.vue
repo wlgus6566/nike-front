@@ -82,6 +82,7 @@
             :basketList="basketList"
             :totalPrice="totalPrice"
             @orderSave="orderSave"
+            @closeSheet="closeSheet"
         />
     </div>
 </template>
@@ -134,6 +135,9 @@ export default {
     },
     mounted() {},
     methods: {
+        closeSheet() {
+            this.visible.orderSheet = false;
+        },
         // quantityUpdate(e, item) {
         //     console.log(e.target);
         //     //const value = e.target.value;
@@ -174,11 +178,12 @@ export default {
 
         // 주문서 발송
         async orderSave(orderProductFileList) {
+            alert('1');
             console.log(orderProductFileList);
             try {
-                const { data: response } = await postOrderSave({
-                    orderProductFileList,
-                });
+                const { data: response } = await postOrderSave(
+                    orderProductFileList
+                );
                 //console.log(response);
                 if (response.existMsg) {
                     await getExistMsg(response);

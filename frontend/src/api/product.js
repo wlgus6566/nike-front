@@ -1,4 +1,4 @@
-import { product } from './index';
+import { product, order } from './index';
 
 // PRODUCT 목록 조회
 function getProductList(params) {
@@ -36,6 +36,11 @@ function putProduct(goodsSeq, data) {
 function delProduct(data) {
     return product.delete(``, { data });
 }
+
+// 수산자 불러오기
+function recipientList() {
+    return order.get(`/recipientList`);
+}
 export {
     getProductList,
     getUserProductList,
@@ -43,4 +48,5 @@ export {
     postProduct,
     putProduct,
     delProduct,
+    recipientList,
 };
