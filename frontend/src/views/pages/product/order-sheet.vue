@@ -373,11 +373,9 @@ export default {
             if (index !== -1) {
                 this.orderList.recipientList.push(user);
             } else {
-                console.log(2);
                 const userIndex = this.orderList.recipientList.findIndex(el => {
                     return el.userSeq === user.userSeq;
                 });
-                console.log(userIndex);
                 this.orderList.recipientList.splice(userIndex, 1);
             }
         },
