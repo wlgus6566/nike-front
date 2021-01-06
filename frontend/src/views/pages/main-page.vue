@@ -212,7 +212,7 @@
 import { getMain } from '@/api/main';
 import {
     delCalendar,
-    getCalendarList, // CALENDAR 목록 조회
+    getCalendarEachList, // CALENDAR 목록 조회
     getTodayCalendar,
     postCalendar,
     putCalendar, // CALENDAR 오늘 조회
@@ -272,7 +272,7 @@ export default {
                             this.calDetailClose();
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -285,7 +285,7 @@ export default {
                             this.calDetailClose();
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -554,8 +554,8 @@ export default {
         async calLendarFetchData() {
             this.loadingData = true;
             try {
-                await this.getCalendarList(this.yyyyMm);
-                await this.getTodayCalendar(this.searchDt);
+                await this.getCalendarEachList(this.yyyyMm);
+                //await this.getTodayCalendar(this.searchDt);
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
@@ -563,11 +563,11 @@ export default {
             }
         },
         // 한달 일정 조회
-        async getCalendarList(yyyyMm) {
+        async getCalendarEachList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
         },
@@ -698,7 +698,7 @@ export default {
             }
         },
         async processAfterSuccess() {
-            await this.getCalendarList();
+            await this.getCalendarEachList();
             await this.getTodayCalendar();
             this.closeDialog();
         },
