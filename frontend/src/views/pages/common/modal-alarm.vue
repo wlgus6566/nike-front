@@ -15,7 +15,8 @@
                     <span>NIKE SPACE</span><br />컨텐츠 업데이트 알림
                 </h4>
                 <p class="alarm-txt">
-                    <strong>ASSET(SP21 NSW MULTI AM EXCEE)</strong><br />
+                    <strong>{{ title }}</strong
+                    ><br />
                     이(가) 업데이트 되었습니다.
                 </p>
                 <hr class="hr-gray mt40" />
@@ -51,7 +52,7 @@ export default {
         };
     },
 
-    props: ['visible'],
+    props: ['visible', 'title'],
 };
 </script>
 <style scoped>
