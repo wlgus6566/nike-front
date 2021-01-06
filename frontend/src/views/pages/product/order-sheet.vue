@@ -281,7 +281,6 @@ export default {
                 orderDescription: null,
                 recipientList: [],
             },
-            fileList: [],
             userList: [],
         };
     },
@@ -536,10 +535,8 @@ export default {
                 index
             ].uploadFileList = this.orderList.orderProductList[
                 index
-            ].uploadFileList.concat(mergeArray); //
-            this.fileList[index] = this.orderList.orderProductList[
-                index
-            ].fileList;
+            ].uploadFileList.concat(mergeArray);
+            console.log(this.orderList.orderProductList[index].uploadFileList);
         },
 
         async uploadFiles() {
