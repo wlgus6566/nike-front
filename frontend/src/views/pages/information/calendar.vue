@@ -34,6 +34,7 @@
         </div>
 
         <calendarManagement
+            v-if="visible.calendarManagement"
             :visible.sync="visible.calendarManagement"
             :statusCode="statusCode"
             :calendarDetail="calendarDetail"
@@ -207,15 +208,19 @@ export default {
     },
     methods: {
         eventClickEvent(e) {
-            console.log(e.event);
+            let end = new Date(e.event.end);
+            end.setDate(end.getDate() - 1);
+
             this.calendarDataModal = e.event;
             const beginyear = e.event.startStr.substr(0, 4);
             const beginmonth = e.event.startStr.substr(5, 2);
             const beginday = e.event.startStr.substr(8, 2);
 
-            const endnyear = e.event.endStr.substr(0, 4);
-            const endnmonth = e.event.endStr.substr(5, 2);
-            const endnday = e.event.endStr.substr(8, 2);
+            const endnyear = end.getFullYear();
+            let endnmonth = end.getMonth() + 1;
+            endnmonth = endnmonth >= 10 ? endnmonth : '0' + endnmonth;
+            let endnday = end.getDate();
+            endnday = endnday >= 10 ? endnday : '0' + endnday;
 
             this.calendarDataModal.beginDt =
                 beginyear + '.' + beginmonth + '.' + beginday;
