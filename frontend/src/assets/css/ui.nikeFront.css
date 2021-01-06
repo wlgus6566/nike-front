@@ -4477,6 +4477,10 @@ img.image-grayscale {
     overflow: hidden;
     white-space: nowrap;
 }
+.check-select .user-item .nickname {
+    display: block;
+    flex: 0 0 auto;
+}
 .check-select .user-item .mail {
     position: relative;
     display: block;
@@ -4582,6 +4586,7 @@ img.image-grayscale {
     box-sizing: border-box;
     background: #fff;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 .check-select .check-list-wrap .el-scrollbar__wrap {
     max-height: calc(202px + 17px) !important;
@@ -4604,11 +4609,6 @@ img.image-grayscale {
 .check-select .check-list li .checkbox {
     margin-right: 5px;
 }
-.check-select .user-item .nickname {
-    display: block;
-    flex: 0 0 auto;
-}
-
 .sheet-list-scroll {
     box-sizing: border-box;
     overflow: hidden;

@@ -74,48 +74,62 @@
                                         @leave="itemClose"
                                         :css="false"
                                     >
-                                        <el-scrollbar
+                                        <div
                                             class="check-list-wrap"
-                                            view-class="check-list-scroll"
-                                            :native="false"
                                             v-if="userListOpen"
                                         >
-                                            <ul
-                                                class="check-list"
-                                                ref="checkList"
+                                            <el-scrollbar
+                                                view-class="check-list-scroll"
+                                                :native="false"
                                             >
-                                                <li
-                                                    v-for="user in userList"
-                                                    :key="user.userSeq"
+                                                <ul
+                                                    class="check-list"
+                                                    ref="checkList"
+                                                    v-if="userListOpen"
                                                 >
-                                                    <label class="user-item">
-                                                        <span class="checkbox">
-                                                            <input
-                                                                type="checkbox"
-                                                                :value="
-                                                                    user.userSeq
-                                                                "
-                                                                v-model="
-                                                                    checked
-                                                                "
-                                                                @change="
-                                                                    userCheckEvent(
-                                                                        user
-                                                                    )
-                                                                "
-                                                            />
-                                                            <i></i>
-                                                        </span>
-                                                        <span class="nickname">
-                                                            {{ user.nickname }}
-                                                        </span>
-                                                        <span class="mail">
-                                                            {{ user.userId }}
-                                                        </span>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </el-scrollbar>
+                                                    <li
+                                                        v-for="user in userList"
+                                                        :key="user.userSeq"
+                                                    >
+                                                        <label
+                                                            class="user-item"
+                                                        >
+                                                            <span
+                                                                class="checkbox"
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    :value="
+                                                                        user.userSeq
+                                                                    "
+                                                                    v-model="
+                                                                        checked
+                                                                    "
+                                                                    @change="
+                                                                        userCheckEvent(
+                                                                            user
+                                                                        )
+                                                                    "
+                                                                />
+                                                                <i></i>
+                                                            </span>
+                                                            <span
+                                                                class="nickname"
+                                                            >
+                                                                {{
+                                                                    user.nickname
+                                                                }}
+                                                            </span>
+                                                            <span class="mail">
+                                                                {{
+                                                                    user.userId
+                                                                }}
+                                                            </span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </el-scrollbar>
+                                        </div>
                                     </transition>
                                 </div>
                             </div>
@@ -327,14 +341,14 @@ export default {
         },
         itemOpen(el, done) {
             gsap.set(el, {
-                height: 'auto',
+                height: el.offsetHeight + 'px',
             });
 
             gsap.from(el, 0.3, {
                 height: 0,
                 ease: Cubic.easeInOut,
                 onComplete: function() {
-                    el.style.height = 'auto';
+                    el.style.height = el.offsetHeight + 'px';
                     done();
                 },
             });
@@ -378,10 +392,14 @@ export default {
                 const {
                     data: { data: response },
                 } = await recipientList();
+                if (response.data.existMsg) {
+                    alert(response.data.msg);
+                    return;
+                }
                 if (response.depthCheckYn === 'Y') {
                     this.userList = response.userList;
                 }
-                this.userList = [
+                /*this.userList = [
                     {
                         nickname: '테스트계정',
                         userId:
@@ -458,7 +476,7 @@ export default {
                         userId: 'test@nike.co.kr14',
                         userSeq: 14,
                     },
-                ];
+                ];*/
             } catch (error) {
                 console.error(error);
             }

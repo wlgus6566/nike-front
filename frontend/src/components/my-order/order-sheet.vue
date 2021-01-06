@@ -58,37 +58,45 @@
                                             @leave="itemClose"
                                             :css="false"
                                         >
-                                            <el-scrollbar
+                                            <div
                                                 class="check-list-wrap"
-                                                view-class="check-list-scroll"
-                                                :native="false"
                                                 v-if="userListOpen"
                                             >
-                                                <ul
-                                                    class="check-list"
-                                                    ref="checkList"
+                                                <el-scrollbar
+                                                    view-class="check-list-scroll"
+                                                    :native="false"
+                                                    v-if="userListOpen"
                                                 >
-                                                    <li
-                                                        v-for="user in userList"
-                                                        :key="user.userSeq"
+                                                    <ul
+                                                        class="check-list"
+                                                        ref="checkList"
                                                     >
-                                                        <div class="user-item">
-                                                            <span
-                                                                class="nickname"
+                                                        <li
+                                                            v-for="user in userList"
+                                                            :key="user.userSeq"
+                                                        >
+                                                            <div
+                                                                class="user-item"
                                                             >
-                                                                {{
-                                                                    user.nickname
-                                                                }}
-                                                            </span>
-                                                            <span class="mail">
-                                                                {{
-                                                                    user.userId
-                                                                }}
-                                                            </span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </el-scrollbar>
+                                                                <span
+                                                                    class="nickname"
+                                                                >
+                                                                    {{
+                                                                        user.nickname
+                                                                    }}
+                                                                </span>
+                                                                <span
+                                                                    class="mail"
+                                                                >
+                                                                    {{
+                                                                        user.userId
+                                                                    }}
+                                                                </span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </el-scrollbar>
+                                            </div>
                                         </transition>
                                     </div>
                                 </div>
@@ -233,12 +241,6 @@ export default {
         return {
             userListOpen: false,
             userList: [
-                {
-                    nickname: '테스트계정',
-                    userId:
-                        ' test@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.kr',
-                    userSeq: 0,
-                },
                 {
                     nickname: '테스트계정1',
                     userId: 'test@nike.co.kr1',
