@@ -1068,10 +1068,6 @@ border-top: 0;*/
 /*::v-deep .fc-active {*/
 /*    background-color: #fa5400;*/
 /*}*/
-::v-deep .fc .fc-daygrid-day-number {
-    font-weight: 400;
-    font-size: 12px;
-}
 ::v-deep .fc-daygrid-day-bottom {
     width: 100%;
 }

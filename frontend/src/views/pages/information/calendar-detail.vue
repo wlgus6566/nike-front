@@ -181,6 +181,7 @@ export default {
 }
 .btn-box {
     text-align: right;
+    height: 17px;
 }
 .btn-box .link-txt {
     display: inline-block;
@@ -188,8 +189,9 @@ export default {
     padding-right: 14px;
     color: #555;
     font-size: 11px;
+    line-height: 17px;
     font-weight: bold;
     background: url('../../../assets/images/svg/icon-more-small.svg') no-repeat
-        right center;
+        right 2px;
 }
 </style>
