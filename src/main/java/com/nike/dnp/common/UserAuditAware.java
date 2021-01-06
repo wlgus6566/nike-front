@@ -35,9 +35,14 @@ public class UserAuditAware implements AuditorAware<Long> {
     public Optional<Long> getCurrentAuditor() {
         log.info("UserAuditAware.getCurrentAuditor");
         Optional<Long> result = Optional.of(0L);
+
+        log.info("22222 UserAuditAware.getCurrentAuditor");
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("3333333333 UserAuditAware.getCurrentAuditor");
         if (!ObjectUtils.isEmpty(authentication) && authentication.isAuthenticated()) {
             final AuthUserDTO authUserDTO = (AuthUserDTO) authentication.getPrincipal();
+            log.info("444 : ", authUserDTO.getUserSeq());
             result = Optional.of(authUserDTO.getUserSeq());
         }
         return result;
