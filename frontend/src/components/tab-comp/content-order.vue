@@ -77,7 +77,7 @@
             </p>
         </div>
         <OrderSheet
-            v-if="basketList.length"
+            v-if="visible.orderSheet"
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
@@ -178,8 +178,7 @@ export default {
 
         // 주문서 발송
         async orderSave(orderProductFileList) {
-            alert('1');
-            console.log(orderProductFileList);
+            console.log('orderSave');
             try {
                 const { data: response } = await postOrderSave(
                     orderProductFileList

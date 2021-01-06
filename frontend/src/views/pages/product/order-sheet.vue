@@ -96,7 +96,7 @@
                                                                     user.userSeq
                                                                 "
                                                                 v-model="
-                                                                    cheched
+                                                                    checked
                                                                 "
                                                                 @change="
                                                                     userCheckEvent(
@@ -148,8 +148,7 @@
                     <ul class="sheet-list">
                         <li
                             class="sheet-item"
-                            v-for="(item,
-                            index) in orderList.orderProductFileList"
+                            v-for="(item, index) in orderList.orderProductList"
                             :key="index"
                         >
                             <span class="thumbnail">
@@ -275,9 +274,9 @@ export default {
     data() {
         return {
             userListOpen: false,
-            cheched: [],
+            checked: [],
             orderList: {
-                orderProductFileList: [],
+                orderProductList: [],
                 totalAmount: '',
                 orderDescription: null,
                 recipientList: [],
@@ -353,17 +352,17 @@ export default {
             this.compMount();
         },
         userDelEvent(user) {
-            const checkIndex = this.cheched.findIndex(check => {
+            const checkIndex = this.checked.findIndex(check => {
                 return check === user.userSeq;
             });
-            this.cheched.splice(checkIndex, 1);
+            this.checked.splice(checkIndex, 1);
             const userIndex = this.orderList.recipientList.findIndex(el => {
                 return el.userSeq === user.userSeq;
             });
             this.orderList.recipientList.splice(userIndex, 1);
         },
         userCheckEvent(user) {
-            const index = this.cheched.findIndex(check => {
+            const index = this.checked.findIndex(check => {
                 return check === user.userSeq;
             });
             if (index !== -1) {
@@ -383,7 +382,7 @@ export default {
                 if (response.depthCheckYn === 'Y') {
                     this.userList = response.userList;
                 }
-                /*       this.userList = [
+                this.userList = [
                     {
                         nickname: '테스트계정',
                         userId:
@@ -460,21 +459,20 @@ export default {
                         userId: 'test@nike.co.kr14',
                         userSeq: 14,
                     },
-                ];*/
+                ];
             } catch (error) {
                 console.error(error);
             }
         },
         orderSave() {
-            console.log(this.orderList);
-            //this.$emit('orderSave', this.orderComment);
+            this.uploadFiles();
         },
 
         // basketList add file , comment
         basketArray() {
             this.orderList.totalAmount = this.totalPrice;
-            this.basketList.forEach((el, index) => {
-                this.orderList.orderProductFileList.push({
+            this.basketList.forEach(el => {
+                this.orderList.orderProductList.push({
                     fileList: [],
                     goodsSeq: el.goodsSeq,
                     orderQuantity: el.orderQuantity,
@@ -490,63 +488,65 @@ export default {
             if (!files.length) return;
 
             let mergeArray = Array.from(files).filter(item => {
-                return this.orderList.orderProductFileList[
-                    index
-                ].fileList.every(el => {
-                    return (
-                        item.name !== el.fileName && item.size !== el.fileSize
-                    );
-                });
+                return this.orderList.orderProductList[index].fileList.every(
+                    el => {
+                        return (
+                            item.name !== el.fileName &&
+                            item.size !== el.fileSize
+                        );
+                    }
+                );
             });
             if (
                 mergeArray.length +
-                    this.orderList.orderProductFileList[index].uploadFileList
+                    this.orderList.orderProductList[index].uploadFileList
                         .length >
                 3
             ) {
                 alert('3개 이상 등록 할 수 없습니다.');
                 if (
-                    this.orderList.orderProductFileList[index].uploadFileList
+                    this.orderList.orderProductList[index].uploadFileList
                         .length === 3
                 )
                     return;
                 let maxNum = 3;
                 if (
-                    this.orderList.orderProductFileList[index].uploadFileList
+                    this.orderList.orderProductList[index].uploadFileList
                         .length > 0
                 ) {
                     maxNum =
                         3 -
-                        this.orderList.orderProductFileList[index]
-                            .uploadFileList.length;
+                        this.orderList.orderProductList[index].uploadFileList
+                            .length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
 
             mergeArray.forEach(el => {
-                this.orderList.orderProductFileList[index].fileList.push({
-                    fileOrder: this.orderList.orderProductFileList[index]
-                        .fileList.length,
+                this.orderList.orderProductList[index].fileList.push({
+                    fileOrder: this.orderList.orderProductList[index].fileList
+                        .length,
                     fileName: el.name,
                     fileSize: el.size,
                     fileContentType: el.type,
                     progress: 0,
                 });
             });
-            this.orderList.orderProductFileList[
+            this.orderList.orderProductList[
                 index
-            ].uploadFileList = this.orderList.orderProductFileList[
+            ].uploadFileList = this.orderList.orderProductList[
                 index
             ].uploadFileList.concat(mergeArray); //
-            this.fileList[index] = this.orderList.orderProductFileList[
+            this.fileList[index] = this.orderList.orderProductList[
                 index
             ].fileList;
         },
 
         async uploadFiles() {
+            console.log('uploadFiles');
             bus.$emit('pageLoading', true);
             await Promise.all(
-                this.orderList.orderProductFileList.map(async basket => {
+                this.orderList.orderProductList.map(async basket => {
                     await Promise.all(
                         basket.uploadFileList.map(async el => {
                             try {
@@ -602,20 +602,20 @@ export default {
             await this.$emit('orderSave', this.orderList);
         },
         removeFile(index, fileOrder) {
-            this.orderList.orderProductFileList[
+            this.orderList.orderProductList[
                 index
-            ].fileList = this.orderList.orderProductFileList[
-                index
-            ].fileList.filter(b => b.fileOrder !== fileOrder);
+            ].fileList = this.orderList.orderProductList[index].fileList.filter(
+                b => b.fileOrder !== fileOrder
+            );
             this.fileOrderSet(index);
         },
         fileOrderSet(index) {
-            this.orderList.orderProductFileList[
+            this.orderList.orderProductList[
                 index
-            ].uploadFileList = this.orderList.orderProductFileList[
+            ].uploadFileList = this.orderList.orderProductList[
                 index
             ].uploadFileList.filter(a => {
-                return this.orderList.orderProductFileList[index].fileList.some(
+                return this.orderList.orderProductList[index].fileList.some(
                     b => {
                         return (
                             a.name === b.fileName &&
@@ -625,7 +625,7 @@ export default {
                     }
                 );
             });
-            this.orderList.orderProductFileList[index].fileList.forEach(
+            this.orderList.orderProductList[index].fileList.forEach(
                 (el, index) => {
                     el.fileOrder = index;
                 }
