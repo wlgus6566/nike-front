@@ -287,7 +287,6 @@ public class User extends BaseTimeEntity {
     }
 
     public LocalDateTime getLoginOneYear() {
-        log.info("User.getLoginOneYear");
-        return this.loginDt.plusYears(1l);
+        return this.loginDt.plusYears(1);
     }
 }
