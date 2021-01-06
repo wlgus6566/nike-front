@@ -327,12 +327,6 @@ export default {
             ) {
                 this.userListOpen = false;
             }
-            /* if (
-                target.closest('.check-select') !== this.$refs.checkSelect &&
-                !target.closest('.txt')
-            ) {
-                this.userListOpen = false;
-            }*/
         },
         compMount() {
             document
