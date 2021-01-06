@@ -25,7 +25,7 @@
                         </div>
                     </li>
 
-                    <li class="form-row">
+                    <li class="form-row" v-if="userList.length > 0">
                         <div class="form-column">
                             <span class="label-title">수신자</span>
                         </div>
@@ -51,7 +51,6 @@
                                             v-for="checkUser in this.orderList
                                                 .recipientList"
                                             :key="checkUser.userSeq"
-                                            ref="list"
                                         >
                                             <span>
                                                 {{ checkUser.nickname }}
@@ -309,7 +308,6 @@ export default {
     methods: {
         htmlClick(e) {
             const target = e.target;
-            console.log(target);
             if (
                 !target.closest('.check-list') &&
                 !target.closest('.txt') &&
@@ -387,11 +385,11 @@ export default {
             try {
                 const {
                     data: { data: response },
-                } = await recipientList({
-                    depthCheckYn: 'Y',
-                });
-                // this.userList = response.userList;
-                this.userList = [
+                } = await recipientList();
+                if (response.depthCheckYn === 'Y') {
+                    response.this.userList = response.userList;
+                }
+                /*       this.userList = [
                     {
                         nickname: '테스트계정',
                         userId:
@@ -468,7 +466,7 @@ export default {
                         userId: 'test@nike.co.kr14',
                         userSeq: 14,
                     },
-                ];
+                ];*/
             } catch (error) {
                 console.error(error);
             }
