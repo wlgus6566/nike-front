@@ -189,7 +189,7 @@ export default {
             );
             const widthGuideTxt = selectDiv.querySelector('#select-width');
             input.style.width = `${Math.ceil(widthGuideTxt.offsetWidth) +
-                30}px`;
+                40}px`;
             widthGuideTxt.parentNode.removeChild(widthGuideTxt);
             this.complete = 1;
         },
@@ -199,7 +199,7 @@ export default {
         if (this.$route.path.split('/')[1] === 'asset') {
             const FontFaceObserver = require('fontfaceobserver');
             const NotoSans = new FontFaceObserver('Noto Sans KR', {
-                weight: 700,
+                weight: 400,
             });
             const Roboto = new FontFaceObserver('Roboto', { weight: 700 });
             Promise.all([NotoSans.load(), Roboto.load()]).then(() => {
@@ -254,5 +254,9 @@ export default {
 }
 .error {
     border-color: #f20000;
+}
+::v-deep .filter-select .el-input--suffix .el-input__inner {
+    font-size: 14px;
+    font-weight: 400;
 }
 </style>
