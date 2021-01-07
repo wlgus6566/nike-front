@@ -225,7 +225,7 @@ export default {
             });
             console.log(mergeArray.length);
             if (mergeArray.length + this.uploadFileList.length > 5) {
-                alert('5개 이상 등록 할 수 없습니다.');
+                alert('첨부파일은 최대 5개까지 등록 가능합니다.');
                 if (this.uploadFileList.length === 5) return;
                 let maxNum = 5;
                 if (this.uploadFileList.length > 0) {
@@ -482,4 +482,8 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+::v-deep .check-label {
+    margin-right: 50px;
+}
+</style>

@@ -176,8 +176,8 @@ export default {
         uploadIptChange(e) {
             const files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-            let mergeArray = Array.from(files).filter((item) => {
-                return this.FileList.every((el) => {
+            let mergeArray = Array.from(files).filter(item => {
+                return this.FileList.every(el => {
                     return (
                         item.name !== el.fileName || item.size !== el.fileSize
                     );
@@ -188,8 +188,8 @@ export default {
                 alert('이미 등록된 파일입니다.');
             }
 
-            mergeArray.forEach((el) => {
-                const idx = this.FileList.findIndex((el) => {
+            mergeArray.forEach(el => {
+                const idx = this.FileList.findIndex(el => {
                     return el.fileKindCode === 'FILE' && !el.fileName;
                 });
 
@@ -228,7 +228,7 @@ export default {
         async uploadFiles() {
             this.errorFile = [];
             Promise.all(
-                this.uploadFile.map(async (el) => {
+                this.uploadFile.map(async el => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
@@ -241,7 +241,7 @@ export default {
                                 console.log(percentCompleted);
                             },*/
 
-                            onUploadProgress: (progressEvent) => {
+                            onUploadProgress: progressEvent => {
                                 let percentCompleted = Math.round(
                                     (progressEvent.loaded * 95) /
                                         progressEvent.total
@@ -275,7 +275,7 @@ export default {
                             }
                         });
                     } catch (error) {
-                        this.FileList.forEach((item) => {
+                        this.FileList.forEach(item => {
                             if (
                                 item.fileName === el.name &&
                                 item.fileSize === el.size
@@ -291,7 +291,7 @@ export default {
                     }
                 })
             )
-                .then((values) => {
+                .then(values => {
                     if (!this.errorFile.length) {
                         this.uploadFile = [];
                         this.$emit('submitForm');
@@ -299,7 +299,7 @@ export default {
                         bus.$emit('pageLoading', false);
                     }
                 })
-                .catch((e) => {
+                .catch(e => {
                     this.uploadFile = [];
                     //this.$emit('submitForm');
                 });
@@ -309,7 +309,7 @@ export default {
             this.emitFileList();
         },
         fileDelete(file) {
-            const idx = this.FileList.findIndex((el) => {
+            const idx = this.FileList.findIndex(el => {
                 return el.fileOrder === file.fileOrder;
             });
             this.FileList.splice(idx, 1);
@@ -317,8 +317,8 @@ export default {
                 this.FileList.push({ ...this.defaultFileData });
             }
 
-            this.uploadFile = this.uploadFile.filter((a) => {
-                return this.FileList.some((b) => {
+            this.uploadFile = this.uploadFile.filter(a => {
+                return this.FileList.some(b => {
                     return (
                         a.name === b.fileName &&
                         a.type === b.fileContentType &&
@@ -353,7 +353,10 @@ export default {
                 if (response.content && response.content.length) {
                     this.FileList = response.content;
                 } else {
-                    this.FileList = [this.defaultFileData];
+                    const obj = JSON.parse(
+                        JSON.stringify(this.defaultFileData)
+                    );
+                    this.FileList = [obj];
                 }
                 this.emitFileList();
                 this.$emit('getAuthList', this.$route.params.id);

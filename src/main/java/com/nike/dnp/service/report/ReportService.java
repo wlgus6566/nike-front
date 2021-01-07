@@ -279,14 +279,26 @@ public class ReportService {
             }
         }
         final List<ReportFileSaveDTO> newFileList = reportSaveDTO.getReportFileSaveDTOList();
+        List<Long> keepFileSeqList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
                 && !ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
             for (final ReportFile beforeFile : beforeFileList) {
                 for (final ReportFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getReportFileSeq().equals(newFile.getReportFileSeq())) {
-                        lastBeforeFileList.remove(beforeFile);
+//                        lastBeforeFileList.remove(beforeFile);
+                        keepFileSeqList.add(beforeFile.getReportFileSeq());
+                        break;
                     }
+                }
+            }
+        }
+
+        for (Long fileSeq : keepFileSeqList) {
+            for (int i = 0; i < lastBeforeFileList.size(); i++) {
+                if (fileSeq == lastBeforeFileList.get(i).getReportFileSeq()) {
+                    lastBeforeFileList.remove(i);
+                    break;
                 }
             }
         }

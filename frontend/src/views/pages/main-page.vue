@@ -212,7 +212,7 @@
 import { getMain } from '@/api/main';
 import {
     delCalendar,
-    getCalendarList, // CALENDAR 목록 조회
+    getCalendarEachList, // CALENDAR 목록 조회
     getTodayCalendar,
     postCalendar,
     putCalendar, // CALENDAR 오늘 조회
@@ -272,7 +272,7 @@ export default {
                             this.calDetailClose();
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -285,7 +285,7 @@ export default {
                             this.calDetailClose();
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -356,17 +356,20 @@ export default {
             });
         },
         mouserOverEvent(e) {
-            console.log(e);
             clearTimeout(this.setTime);
             this.setTime = setTimeout(() => {
+                let end = new Date(e.event.end);
+                end.setDate(end.getDate() - 1);
                 this.calendarData = e.event;
                 const beginyear = e.event.startStr.substr(0, 4);
                 const beginmonth = e.event.startStr.substr(5, 2);
                 const beginday = e.event.startStr.substr(8, 2);
 
-                const endnyear = e.event.endStr.substr(0, 4);
-                const endnmonth = e.event.endStr.substr(5, 2);
-                const endnday = e.event.endStr.substr(8, 2);
+                const endnyear = end.getFullYear();
+                let endnmonth = end.getMonth() + 1;
+                endnmonth = endnmonth >= 10 ? endnmonth : '0' + endnmonth;
+                let endnday = end.getDate();
+                endnday = endnday >= 10 ? endnday : '0' + endnday;
 
                 this.calendarData.beginDt =
                     beginyear + '.' + beginmonth + '.' + beginday;
@@ -551,8 +554,8 @@ export default {
         async calLendarFetchData() {
             this.loadingData = true;
             try {
-                await this.getCalendarList(this.yyyyMm);
-                await this.getTodayCalendar(this.searchDt);
+                await this.getCalendarEachList(this.yyyyMm);
+                //await this.getTodayCalendar(this.searchDt);
                 this.loadingData = false;
                 await this.loadCalendarCode();
             } catch (error) {
@@ -560,11 +563,11 @@ export default {
             }
         },
         // 한달 일정 조회
-        async getCalendarList(yyyyMm) {
+        async getCalendarEachList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
         },
@@ -695,7 +698,7 @@ export default {
             }
         },
         async processAfterSuccess() {
-            await this.getCalendarList();
+            await this.getCalendarEachList();
             await this.getTodayCalendar();
             this.closeDialog();
         },
@@ -1068,10 +1071,6 @@ border-top: 0;*/
 /*::v-deep .fc-active {*/
 /*    background-color: #fa5400;*/
 /*}*/
-::v-deep .fc .fc-daygrid-day-number {
-    font-weight: 400;
-    font-size: 12px;
-}
 ::v-deep .fc-daygrid-day-bottom {
     width: 100%;
 }
