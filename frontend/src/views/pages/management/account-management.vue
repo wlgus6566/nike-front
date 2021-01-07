@@ -92,25 +92,6 @@
                                     />
                                 </div>
                             </li>
-                            <li class="form-row">
-                              <div class="form-column">
-                                <span class="label-title required">
-                                  메일 수신
-                                </span>
-                              </div>
-                              <div class="form-column">
-                                <label class="check-label">
-                                  <span class="checkbox">
-                                    <input
-                                        type="checkbox"
-                                        v-model="checked"
-                                    />
-                                    <i></i>
-                                  </span>
-                                  ORDER 메일 수신 권한
-                                </label>
-                              </div>
-                            </li>
                         </ul>
                         <hr class="hr-gray" />
                     </div>
@@ -161,10 +142,7 @@
 import CascaderSelect from '@/components/cascader-select';
 export default {
     data() {
-        return {
-          checked:false,
-          checkMail:false,
-        };
+        return {};
     },
     components: {
         CascaderSelect,
