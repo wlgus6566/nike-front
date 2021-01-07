@@ -25,83 +25,117 @@
                                 </span>
                             </div>
                         </li>
-                        <li class="form-row">
-                            <div class="form-column">
-                                <span class="label-title">수신자</span>
-                            </div>
-                            <div class="form-column">
-                                <div class="check-select" ref="checkSelect">
-                                    <button
-                                        type="button"
-                                        class="txt txt-click user-item"
-                                        @click="accordion"
-                                        v-if="userList.length > 1"
-                                    >
-                                        <span class="nickname">
-                                            {{ userList[0].nickname }}
-                                        </span>
-                                        <span class="mail">
-                                            {{ userList[0].userId }} </span
-                                        >,외5명
-                                    </button>
-                                    <span class="txt user-item" v-else>
-                                        <span class="nickname">
-                                            {{ userList[0].nickname }}
-                                        </span>
-                                        <span class="mail">
-                                            {{ userList[0].userId }}
-                                        </span>
-                                    </span>
-                                    <div class="bottom-fixed">
-                                        <transition
-                                            @enter="itemOpen"
-                                            @leave="itemClose"
-                                            :css="false"
+                        <template v-if="orderDetailData.orderRecipientList">
+                            <li
+                                class="form-row"
+                                v-if="
+                                    orderDetailData.orderRecipientList.length >
+                                        0
+                                "
+                            >
+                                <div class="form-column">
+                                    <span class="label-title">수신자</span>
+                                </div>
+                                <div class="form-column">
+                                    <div class="check-select" ref="checkSelect">
+                                        <button
+                                            type="button"
+                                            class="txt txt-click user-item"
+                                            @click="accordion"
+                                            v-if="
+                                                orderDetailData
+                                                    .orderRecipientList.length >
+                                                    1
+                                            "
                                         >
-                                            <div
-                                                class="check-list-wrap"
-                                                v-if="userListOpen"
+                                            <span class="nickname">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .nickname
+                                                }}
+                                            </span>
+                                            <span class="mail">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .userId
+                                                }} </span
+                                            >,외{{
+                                                orderDetailData
+                                                    .orderRecipientList.length -
+                                                    1
+                                            }}명
+                                        </button>
+                                        <span class="txt user-item" v-else>
+                                            <span class="nickname">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .nickname
+                                                }}
+                                            </span>
+                                            <span class="mail">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .userId
+                                                }}
+                                            </span>
+                                        </span>
+                                        <div class="bottom-fixed">
+                                            <transition
+                                                @enter="itemOpen"
+                                                @leave="itemClose"
+                                                :css="false"
                                             >
-                                                <el-scrollbar
-                                                    view-class="check-list-scroll"
-                                                    :native="false"
+                                                <div
+                                                    class="check-list-wrap"
                                                     v-if="userListOpen"
                                                 >
-                                                    <ul
-                                                        class="check-list"
-                                                        ref="checkList"
+                                                    <el-scrollbar
+                                                        view-class="check-list-scroll"
+                                                        :native="false"
+                                                        v-if="userListOpen"
                                                     >
-                                                        <li
-                                                            v-for="user in userList"
-                                                            :key="user.userSeq"
+                                                        <ul
+                                                            class="check-list"
+                                                            ref="checkList"
                                                         >
-                                                            <div
-                                                                class="user-item"
+                                                            <li
+                                                                v-for="user in orderDetailData.orderRecipientList"
+                                                                :key="
+                                                                    user.userSeq
+                                                                "
                                                             >
-                                                                <span
-                                                                    class="nickname"
+                                                                <div
+                                                                    class="user-item"
                                                                 >
-                                                                    {{
-                                                                        user.nickname
-                                                                    }}
-                                                                </span>
-                                                                <span
-                                                                    class="mail"
-                                                                >
-                                                                    {{
-                                                                        user.userId
-                                                                    }}
-                                                                </span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </el-scrollbar>
-                                            </div>
-                                        </transition>
+                                                                    <span
+                                                                        class="nickname"
+                                                                    >
+                                                                        {{
+                                                                            user.nickname
+                                                                        }}
+                                                                    </span>
+                                                                    <span
+                                                                        class="mail"
+                                                                    >
+                                                                        {{
+                                                                            user.userId
+                                                                        }}
+                                                                    </span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </el-scrollbar>
+                                                </div>
+                                            </transition>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        </template>
                         <li class="form-row">
                             <div class="form-column">
                                 <span class="label-title">총 예상 금액</span>
@@ -245,78 +279,6 @@ export default {
     data() {
         return {
             userListOpen: false,
-            userList: [
-                {
-                    nickname: '테스트계정1',
-                    userId: 'test@nike.co.kr1',
-                    userSeq: 1,
-                },
-                {
-                    nickname: '테스트계정2',
-                    userId: 'test@nike.co.kr2',
-                    userSeq: 2,
-                },
-                {
-                    nickname: '테스트계정3',
-                    userId: 'test@nike.co.kr3',
-                    userSeq: 3,
-                },
-                {
-                    nickname: '테스트계정4',
-                    userId: 'test@nike.co.kr4',
-                    userSeq: 4,
-                },
-                {
-                    nickname: '테스트계정5',
-                    userId: 'test@nike.co.kr5',
-                    userSeq: 5,
-                },
-                {
-                    nickname: '테스트계정6',
-                    userId: 'test@nike.co.kr6',
-                    userSeq: 6,
-                },
-                {
-                    nickname: '테스트계정7',
-                    userId: 'test@nike.co.kr7',
-                    userSeq: 7,
-                },
-                {
-                    nickname: '테스트계정8',
-                    userId: 'test@nike.co.kr8',
-                    userSeq: 8,
-                },
-                {
-                    nickname: '테스트계정9',
-                    userId: 'test@nike.co.kr9',
-                    userSeq: 9,
-                },
-                {
-                    nickname: '테스트계정10',
-                    userId: 'test@nike.co.kr10',
-                    userSeq: 10,
-                },
-                {
-                    nickname: '테스트계정11',
-                    userId: 'test@nike.co.kr11',
-                    userSeq: 11,
-                },
-                {
-                    nickname: '테스트계정12',
-                    userId: 'test@nike.co.kr12',
-                    userSeq: 12,
-                },
-                {
-                    nickname: '테스트계정13',
-                    userId: 'test@nike.co.kr13',
-                    userSeq: 13,
-                },
-                {
-                    nickname: '테스트계정14',
-                    userId: 'test@nike.co.kr14',
-                    userSeq: 14,
-                },
-            ],
         };
     },
     props: ['visible', 'orderDetailData'],
