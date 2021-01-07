@@ -652,7 +652,6 @@ export default {
 }
 ::v-deep .el-dialog {
     margin: 0 !important;
-    width: 600px;
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
