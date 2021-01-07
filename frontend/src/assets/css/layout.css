@@ -464,6 +464,7 @@ footer .info-list .info-list-item a {
 .el-dialog {
     margin: 0 !important;
     min-width: 600px;
+    width: 600px;
     padding-bottom: 50px;
 }
 .el-dialog__title {

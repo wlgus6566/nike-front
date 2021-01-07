@@ -152,15 +152,18 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.modal-wrap .el-dialog {
+::v-deep .el-dialog {
     margin: 0 !important;
+    width: 660px;
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
 ::v-deep .el-dialog,
 ::v-deep .el-dialog__body {
-    width: 600px;
     box-sizing: border-box;
+}
+.form-desc {
+    font-size: 10px;
 }
 </style>
