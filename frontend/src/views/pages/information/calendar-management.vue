@@ -333,19 +333,19 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.el-dialog {
+::v-deep .el-dialog {
     max-width: 600px;
 }
-.modal-wrap .el-dialog {
+::v-deep .modal-wrap .el-dialog {
     margin: 0 !important;
 }
-.modal-wrap .el-scrollbar__wrap {
+::v-deep .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
 .form-list .check-label:last-child {

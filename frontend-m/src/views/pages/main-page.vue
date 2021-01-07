@@ -155,7 +155,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import momentPlugin from '@fullcalendar/moment';
 import CalendarModal from '@/views/pages/information/calendar-detail.vue';
-import { getCalendarList } from '@/api/calendar';
 export default {
     name: 'MainPage',
     data() {
@@ -210,7 +209,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.prev();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -222,7 +221,7 @@ export default {
                         click: () => {
                             let calendarApi = this.$refs.fullCalendar.getApi();
                             calendarApi.next();
-                            this.getCalendarList(
+                            this.getCalendarEachList(
                                 this.$moment(calendarApi.getDate()).format(
                                     'YYYY.MM'
                                 )
@@ -261,14 +260,18 @@ export default {
     },
     methods: {
         eventClickEvent(e) {
+            let end = new Date(e.event.end);
+            end.setDate(end.getDate() - 1);
             this.calendarData = e.event;
             const beginyear = e.event.startStr.substr(0, 4);
             const beginmonth = e.event.startStr.substr(5, 2);
             const beginday = e.event.startStr.substr(8, 2);
 
-            const endnyear = e.event.endStr.substr(0, 4);
-            const endnmonth = e.event.endStr.substr(5, 2);
-            const endnday = e.event.endStr.substr(8, 2);
+            const endnyear = end.getFullYear();
+            let endnmonth = end.getMonth() + 1;
+            endnmonth = endnmonth >= 10 ? endnmonth : '0' + endnmonth;
+            let endnday = end.getDate();
+            endnday = endnday >= 10 ? endnday : '0' + endnday;
 
             this.calendarData.beginDt =
                 beginyear + '.' + beginmonth + '.' + beginday;
@@ -357,19 +360,19 @@ export default {
         async calLendarFetchData() {
             this.loadingData = true;
             try {
-                await this.getCalendarList(this.yyyyMm);
-                await this.getTodayCalendar(this.searchDt);
+                await this.getCalendarEachList(this.yyyyMm);
+                //await this.getTodayCalendar(this.searchDt);
                 this.loadingData = false;
             } catch (error) {
                 console.error(error);
             }
         },
         // 한달 일정 조회
-        async getCalendarList(yyyyMm) {
+        async getCalendarEachList(yyyyMm) {
             this.yyyyMm = !!yyyyMm ? yyyyMm : this.yyyyMm;
             const {
                 data: { data: response },
-            } = await getCalendarList({ yyyyMm: this.yyyyMm });
+            } = await getCalendarEachList({ yyyyMm: this.yyyyMm });
             this.calendarData = response;
             this.transformData();
         },

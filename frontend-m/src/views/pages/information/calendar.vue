@@ -153,14 +153,19 @@ export default {
     },
     methods: {
         eventClickEvent(e) {
+            let end = new Date(e.event.end);
+            end.setDate(end.getDate() - 1);
             this.calendarDetailData = e.event;
+
             const beginyear = e.event.startStr.substr(0, 4);
             const beginmonth = e.event.startStr.substr(5, 2);
             const beginday = e.event.startStr.substr(8, 2);
 
-            const endnyear = e.event.endStr.substr(0, 4);
-            const endnmonth = e.event.endStr.substr(5, 2);
-            const endnday = e.event.endStr.substr(8, 2);
+            const endnyear = end.getFullYear();
+            let endnmonth = end.getMonth() + 1;
+            endnmonth = endnmonth >= 10 ? endnmonth : '0' + endnmonth;
+            let endnday = end.getDate();
+            endnday = endnday >= 10 ? endnday : '0' + endnday;
 
             this.calendarDetailData.beginDt =
                 beginyear + '.' + beginmonth + '.' + beginday;
