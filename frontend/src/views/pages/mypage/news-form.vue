@@ -64,6 +64,17 @@
                 </li>
             </ul>
             <hr class="hr-gray" />
+            <FileItem
+                v-for="file in FileList"
+                :listLength="FileList.length"
+                :file="file"
+                :key="file.fileOrder"
+                :errorFile="errorFile"
+                :pageFileSectionCodeName="pageFileSectionCodeName"
+                :menuCode="menuCode"
+                @fileSelect="fileSelect"
+                @fileDelete="fileDelete(file)"
+            />
             <div class="btn-area">
                 <router-link to="/mypage/news" class="btn-s-white">
                     <span>취소</span>
@@ -79,6 +90,7 @@
 <script>
 import { getCustomerDetail, postNews, putNews } from '@/api/customer';
 import thumbnail from '@/components/thumbnail/index';
+import FileItem from '@/components/file-settings/file-item.vue';
 import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
@@ -90,6 +102,66 @@ export default {
     },
     data() {
         return {
+            menuCode: 'notice',
+            uploadFile: [],
+            errorFile: [],
+
+            test: {
+                detailThumbnailFileName: '',
+                detailThumbnailFilePhysicalName: '',
+                detailThumbnailFileSize: '',
+                fileExtension: '',
+                fileKindCode: 'FILE',
+                filePhysicalName: '',
+                fileSectionCode: null,
+                thumbnailFileName: '',
+                thumbnailFilePhysicalName: '',
+                thumbnailFileSize: '',
+                progress: 0,
+                title: '',
+                url: '',
+            },
+            FileList: [
+                {
+                    progress: 0,
+                    detailThumbnailFileName: '',
+                    detailThumbnailFilePhysicalName: '',
+                    detailThumbnailFileSize: '',
+                    fileContentType: '',
+                    fileExtension: '',
+                    fileKindCode: 'FILE',
+                    fileName: '',
+                    fileOrder: 0,
+                    filePhysicalName: '',
+                    fileSectionCode: null,
+                    fileSize: 0,
+                    thumbnailFileName: '',
+                    thumbnailFilePhysicalName: '',
+                    thumbnailFileSize: '',
+                    title: '',
+                    url: '',
+                },
+            ],
+            defaultFileData: {
+                progress: 0,
+                detailThumbnailFileName: '',
+                detailThumbnailFilePhysicalName: '',
+                detailThumbnailFileSize: '',
+                fileContentType: '',
+                fileExtension: '',
+                fileKindCode: 'FILE',
+                fileName: '',
+                fileOrder: 0,
+                filePhysicalName: '',
+                fileSectionCode: null,
+                fileSize: 0,
+                thumbnailFileName: '',
+                thumbnailFilePhysicalName: '',
+                thumbnailFileSize: '',
+                title: '',
+                url: '',
+            },
+
             noticeArticleSectionCode: 'NEWS',
             useYn: 'Y',
             newsDetail: {
@@ -115,6 +187,7 @@ export default {
     },
     components: {
         thumbnail,
+        FileItem,
     },
     created() {
         this.$store.state.saveFolder = false;
@@ -136,13 +209,39 @@ export default {
         }
     },
     methods: {
+        fileSelect() {
+            this.$refs.uploadIpt.value = null;
+            this.$refs.uploadIpt.click();
+        },
+        fileDelete(file) {
+            const idx = this.FileList.findIndex(el => {
+                return el.fileOrder === file.fileOrder;
+            });
+            this.FileList.splice(idx, 1);
+            if (!this.FileList.length) {
+                this.FileList.push({ ...this.defaultFileData });
+            }
+
+            this.uploadFile = this.uploadFile.filter(a => {
+                return this.FileList.some(b => {
+                    return (
+                        a.name === b.fileName &&
+                        a.type === b.fileContentType &&
+                        a.size === b.fileSize
+                    );
+                });
+            });
+
+            this.emitFileList();
+        },
+
         //이미지 받아오기
         cropImage(imageBase64, imgName) {
             this.newsDetail.imageBase64 = imageBase64;
             this.newsDetail.thumbnailFileName = imgName;
         },
         validateSelect(e, prop) {
-            this.$refs.form.validateField(prop, (error) => {
+            this.$refs.form.validateField(prop, error => {
                 if (!error) {
                     alert('submit!');
                 } else {
@@ -251,7 +350,7 @@ export default {
             this.newsDetail.thumbnailFilePhysicalName = null;
             this.newsDetail.thumbnailFileSize = null;
         },
-        onEditorInput: function (e) {
+        onEditorInput: function(e) {
             this.newsDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },
