@@ -62,13 +62,19 @@ public class OrderEntity extends BaseTimeEntity {
     @ApiModelProperty(name = "useYn", value = "사용여부")
     private String useYn;
 
-
     /**
      * The Order product mapping
      */
     @OneToMany(mappedBy = "orderEntity")
     @JsonManagedReference
     private List<OrderProductMapping> orderProductMapping;
+
+    /**
+     * The Order recipient list
+     */
+    @OneToMany(mappedBy = "orderEntity")
+    @JsonManagedReference
+    private List<OrderMail> orderRecipientList;
 
     /**
      * The User email
