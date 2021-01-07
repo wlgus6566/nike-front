@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title=""
-        class="modal-wrap"
+        class="modal-wrap order-sheet-modal"
         :visible="visible"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
@@ -153,24 +153,29 @@
                                         :alt="item.product.imageFileName"
                                     />
                                 </span>
-                                <span class="info-box">
-                                    <strong class="title">
-                                        {{ item.product.goodsName }}
-                                    </strong>
-                                    <p class="txt">
-                                        {{ item.product.goodsDescription }}
-                                    </p>
-                                    <span class="desc-txt-box">
-                                        <p class="desc">
-                                            {{ item.product.agency.agencyName }}
+                                <div class="info-box-wrap">
+                                    <span class="info-box">
+                                        <strong class="title">
+                                            {{ item.product.goodsName }}
+                                        </strong>
+                                        <p class="txt">
+                                            {{ item.product.goodsDescription }}
                                         </p>
+                                        <span class="desc-txt-box">
+                                            <p class="desc">
+                                                {{
+                                                    item.product.agency
+                                                        .agencyName
+                                                }}
+                                            </p>
+                                        </span>
                                     </span>
-                                </span>
-                                <span class="quantity-txt">
-                                    <!-- 주문수량  -->
-                                    <em> {{ item.orderQuantity }}</em>
-                                    개
-                                </span>
+                                    <span class="quantity-txt">
+                                        <!-- 주문수량  -->
+                                        <em> {{ item.orderQuantity }}</em>
+                                        개
+                                    </span>
+                                </div>
                                 <ul class="add-order-list">
                                     <li
                                         v-if="
@@ -393,8 +398,5 @@ export default {
 ::v-deep .el-dialog,
 ::v-deep .el-dialog__body {
     box-sizing: border-box;
-}
-.form-desc {
-    font-size: 10px;
 }
 </style>

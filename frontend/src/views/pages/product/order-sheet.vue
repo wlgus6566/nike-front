@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title=""
-        class="modal-wrap"
+        class="modal-wrap order-sheet-modal"
         :visible="visible"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
@@ -171,24 +171,25 @@
                                     :alt="item.product.imageFileName"
                                 />
                             </span>
-                            <span class="info-box">
-                                <strong class="title">
-                                    {{ item.product.goodsName }}
-                                </strong>
-                                <p class="txt">
-                                    {{ item.product.goodsDescription }}
-                                </p>
-                                <span class="desc-txt-box">
-                                    <p class="desc">
+                            <div class="info-box-wrap">
+                                <span class="info-box">
+                                    <strong class="title">
                                         {{ item.product.goodsName }}
+                                    </strong>
+                                    <p class="txt">
+                                        {{ item.product.goodsDescription }}
                                     </p>
+                                    <span class="desc-txt-box">
+                                        <p class="desc">
+                                            {{ item.product.goodsName }}
+                                        </p>
+                                    </span>
                                 </span>
-                            </span>
-                            <span class="quantity-txt">
-                                <em>{{ item.orderQuantity }}</em>
-                                개
-                            </span>
-
+                                <span class="quantity-txt">
+                                    <em>{{ item.orderQuantity }}</em>
+                                    개
+                                </span>
+                            </div>
                             <span class="add-file">
                                 <div class="order-upload-file-box">
                                     <!--active-->
@@ -655,9 +656,6 @@ export default {
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
-}
-.form-desc {
-    font-size: 10px;
 }
 .drag-item {
     opacity: 1 !important;
