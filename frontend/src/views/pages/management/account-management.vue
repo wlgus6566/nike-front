@@ -169,32 +169,35 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.modal-wrap .el-dialog {
-    margin: 0 !important;
-}
-.modal-wrap .el-scrollbar__wrap {
+::v-deep .el-scrollbar__wrap {
     max-height: 80vh;
 }
-.cascader-select .el-input--suffix .el-input__inner {
+::v-deep .cascader-select .el-input--suffix .el-input__inner {
     height: 39px;
     vertical-align: top;
 }
-.cascader-select .el-input--suffix .el-input__inner[aria-expanded='false'] {
+::v-deep
+    .cascader-select
+    .el-input--suffix
+    .el-input__inner[aria-expanded='false'] {
     color: #888 !important;
 }
-.cascader-select .el-input--suffix .el-input__inner::placeholder {
+::v-deep .cascader-select .el-input--suffix .el-input__inner::placeholder {
     color: #888 !important;
 }
-.cascader-select .el-input--suffix .el-input__inner::-webkit-input-placeholder {
+::v-deep
+    .cascader-select
+    .el-input--suffix
+    .el-input__inner::-webkit-input-placeholder {
     color: #888 !important;
 }
-.cascader-select.readonly .el-input__inner {
+::v-deep .cascader-select.readonly .el-input__inner {
     color: #888;
 }
 </style>

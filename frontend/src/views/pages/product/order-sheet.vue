@@ -373,23 +373,20 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.modal-wrap .el-dialog {
+::v-deep .el-dialog {
     margin: 0 !important;
+    width: 660px;
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
 .form-desc {
-    margin-top: 5px;
     font-size: 10px;
-}
-.sub-title {
-    line-height: 16px;
 }
 </style>
