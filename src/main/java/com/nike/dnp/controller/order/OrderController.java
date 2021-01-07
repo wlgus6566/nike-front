@@ -2,27 +2,19 @@ package com.nike.dnp.controller.order;
 
 
 import com.nike.dnp.common.aspect.ValidField;
-import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
-import com.nike.dnp.dto.file.FileResultDTO;
-import com.nike.dnp.dto.file.FileUploadDTO;
-import com.nike.dnp.dto.notice.EditorImageDto;
 import com.nike.dnp.dto.order.*;
 import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.product.Product;
-import com.nike.dnp.exception.CodeMessageHandleException;
-import com.nike.dnp.exception.FileHandleException;
 import com.nike.dnp.model.response.SingleResult;
 import com.nike.dnp.service.ResponseService;
 import com.nike.dnp.service.goodsbasket.GoodsBasketService;
+import com.nike.dnp.service.order.OrderMailService;
 import com.nike.dnp.service.order.OrderProductFileService;
 import com.nike.dnp.service.order.OrderProductMappingService;
 import com.nike.dnp.service.order.OrderService;
 import com.nike.dnp.service.product.ProductService;
-import com.nike.dnp.util.FileUtil;
-import com.nike.dnp.util.MessageUtil;
-import com.nike.dnp.util.S3Util;
 import com.nike.dnp.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,13 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 주문 Controller
@@ -101,6 +89,13 @@ public class OrderController {
 	private final OrderProductFileService orderProductFileService;
 
 	/**
+	 * The Order mail service
+	 *
+	 * @author [이소정]
+	 */
+	private final OrderMailService orderMailService;
+
+	/**
 	 * The constant REQUEST_CHARACTER
 	 *
 	 * @author [윤태호]
@@ -153,8 +148,8 @@ public class OrderController {
 					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
 			);
 		}
-			orderProductMappingService.orderSheetSend_del(orderEntity);
-			return responseService.getSingleResult(orderEntity);
+		orderProductMappingService.orderSheetSend_del(orderEntity);
+		return responseService.getSingleResult(orderEntity);
 	}
 
 
@@ -204,6 +199,10 @@ public class OrderController {
 					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
 			);
 		}
+
+		// 수신자 목록 저장
+		orderMailService.saveOrderMail(orderEntity.getOrderSeq(), orderSaveDTO.getRecipientList());
+		// 주문서 메일 발송
 		orderProductMappingService.orderSheetSend(orderEntity, orderSaveDTO.getRecipientList());
 		return responseService.getSingleResult(orderEntity);
 	}
