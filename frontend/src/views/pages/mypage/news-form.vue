@@ -64,17 +64,49 @@
                 </li>
             </ul>
             <hr class="hr-gray" />
-            <FileItem
-                v-for="file in FileList"
-                :listLength="FileList.length"
-                :file="file"
-                :key="file.fileOrder"
-                :errorFile="errorFile"
-                :pageFileSectionCodeName="pageFileSectionCodeName"
-                :menuCode="menuCode"
-                @fileSelect="fileSelect"
-                @fileDelete="fileDelete(file)"
-            />
+            <h3 class="form-title">파일 설정</h3>
+            <hr class="hr-black" />
+            <div class="btn-area-file">
+                <button class="btn-file-full" v-on:click.prevent="fileAdd">
+                    <i class="icon-add"></i>
+                    <span>파일 추가하기</span>
+                </button>
+            </div>
+            <div>
+                <input
+                    type="file"
+                    ref="uploadIpt"
+                    multiple
+                    @change="uploadIptChange"
+                    style="position: absolute; opacity: 0;"
+                />
+                <draggable
+                    ref="fileListUl"
+                    v-model="FileList"
+                    v-bind="dragOptions"
+                    @end="emitFileList"
+                    class="file-setting-list"
+                    tag="ul"
+                >
+                    <FileItem
+                        v-for="file in FileList"
+                        :listLength="FileList.length"
+                        :file="file"
+                        :key="file.fileOrder"
+                        :errorFile="errorFile"
+                        :pageFileSectionCodeName="pageFileSectionCodeName"
+                        :menuCode="menuCode"
+                        @fileSelect="fileSelect"
+                        @fileDelete="fileDelete(file)"
+                    />
+                </draggable>
+            </div>
+            <div class="btn-area-file">
+                <button class="btn-file-full" v-on:click.prevent="fileAdd">
+                    <i class="icon-add"></i>
+                    <span>파일 추가하기</span>
+                </button>
+            </div>
             <div class="btn-area">
                 <router-link to="/mypage/news" class="btn-s-white">
                     <span>취소</span>
@@ -88,6 +120,7 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import { getCustomerDetail, postNews, putNews } from '@/api/customer';
 import thumbnail from '@/components/thumbnail/index';
 import FileItem from '@/components/file-settings/file-item.vue';
@@ -102,6 +135,7 @@ export default {
     },
     data() {
         return {
+            pageFileSectionCodeName: '',
             menuCode: 'notice',
             uploadFile: [],
             errorFile: [],
@@ -188,6 +222,17 @@ export default {
     components: {
         thumbnail,
         FileItem,
+        draggable,
+    },
+    computed: {
+        dragOptions() {
+            return {
+                animation: 100,
+                group: 'description',
+                disabled: false,
+                ghostClass: 'ghost',
+            };
+        },
     },
     created() {
         this.$store.state.saveFolder = false;
@@ -209,6 +254,10 @@ export default {
         }
     },
     methods: {
+        fileAdd() {
+            this.FileList.push({ ...this.defaultFileData });
+            this.emitFileList();
+        },
         fileSelect() {
             this.$refs.uploadIpt.value = null;
             this.$refs.uploadIpt.click();
