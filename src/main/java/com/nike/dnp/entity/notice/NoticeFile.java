@@ -1,6 +1,7 @@
 package com.nike.dnp.entity.notice;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.notice.CustomerFileSaveDTO;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.entity.BaseTimeEntity;
@@ -105,9 +106,37 @@ public class NoticeFile extends BaseTimeEntity {
     private String useYn;
 
     /**
+     * 파일 종류 공통코드
+     *
+     * @author [이소정]
+     */
+    @Column(name = "FILE_KIND_CODE")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO)")
+    private String fileKindCode;
+
+    /**
+     * 타이틀
+     *
+     * @author [이소정]
+     */
+    @Column(name = "TITLE")
+    @ApiModelProperty(name = "title", value = "타이틀")
+    private String title;
+
+    /**
+     * url
+     *
+     * @author [이소정]
+     */
+    @Column(name = "URL")
+    @ApiModelProperty(name = "url", value = "url")
+    private String url;
+
+
+    /**
      * 주문 상품 정보
      *
-     * @author [윤태호]
+     * @author [이소정]
      */
     @ManyToOne
     @JoinColumn(name="NOTICE_ARTICLE_SEQ",insertable = false,updatable = false)
@@ -122,19 +151,50 @@ public class NoticeFile extends BaseTimeEntity {
      * @param customerFileSaveDTO the customer file save dto
      * @return the notice file
      * @author [이소정]
-     * @implNote [method 설명]
+     * @implNote 게시물 파일 저장
      * @since 2020. 12. 16. 오후 6:57:15
      */
     public NoticeFile saveNoticeFile(final CustomerFileSaveDTO customerFileSaveDTO) {
         NoticeFile noticeFile = new NoticeFile();
         noticeFile.setNoticeArticleSeq(customerFileSaveDTO.getNoticeArticleSeq());
-        noticeFile.setFileContentType(customerFileSaveDTO.getFileContentType());
-        noticeFile.setFileExtension(customerFileSaveDTO.getFileExtension());
-        noticeFile.setFileName(customerFileSaveDTO.getFileName());
-        noticeFile.setFileSize(customerFileSaveDTO.getFileSize());
-        noticeFile.setFilePhysicalName(customerFileSaveDTO.getFilePhysicalName());
+
+        boolean isFile = ServiceCode.NoticeFileKindCode.FILE.toString().equals(customerFileSaveDTO.getFileKindCode()) ? true : false;
+        
+        noticeFile.setFileKindCode(customerFileSaveDTO.getFileKindCode());
+
+        noticeFile.setFileContentType(isFile ? customerFileSaveDTO.getFileContentType() : null);
+        noticeFile.setFileExtension(isFile ? customerFileSaveDTO.getFileExtension() : null);
+        noticeFile.setFileName(isFile ? customerFileSaveDTO.getFileName(): null);
+        noticeFile.setFileSize(isFile ? customerFileSaveDTO.getFileSize(): null);
+        noticeFile.setFilePhysicalName(isFile ? customerFileSaveDTO.getFilePhysicalName(): null);
+
+        noticeFile.setTitle(isFile ? null : customerFileSaveDTO.getTitle());
+        noticeFile.setUrl(isFile ? null : customerFileSaveDTO.getUrl());
+
         noticeFile.setUseYn(customerFileSaveDTO.getUseYn());
         return noticeFile;
+    }
+
+    /**
+     * Update.
+     *
+     * @param customerFileSaveDTO the customer file save dto
+     * @author [이소정]
+     * @implNote 게시판 파일 수정
+     * @since 2021. 1. 7. 오후 9:47:41
+     */
+    public void update(final CustomerFileSaveDTO customerFileSaveDTO) {
+        boolean isFile = ServiceCode.NoticeFileKindCode.FILE.toString().equals(customerFileSaveDTO.getFileKindCode()) ? true : false;
+        this.fileKindCode = customerFileSaveDTO.getFileKindCode();
+        
+        this.fileContentType = isFile ? customerFileSaveDTO.getFileContentType() : null;
+        this.fileExtension = isFile ? customerFileSaveDTO.getFileExtension() : null;
+        this.fileName = isFile ? customerFileSaveDTO.getFileName(): null;
+        this.fileSize = isFile ? customerFileSaveDTO.getFileSize(): null;
+        this.filePhysicalName = isFile ? customerFileSaveDTO.getFilePhysicalName(): null;
+        
+        this.title = isFile ? null : customerFileSaveDTO.getTitle();
+        this.url = isFile ? null : customerFileSaveDTO.getUrl();
     }
 
     /**

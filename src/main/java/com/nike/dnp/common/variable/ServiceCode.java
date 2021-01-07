@@ -91,6 +91,14 @@ public class ServiceCode {
     }
 
     /**
+     * 게시물 > 파일 > 파일종류
+     */
+    public enum NoticeFileKindCode {
+        FILE  // 파일
+        , VIDEO  // 동영상(URL)
+    }
+
+    /**
      * The enum Contents top menu code.
      */
     public enum ContentsTopMenuCode {
