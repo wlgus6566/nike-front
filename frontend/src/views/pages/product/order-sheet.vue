@@ -191,7 +191,10 @@
                                 </span>
                             </div>
                             <span class="add-file">
-                                <div class="order-upload-file-box">
+                                <div
+                                    class="order-upload-file-box"
+                                    v-if="item.product.category2Code === 'MNQ'"
+                                >
                                     <!--active-->
                                     <ul class="order-upload-file-list">
                                         <template
