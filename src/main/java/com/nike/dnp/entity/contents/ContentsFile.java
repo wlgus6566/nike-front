@@ -78,7 +78,6 @@ public class ContentsFile extends BaseTimeEntity {
     private String title;
 
     /**
-     * e
      * url
      *
      * @author [이소정]
