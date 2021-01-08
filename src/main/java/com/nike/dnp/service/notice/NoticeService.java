@@ -279,7 +279,6 @@ public class NoticeService {
             for (final NoticeFile beforeFile : beforeFileList) {
                 for (final CustomerFileSaveDTO newFile : newFileList) {
                     if (beforeFile.getNoticeFileSeq().equals(newFile.getNoticeFileSeq())) {
-//                        lastBeforeFileList.remove(beforeFile);
                         keepFileSeqList.add(beforeFile.getNoticeFileSeq());
                     }
                 }
@@ -313,7 +312,7 @@ public class NoticeService {
                 );
 
                 if (0l != noticeFileSeq) {
-                    reportFile.ifPresent(value -> value.update(customerFileSaveDTO));
+                    reportFile.ifPresent(value -> value.update(customerFileSaveDTO, cdnUrl));
                 } else {
                     noticeFileRepository.save(saveReportFile);
                 }

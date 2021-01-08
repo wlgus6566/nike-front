@@ -1,14 +1,23 @@
 package com.nike.dnp.dto.order;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.nike.dnp.entity.agency.Agency;
+import com.nike.dnp.entity.order.OrderEntity;
+import com.nike.dnp.entity.order.OrderProductFile;
+import com.nike.dnp.entity.order.OrderProductMapping;
+import com.nike.dnp.entity.product.Product;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The Class Order product result dto.
@@ -98,6 +107,8 @@ public class OrderProductResultDTO {
 	@ApiModelProperty(name = "orderDescription", value = "주문 코맨트")
 	private String orderDescription;
 
+	private Long orderGoodsSeq;
+
 
 	/**
 	 * 이미지 파일
@@ -106,4 +117,42 @@ public class OrderProductResultDTO {
 	 */
 	@ApiModelProperty(hidden = true)
 	private String imageFilePhysicalName;
+
+	/**
+	 * 상품 설명
+	 *
+	 * @author [이소정]
+	 */
+	@ApiModelProperty(name = "productDescription", value = "상품 설명", example = "상품 설명입니다.")
+	private String productDescription;
+
+
+	/**
+	 * The Order product file list
+	 *
+	 * @author [이소정]
+	 */
+	@ApiModelProperty(name = "orderProductFileList", value = "주문 상품 파일 목록")
+	private List<OrderProductFileSaveDTO> orderProductFile;
+
+	public OrderProductResultDTO(OrderProductMapping orderProductMapping
+			, Product product, Agency agency, OrderEntity order) {
+		this.orderSeq = orderProductMapping.getOrderSeq();
+		this.registrationDt = orderProductMapping.getRegistrationDt();
+		this.orderQuantity = orderProductMapping.getOrderQuantity();
+		this.goodsName = product.getGoodsName();
+		this.goodsDescription = product.getGoodsDescription();
+		this.imageFilePhysicalName = product.getImageFilePhysicalName();
+		this.agencyName = agency.getAgencyName();
+		this.agencySeq = agency.getAgencySeq();
+		this.email = agency.getEmail();
+		this.orderDescription = order.getOrderDescription();
+		this.productDescription = orderProductMapping.getProductDescription();
+
+		this.orderGoodsSeq = orderProductMapping.getOrderGoodsSeq();
+	}
+
+
+
+
 }

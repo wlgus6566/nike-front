@@ -4,6 +4,7 @@ import com.nike.dnp.dto.order.OrderProductResultDTO;
 import com.nike.dnp.entity.agency.QAgency;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.order.QOrderEntity;
+import com.nike.dnp.entity.order.QOrderProductFile;
 import com.nike.dnp.entity.order.QOrderProductMapping;
 import com.nike.dnp.entity.product.QProduct;
 import com.querydsl.core.types.Projections;
@@ -54,21 +55,17 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 		final QAgency agency = QAgency.agency;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 		return queryFactory.select(
-				Projections.bean(OrderProductResultDTO.class, orderProductMapping.orderSeq,
-																			 orderProductMapping.registrationDt,
-																			 orderProductMapping.orderQuantity,
-																			 product.goodsName,
-																			 product.goodsDescription,
-																			 product.imageFilePhysicalName,
-																			 agency.agencyName,
-																			 agency.agencySeq,
-																			 agency.email,
-																			 order.orderDescription))
-											.from(orderProductMapping)
-											.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
-											.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
-											.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
-											.where(orderProductMapping.orderSeq.eq(orderSeq))
-											.orderBy(orderProductMapping.orderSeq.desc()).fetch();
+				Projections.constructor(OrderProductResultDTO.class,
+						orderProductMapping,
+						product,
+						agency,
+						order
+						))
+				.from(orderProductMapping)
+				.innerJoin(order).on(orderProductMapping.orderSeq.eq(order.orderSeq))
+				.innerJoin(product).on(orderProductMapping.goodsSeq.eq(product.goodsSeq))
+				.innerJoin(agency).on(product.agencySeq.eq(agency.agencySeq))
+				.where(orderProductMapping.orderSeq.eq(orderSeq))
+				.orderBy(orderProductMapping.orderSeq.desc()).fetch();
 	}
 }

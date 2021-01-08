@@ -1,13 +1,18 @@
 package com.nike.dnp.dto.email;
 
+import com.nike.dnp.dto.order.OrderProductFileSaveDTO;
+import com.nike.dnp.entity.order.OrderProductFile;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.util.List;
 
 /**
  * The Class Order product dto.
  *
  * @author [오지훈]
- * @since 2020. 7. 3. 오후 5:15:49
  * @implNote
+ * @since 2020. 7. 3. 오후 5:15:49
  */
 @Getter
 @Setter
@@ -43,5 +48,19 @@ public class OrderProductDTO {
      * @author [윤태호]
      */
     private String imageFilePhysicalName;
+
+    /**
+     * The Product comment
+     *
+     * @author [이소정]
+     */
+    private String productComment;
+
+    /**
+     * The File list
+     *
+     * @author [이소정]
+     */
+    private List<OrderProductFile> productFileList;
 
 }
