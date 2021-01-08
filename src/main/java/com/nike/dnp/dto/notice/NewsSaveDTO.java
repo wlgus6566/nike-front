@@ -8,11 +8,10 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * The Class Notice save dto.
+ * The Class News save dto.
  *
- * @author [정주희]
- * @CreatedOn 2020. 7. 19. 오전 1:14:17
- * @Description
+ * @author [이소정]
+ * @since 2021. 1. 8. 오후 12:42:32
  */
 @Getter
 @Setter
@@ -208,6 +207,6 @@ public class NewsSaveDTO extends BasicDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileList", value = "게시글 파일목록")
-    private List<CustomerFileSaveDTO> fileList;
+    private List<NewsFileSaveDTO> fileList;
 
 }

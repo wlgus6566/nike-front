@@ -5,11 +5,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * The Class Notice save dto.
  *
- * @author [정주희]
+ * @author [이소정]
  * @CreatedOn 2020. 7. 19. 오전 1:14:17
  * @Description
  */
@@ -22,24 +23,16 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Notice article section code
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @ApiModelProperty(name = "noticeArticleSectionCode",
             value = "게시물 구분 코드", example = "NEWS", required = true)
     private String noticeArticleSectionCode;
 
     /**
-     * The Notice article seq
-     *
-     * @author [정주희]
-     */
-    @ApiModelProperty(name = "noticeArticleSeq", value = "게시글 시퀀스", example = "30", required = true)
-    private Long noticeArticleSeq;
-
-    /**
      * The Thumbnail file name
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFileName", value = "[NEWS] 썸네일 파일 명")
     private String thumbnailFileName;
@@ -47,7 +40,7 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Thumbnail file size
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFileSize", value = "[NEWS] 썸네일 파일 사이즈")
     private String thumbnailFileSize;
@@ -55,7 +48,7 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Thumbnail file physical name
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "[NEWS] 썸네일 파일 물리 명")
     private String thumbnailFilePhysicalName;
@@ -63,7 +56,7 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Title
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @NotBlank(message = "customer.title")
     @ApiModelProperty(name = "title", value = "제목", example = "제목입니다.", required = true)
@@ -72,7 +65,7 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Contents
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @NotBlank(message = "customer.contents")
     @ApiModelProperty(name = "contents", value = "내용", example = "내용입니다.", required = true)
@@ -81,7 +74,7 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Use yn
      *
-     * @author [정주희]
+     * @author [이소정]
      */
     @ApiModelProperty(name = "useYn", value = "게시글 사용 여부", example = "Y", required = true)
     private String useYn;
@@ -89,9 +82,10 @@ public class NewsUpdateDTO extends BasicDTO {
     /**
      * The Image base 64
      *
-     * @author [정주희]
+     * @author [이소정]
      */
-    @ApiModelProperty(name = "imageBase64", value = "[NEWS] 이미지 base64 문자", example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
+    @NotBlank(message = "customer.thumbnail")
+    @ApiModelProperty(name = "imageBase64", value = "이미지 base64 문자", required = true, example = "data:image/jpeg;base64," + "/9j/4AAQSkZJRgABAQEAYABgAAD" +
             "/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUF" +
             "BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAD0AacDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhB" +
             "yJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19" +
@@ -207,5 +201,13 @@ public class NewsUpdateDTO extends BasicDTO {
             "UUUAFFFFABRRRQAUUUUAFFFFABRRRQAVFb2dvZhxbwxwh2Lt5ahdzHqTjqfepaKBhRRRQIKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoo" +
             "ooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//2Q==")
     private String imageBase64;
+
+    /**
+     * The Notice file save list
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileList", value = "게시글 파일목록")
+    private List<NewsFileUpdateDTO> fileList;
 
 }

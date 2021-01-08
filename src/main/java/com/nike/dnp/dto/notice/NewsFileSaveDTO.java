@@ -3,22 +3,18 @@ package com.nike.dnp.dto.notice;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-
+/**
+ * The Class News file save dto.
+ *
+ * @author [이소정]
+ * @since 2021. 1. 8. 오후 12:45:39
+ */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class CustomerFileSaveDTO {
-
-    /**
-     * 게시물_파일_시퀀스
-     *
-     * @author [이소정]
-     */
-    @ApiModelProperty(name = "noticeFileSeq" , value = "게시물_파일_시퀀스", hidden = true)
-    private Long noticeFileSeq;
+public class NewsFileSaveDTO {
 
     /**
      * 게시물_시퀀스
@@ -81,7 +77,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileKindCode", value = "(NEWS만 사용)파일 종류(FILE/VIDEO)")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류(FILE/VIDEO)")
     private String fileKindCode;
 
     /**
@@ -89,7 +85,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "title", value = "(NEWS만 사용)타이틀")
+    @ApiModelProperty(name = "title", value = "타이틀")
     private String title;
 
     /**
@@ -97,7 +93,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "url", value = "(NEWS만 사용)url")
+    @ApiModelProperty(name = "url", value = "url")
     private String url;
 
 }
