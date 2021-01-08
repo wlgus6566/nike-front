@@ -70,6 +70,6 @@ public class NoticeSaveDTO extends BasicDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "fileList", value = "게시글 파일목록")
-    private List<CustomerFileSaveDTO> fileList;
+    private List<NoticeFileSaveDTO> fileList;
 
 }
