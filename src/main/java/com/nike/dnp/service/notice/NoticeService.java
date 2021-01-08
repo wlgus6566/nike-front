@@ -120,7 +120,9 @@ public class NoticeService {
 
             List<CustomerFileResultDTO> fileList = ObjectMapperUtil.mapAll(noticeFileRepository.findAllByNoticeArticleSeqAndUseYn(noticeSeq, "Y"), CustomerFileResultDTO.class);
             for (CustomerFileResultDTO customerFileResultDTO : fileList) {
-                customerFileResultDTO.setFilePhysicalName(cdnUrl + customerFileResultDTO.getFilePhysicalName());
+                if (!ServiceCode.NoticeFileKindCode.VIDEO.toString().equals(customerFileResultDTO.getFileKindCode())) {
+                    customerFileResultDTO.setFilePhysicalName(cdnUrl + customerFileResultDTO.getFilePhysicalName());
+                }
             }
 
             result.setFileList( fileList );
@@ -152,6 +154,11 @@ public class NoticeService {
             || NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
             for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
                 customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
+                // NEWS 일 경우 파일 종류는 FILE
+                if (NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
+                    customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
+                }
+
                 noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))));
             }
         }
@@ -299,8 +306,7 @@ public class NoticeService {
                 );
 
                 if (0l != reportFileSeq) {
-//                    기존에 있던 파이 수정될 일이 없을듯.
-//                    reportFile.ifPresent(value -> value.update(reportFileSaveDTO));
+                    reportFile.ifPresent(value -> value.update(reportFileSaveDTO));
                 } else {
                     noticeFileRepository.save(saveReportFile);
                 }

@@ -3,6 +3,8 @@ package com.nike.dnp.dto.notice;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.persistence.Column;
+
 @Getter
 @Setter
 @ToString
@@ -73,5 +75,29 @@ public class CustomerFileSaveDTO {
      */
     @ApiModelProperty(name = "useYn", value = "사용 여부", hidden = true)
     private String useYn = "Y";
+
+    /**
+     * 파일 종류 공통코드
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류(FILE/VIDEO)")
+    private String fileKindCode;
+
+    /**
+     * 타이틀
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "title", value = "타이틀")
+    private String title;
+
+    /**
+     * url
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "url", value = "url")
+    private String url;
 
 }
