@@ -1,31 +1,39 @@
 package com.nike.dnp.dto.notice;
 
+import com.nike.dnp.dto.BasicDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
+
+/**
+ * The Class News file update dto.
+ *
+ * @author [이소정]
+ * @since 2021. 1. 8. 오후 12:42:18
+ */
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
-public class CustomerFileSaveDTO {
+public class NewsFileUpdateDTO extends BasicDTO {
 
     /**
      * 게시물_파일_시퀀스
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "noticeFileSeq" , value = "게시물_파일_시퀀스", hidden = true)
+    @ApiModelProperty(name = "noticeFileSeq" , value = "게시물_파일_시퀀스")
     private Long noticeFileSeq;
 
     /**
      * 게시물_시퀀스
      *
      * @author [이소정]
-     */
-    @ApiModelProperty(name = "noticeArticleSeq", value ="게시물 시퀀스", hidden = true)
+    */
+    @ApiModelProperty(name = "noticeArticleSeq", value ="게시물 시퀀스")
     private Long noticeArticleSeq;
 
     /**
@@ -81,7 +89,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileKindCode", value = "(NEWS만 사용)파일 종류(FILE/VIDEO)")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류(FILE/VIDEO)")
     private String fileKindCode;
 
     /**
@@ -89,7 +97,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "title", value = "(NEWS만 사용)타이틀")
+    @ApiModelProperty(name = "title", value = "타이틀")
     private String title;
 
     /**
@@ -97,7 +105,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "url", value = "(NEWS만 사용)url")
+    @ApiModelProperty(name = "url", value = "url")
     private String url;
 
 }

@@ -152,14 +152,16 @@ public class NoticeService {
         // NOTICE, NEW 인 경우에만 fileList 저장
         if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())
             || NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
-            for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
-                customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
-                // NEWS 일 경우 파일 종류는 FILE
-                if (NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
-                    customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
-                }
+            if (!ObjectUtils.isEmpty(customerSaveDTO.getFileList())) {
+                for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
+                    customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
+                    // NEWS 일 경우 파일 종류는 FILE
+                    if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
+                        customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
+                    }
 
-                noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))));
+                    noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))));
+                }
             }
         }
 
@@ -294,19 +296,24 @@ public class NoticeService {
         }
 
         if (!ObjectUtils.isEmpty(newFileList) && !newFileList.isEmpty()) {
-            for (final CustomerFileSaveDTO reportFileSaveDTO : newFileList) {
-                final Long reportFileSeq = null != reportFileSaveDTO.getNoticeFileSeq() ? reportFileSaveDTO.getNoticeFileSeq() : 0l;
-                final Optional<NoticeFile> reportFile = noticeFileRepository.findById(reportFileSeq);
+            for (final CustomerFileSaveDTO customerFileSaveDTO : newFileList) {
+                final Long noticeFileSeq = null != customerFileSaveDTO.getNoticeFileSeq() ? customerFileSaveDTO.getNoticeFileSeq() : 0l;
+                final Optional<NoticeFile> reportFile = noticeFileRepository.findById(noticeFileSeq);
+
+                // NEWS 일 경우 파일 종류는 FILE
+                if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(updatedNoticeArticle.getNoticeArticleSectionCode())) {
+                    customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
+                }
 
 //                this.checkReportFileValidation(reportFileSaveDTO);
-                this.s3FileCopySave(reportFileSaveDTO);
-                reportFileSaveDTO.setNoticeArticleSeq(noticeSeq);
+                this.s3FileCopySave(customerFileSaveDTO);
+                customerFileSaveDTO.setNoticeArticleSeq(noticeSeq);
                 final NoticeFile saveReportFile = reportFile.orElse(
-                    new NoticeFile().saveNoticeFile(this.s3FileCopySave(reportFileSaveDTO))
+                    new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))
                 );
 
-                if (0l != reportFileSeq) {
-                    reportFile.ifPresent(value -> value.update(reportFileSaveDTO));
+                if (0l != noticeFileSeq) {
+                    reportFile.ifPresent(value -> value.update(customerFileSaveDTO));
                 } else {
                     noticeFileRepository.save(saveReportFile);
                 }
