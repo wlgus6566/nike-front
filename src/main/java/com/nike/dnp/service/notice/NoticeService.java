@@ -120,7 +120,9 @@ public class NoticeService {
 
             List<CustomerFileResultDTO> fileList = ObjectMapperUtil.mapAll(noticeFileRepository.findAllByNoticeArticleSeqAndUseYn(noticeSeq, "Y"), CustomerFileResultDTO.class);
             for (CustomerFileResultDTO customerFileResultDTO : fileList) {
-                customerFileResultDTO.setFilePhysicalName(cdnUrl + customerFileResultDTO.getFilePhysicalName());
+                if (!ServiceCode.NoticeFileKindCode.VIDEO.toString().equals(customerFileResultDTO.getFileKindCode())) {
+                    customerFileResultDTO.setFilePhysicalName(cdnUrl + customerFileResultDTO.getFilePhysicalName());
+                }
             }
 
             result.setFileList( fileList );
@@ -152,10 +154,11 @@ public class NoticeService {
             || NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
             for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
                 customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
-                // 공지사항 일 경우 파일 종류는 FILE
-                if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
+                // NEWS 일 경우 파일 종류는 FILE
+                if (NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
                     customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
                 }
+
                 noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))));
             }
         }

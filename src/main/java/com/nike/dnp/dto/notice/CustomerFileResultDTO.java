@@ -1,9 +1,11 @@
 package com.nike.dnp.dto.notice;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ObjectUtils;
 
 /**
  * The Class Customer file result dto.
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 public class CustomerFileResultDTO {
 
@@ -81,5 +84,48 @@ public class CustomerFileResultDTO {
      */
     @ApiModelProperty(name = "useYn", value = "사용 여부")
     private String useYn;
+
+    /**
+     * 파일 종류 공통코드
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류(FILE/VIDEO)")
+    private String fileKindCode;
+
+    /**
+     * 타이틀
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "title", value = "타이틀")
+    private String title;
+
+    /**
+     * url
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "url", value = "url")
+    private String url;
+
+    /**
+     * Gets file name.
+     *
+     * @return the file name
+     * @author [이소정]
+     * @implNote 파일명 특수기호 원복
+     * @since 2021. 1. 8. 오전 11:52:50
+     */
+    public String getFileName() {
+        if (!ObjectUtils.isEmpty(fileName)) {
+            fileName = fileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+            fileName = fileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
+            fileName = fileName.replaceAll("#39;", "'");
+            return fileName;
+        } else {
+            return null;
+        }
+    }
 
 }

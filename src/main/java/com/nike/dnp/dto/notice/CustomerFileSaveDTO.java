@@ -81,7 +81,7 @@ public class CustomerFileSaveDTO {
      *
      * @author [이소정]
      */
-    @ApiModelProperty(name = "fileKindCode", value = "파일 종류 공통코드(FILE/VIDEO)")
+    @ApiModelProperty(name = "fileKindCode", value = "파일 종류(FILE/VIDEO)")
     private String fileKindCode;
 
     /**
