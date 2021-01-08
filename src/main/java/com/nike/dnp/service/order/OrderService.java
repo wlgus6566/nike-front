@@ -94,25 +94,6 @@ public class OrderService {
 	}
 
 	/**
-	 * Save order del order entity.
-	 *
-	 * @param orderSaveDTO the order save dto
-	 * @return the order entity
-	 * @author [이소정]
-	 * @implNote [method 설명]
-	 * @since 2021. 1. 5. 오후 3:26:13
-	 */
-	@Transactional
-	public OrderEntity saveOrder_del(final OrderSaveDTO_del orderSaveDTO) {
-		log.info("OrderService.saveOrder");
-		final OrderEntity orderEntity = new OrderEntity();
-		orderEntity.setOrderDescription(orderSaveDTO.getOrderDescription());
-		orderEntity.setTotalAmount(orderSaveDTO.getTotalAmount());
-		orderEntity.setUseYn(ServiceCode.YesOrNoEnumCode.Y.name());
-		return orderRepository.save(orderEntity);
-	}
-
-	/**
 	 * 1년 지난 주문서 삭제
 	 *
 	 * @author [윤태호]

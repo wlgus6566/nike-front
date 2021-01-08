@@ -1,5 +1,6 @@
 package com.nike.dnp.dto.order;
 
+import com.nike.dnp.entity.order.OrderProductFile;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -87,5 +88,4 @@ public class OrderProductFileSaveDTO {
      */
     @ApiModelProperty(name = "thumbnailFilePhysicalName", value = "썸네일 파일 물리 명", example = "/temp/graphic_file_name_thumbnail.jpg")
     private String thumbnailFilePhysicalName;
-
 }

@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
@@ -132,7 +133,6 @@ public class NoticeFile extends BaseTimeEntity {
     @ApiModelProperty(name = "url", value = "url")
     private String url;
 
-
     /**
      * 주문 상품 정보
      *
@@ -183,7 +183,7 @@ public class NoticeFile extends BaseTimeEntity {
      * @implNote 게시판 파일 수정
      * @since 2021. 1. 7. 오후 9:47:41
      */
-    public void update(final CustomerFileSaveDTO customerFileSaveDTO) {
+    public void update(final CustomerFileSaveDTO customerFileSaveDTO, final String cdnUrl) {
         boolean isFile = ServiceCode.NoticeFileKindCode.FILE.toString().equals(customerFileSaveDTO.getFileKindCode()) ? true : false;
         this.fileKindCode = customerFileSaveDTO.getFileKindCode();
         
@@ -191,7 +191,7 @@ public class NoticeFile extends BaseTimeEntity {
         this.fileExtension = isFile ? customerFileSaveDTO.getFileExtension() : null;
         this.fileName = isFile ? customerFileSaveDTO.getFileName(): null;
         this.fileSize = isFile ? customerFileSaveDTO.getFileSize(): null;
-        this.filePhysicalName = isFile ? customerFileSaveDTO.getFilePhysicalName(): null;
+        this.filePhysicalName = isFile ? customerFileSaveDTO.getFilePhysicalName().replace(cdnUrl, ""): null;
         
         this.title = isFile ? null : customerFileSaveDTO.getTitle();
         this.url = isFile ? null : customerFileSaveDTO.getUrl();

@@ -5,6 +5,7 @@ import com.nike.dnp.common.aspect.ValidField;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.order.*;
 import com.nike.dnp.entity.order.OrderEntity;
+import com.nike.dnp.entity.order.OrderProductFile;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.product.Product;
 import com.nike.dnp.model.response.SingleResult;
@@ -29,7 +30,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 주문 Controller
@@ -109,10 +113,8 @@ public class OrderController {
 	 */
 	private static final String BASIC_CHARACTER = "## Request ## \n" + "[하위 Parameters 참조] \n" + "## Request ## \n" + "[하위 Model 참조]\n\n";
 
-
 	/**
 	 * 주문 등록
-	 * 1차 오픈(1/8이후) 후 삭제 예정
 	 *
 	 * @param orderSaveDTO the order save dto
 	 * @param result       the result
@@ -124,49 +126,6 @@ public class OrderController {
 	 */
 	@ApiOperation(value = "주문 등록", notes = BASIC_CHARACTER)
 	@PostMapping(value = "/order/save", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@Transactional
-	@ValidField
-	public SingleResult<OrderEntity> saveOrder(
-			@RequestBody @Valid final OrderSaveDTO_del orderSaveDTO
-			, @ApiIgnore final BindingResult result) {
-		log.info("OrderController.saveOrder");
-		final OrderEntity orderEntity = orderService.saveOrder_del(orderSaveDTO);
-		for (OrderProductSaveDTO_del orderProductSaveDTO : orderSaveDTO.getOrderProductList()) {
-			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeq());
-			OrderProductMapping orderProduct = orderProductMappingService.saveOrderProductMapping(
-					OrderProductMappingSaveDTO.builder()
-							.goodsSeq(orderProductSaveDTO.getGoodsSeq())
-							.orderSeq(orderEntity.getOrderSeq())
-							.agencySeq(product.getAgencySeq())
-							.orderQuantity(orderProductSaveDTO.getOrderQuantity())
-							.productDescription(orderProductSaveDTO.getProductDescription())
-							.build()
-			);
-
-			// 장바구니 삭제
-			goodsBasketService.deleteByGoodsSeqAndUserSeq(
-					orderProductSaveDTO.getGoodsSeq(), SecurityUtil.currentUser().getUserSeq()
-			);
-		}
-		orderProductMappingService.orderSheetSend_del(orderEntity);
-		return responseService.getSingleResult(orderEntity);
-	}
-
-
-	/**
-	 * 주문 등록
-	 * 2차 오픈 내용
-	 *
-	 * @param orderSaveDTO the order save dto
-	 * @param result       the result
-	 * @return the single result
-	 * @author [윤태호]
-	 * @implNote [method 설명]
-	 * @apiNote 주문 등록
-	 * @since 2020. 7. 1. 오후 2:48:06
-	 */
-	@ApiOperation(value = "주문 등록(2차오픈)", notes = BASIC_CHARACTER)
-	@PostMapping(value = "/order/save/2nd", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Transactional
 	@ValidField
 	public SingleResult<OrderEntity> saveOrder(
@@ -191,6 +150,7 @@ public class OrderController {
 				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
 					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
 					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);
+
 				}
 			}
 
