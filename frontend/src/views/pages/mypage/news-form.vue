@@ -64,49 +64,6 @@
                 </li>
             </ul>
             <hr class="hr-gray" />
-            <h3 class="form-title">파일 설정</h3>
-            <hr class="hr-black" />
-            <div class="btn-area-file">
-                <button class="btn-file-full" v-on:click.prevent="fileAdd">
-                    <i class="icon-add"></i>
-                    <span>파일 추가하기</span>
-                </button>
-            </div>
-            <div>
-                <input
-                    type="file"
-                    ref="uploadIpt"
-                    multiple
-                    @change="uploadIptChange"
-                    style="position: absolute; opacity: 0;"
-                />
-                <draggable
-                    ref="fileListUl"
-                    v-model="FileList"
-                    v-bind="dragOptions"
-                    @end="emitFileList"
-                    class="file-setting-list"
-                    tag="ul"
-                >
-                    <FileItem
-                        v-for="file in FileList"
-                        :listLength="FileList.length"
-                        :file="file"
-                        :key="file.fileOrder"
-                        :errorFile="errorFile"
-                        :pageFileSectionCodeName="pageFileSectionCodeName"
-                        :menuCode="menuCode"
-                        @fileSelect="fileSelect"
-                        @fileDelete="fileDelete(file)"
-                    />
-                </draggable>
-            </div>
-            <div class="btn-area-file">
-                <button class="btn-file-full" v-on:click.prevent="fileAdd">
-                    <i class="icon-add"></i>
-                    <span>파일 추가하기</span>
-                </button>
-            </div>
             <div class="btn-area">
                 <router-link to="/mypage/news" class="btn-s-white">
                     <span>취소</span>
@@ -120,10 +77,8 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
 import { getCustomerDetail, postNews, putNews } from '@/api/customer';
 import thumbnail from '@/components/thumbnail/index';
-import FileItem from '@/components/file-settings/file-item.vue';
 import { getAuthFromCookie } from '@/utils/cookies';
 
 export default {
@@ -135,67 +90,6 @@ export default {
     },
     data() {
         return {
-            pageFileSectionCodeName: '',
-            menuCode: 'notice',
-            uploadFile: [],
-            errorFile: [],
-
-            test: {
-                detailThumbnailFileName: '',
-                detailThumbnailFilePhysicalName: '',
-                detailThumbnailFileSize: '',
-                fileExtension: '',
-                fileKindCode: 'FILE',
-                filePhysicalName: '',
-                fileSectionCode: null,
-                thumbnailFileName: '',
-                thumbnailFilePhysicalName: '',
-                thumbnailFileSize: '',
-                progress: 0,
-                title: '',
-                url: '',
-            },
-            FileList: [
-                {
-                    progress: 0,
-                    detailThumbnailFileName: '',
-                    detailThumbnailFilePhysicalName: '',
-                    detailThumbnailFileSize: '',
-                    fileContentType: '',
-                    fileExtension: '',
-                    fileKindCode: 'FILE',
-                    fileName: '',
-                    fileOrder: 0,
-                    filePhysicalName: '',
-                    fileSectionCode: null,
-                    fileSize: 0,
-                    thumbnailFileName: '',
-                    thumbnailFilePhysicalName: '',
-                    thumbnailFileSize: '',
-                    title: '',
-                    url: '',
-                },
-            ],
-            defaultFileData: {
-                progress: 0,
-                detailThumbnailFileName: '',
-                detailThumbnailFilePhysicalName: '',
-                detailThumbnailFileSize: '',
-                fileContentType: '',
-                fileExtension: '',
-                fileKindCode: 'FILE',
-                fileName: '',
-                fileOrder: 0,
-                filePhysicalName: '',
-                fileSectionCode: null,
-                fileSize: 0,
-                thumbnailFileName: '',
-                thumbnailFilePhysicalName: '',
-                thumbnailFileSize: '',
-                title: '',
-                url: '',
-            },
-
             noticeArticleSectionCode: 'NEWS',
             useYn: 'Y',
             newsDetail: {
@@ -221,18 +115,6 @@ export default {
     },
     components: {
         thumbnail,
-        FileItem,
-        draggable,
-    },
-    computed: {
-        dragOptions() {
-            return {
-                animation: 100,
-                group: 'description',
-                disabled: false,
-                ghostClass: 'ghost',
-            };
-        },
     },
     created() {
         this.$store.state.saveFolder = false;
@@ -254,36 +136,6 @@ export default {
         }
     },
     methods: {
-        fileAdd() {
-            this.FileList.push({ ...this.defaultFileData });
-            this.emitFileList();
-        },
-        fileSelect() {
-            this.$refs.uploadIpt.value = null;
-            this.$refs.uploadIpt.click();
-        },
-        fileDelete(file) {
-            const idx = this.FileList.findIndex(el => {
-                return el.fileOrder === file.fileOrder;
-            });
-            this.FileList.splice(idx, 1);
-            if (!this.FileList.length) {
-                this.FileList.push({ ...this.defaultFileData });
-            }
-
-            this.uploadFile = this.uploadFile.filter(a => {
-                return this.FileList.some(b => {
-                    return (
-                        a.name === b.fileName &&
-                        a.type === b.fileContentType &&
-                        a.size === b.fileSize
-                    );
-                });
-            });
-
-            this.emitFileList();
-        },
-
         //이미지 받아오기
         cropImage(imageBase64, imgName) {
             this.newsDetail.imageBase64 = imageBase64;
