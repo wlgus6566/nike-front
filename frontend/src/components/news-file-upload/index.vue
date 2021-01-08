@@ -30,8 +30,6 @@
                     :file="file"
                     :key="file.fileOrder"
                     :errorFile="errorFile"
-                    :pageFileSectionCodeName="pageFileSectionCodeName"
-                    :menuCode="menuCode"
                     @fileSelect="fileSelect"
                     @fileDelete="fileDelete(file)"
                 />
@@ -47,9 +45,8 @@
 </template>
 <script>
 import draggable from 'vuedraggable';
-import FileItem from '@/components/file-settings/file-item.vue';
+import FileItem from '@/components/news-file-upload/file-item.vue';
 import { fileUpLoad } from '@/api/file';
-import { getContentsViewFile } from '@/api/contents';
 import bus from '@/utils/bus';
 export default {
     name: 'FileSettings',
@@ -59,63 +56,39 @@ export default {
             errorFile: [],
 
             test: {
-                detailThumbnailFileName: '',
-                detailThumbnailFilePhysicalName: '',
-                detailThumbnailFileSize: '',
+                fileContentType: '',
                 fileExtension: '',
                 fileKindCode: 'FILE',
+                fileName: '',
                 filePhysicalName: '',
-                fileSectionCode: null,
-                thumbnailFileName: '',
-                thumbnailFilePhysicalName: '',
-                thumbnailFileSize: '',
-                progress: 0,
+                fileSize: 0,
                 title: '',
                 url: '',
             },
             FileList: [
                 {
-                    progress: 0,
-                    detailThumbnailFileName: '',
-                    detailThumbnailFilePhysicalName: '',
-                    detailThumbnailFileSize: '',
                     fileContentType: '',
                     fileExtension: '',
                     fileKindCode: 'FILE',
                     fileName: '',
-                    fileOrder: 0,
                     filePhysicalName: '',
-                    fileSectionCode: null,
                     fileSize: 0,
-                    thumbnailFileName: '',
-                    thumbnailFilePhysicalName: '',
-                    thumbnailFileSize: '',
                     title: '',
                     url: '',
                 },
             ],
             defaultFileData: {
-                progress: 0,
-                detailThumbnailFileName: '',
-                detailThumbnailFilePhysicalName: '',
-                detailThumbnailFileSize: '',
                 fileContentType: '',
                 fileExtension: '',
                 fileKindCode: 'FILE',
                 fileName: '',
-                fileOrder: 0,
                 filePhysicalName: '',
-                fileSectionCode: null,
                 fileSize: 0,
-                thumbnailFileName: '',
-                thumbnailFilePhysicalName: '',
-                thumbnailFileSize: '',
                 title: '',
                 url: '',
             },
         };
     },
-    props: ['pageFileSectionCodeName', 'menuCode'],
     computed: {
         dragOptions() {
             return {
@@ -127,18 +100,12 @@ export default {
         },
     },
     created() {
-        this.FileList[0].fileSectionCode = this.pageFileSectionCodeName[0];
-        this.defaultFileData.fileSectionCode = this.pageFileSectionCodeName[0];
         this.emitFileList();
     },
     activated() {
         this.fileReset();
     },
-    watch: {
-        pageFileSectionCodeName() {
-            //console.log(this.pageFileSectionCodeName);
-        },
-    },
+    watch: {},
     components: {
         FileItem,
         draggable,
@@ -147,21 +114,12 @@ export default {
         fileReset() {
             this.FileList = [
                 {
-                    progress: 0,
-                    detailThumbnailFileName: '',
-                    detailThumbnailFilePhysicalName: '',
-                    detailThumbnailFileSize: '',
                     fileContentType: '',
                     fileExtension: '',
                     fileKindCode: 'FILE',
                     fileName: '',
-                    fileOrder: 0,
                     filePhysicalName: '',
-                    fileSectionCode: null,
                     fileSize: 0,
-                    thumbnailFileName: '',
-                    thumbnailFilePhysicalName: '',
-                    thumbnailFileSize: '',
                     title: '',
                     url: '',
                 },
@@ -184,6 +142,15 @@ export default {
                 });
             });
 
+            if (mergeArray.length + files.length > 5) {
+                alert('첨부파일은 최대 5개까지 등록 가능합니다.');
+                if (files.length === 5) return;
+                let maxNum = 5;
+                if (files.length > 0) {
+                    maxNum = 5 - files.length;
+                }
+                mergeArray.splice(maxNum, 9999);
+            }
             if (mergeArray.length !== files.length) {
                 alert('이미 등록된 파일입니다.');
             }
@@ -198,7 +165,6 @@ export default {
                     this.FileList[idx].fileName = el.name;
                     this.FileList[idx].fileSize = el.size;
                 } else {
-                    this.test.fileSectionCode = this.pageFileSectionCodeName[0];
                     this.FileList.push({
                         fileContentType: el.type,
                         fileName: el.name,
@@ -214,45 +180,26 @@ export default {
             this.uploadFile = this.uploadFile.concat(mergeArray);
             //this.uploadFiles(mergeArray);
         },
-        progressUpdate(percentCompleted, el) {
-            this.FileList.forEach((item, index, array) => {
-                if (
-                    item.fileName === el.name &&
-                    item.fileContentType === el.type &&
-                    item.fileSize === el.size
-                ) {
-                    array[index].progress = percentCompleted;
-                }
-            });
-        },
         async uploadFiles() {
+            console.log(1);
+            if (this.$route.meta.modify) {
+                if (!confirm('수정하시겠습니까?')) {
+                    return false;
+                }
+            } else {
+                if (!confirm('저장하시겠습니까?')) {
+                    return false;
+                }
+            }
             this.errorFile = [];
             Promise.all(
                 this.uploadFile.map(async el => {
                     try {
                         const formData = new FormData();
                         formData.append('uploadFile', el);
-                        const config = {
-                            /* onDownloadProgress: (progressEvent) => {
-                                let percentCompleted = Math.round(
-                                    (progressEvent.loaded * 100) /
-                                        progressEvent.total
-                                );
-                                console.log(percentCompleted);
-                            },*/
-
-                            onUploadProgress: progressEvent => {
-                                let percentCompleted = Math.round(
-                                    (progressEvent.loaded * 95) /
-                                        progressEvent.total
-                                );
-                                this.progressUpdate(percentCompleted, el);
-                                this.emitFileList();
-                            },
-                        };
-
+                        const config = {};
+                        formData.append('menuCode', 'news');
                         const response = await fileUpLoad(formData, config);
-                        this.progressUpdate(100, el);
                         if (response.data.existMsg) {
                             alert(response.data.msg);
                             return;
@@ -265,7 +212,6 @@ export default {
                             ) {
                                 array[idx] = {
                                     fileKindCode: 'FILE',
-                                    fileSectionCode: item.fileSectionCode,
                                     progress: 100,
                                     title: '',
                                     url: '',
@@ -294,7 +240,11 @@ export default {
                 .then(values => {
                     if (!this.errorFile.length) {
                         this.uploadFile = [];
-                        this.$emit('submitForm');
+                        if (this.$route.meta.modify) {
+                            this.$emit('modifyForm');
+                        } else {
+                            this.$emit('submitForm'``);
+                        }
                     } else {
                         bus.$emit('pageLoading', false);
                     }
@@ -305,8 +255,12 @@ export default {
                 });
         },
         fileAdd() {
-            this.FileList.push({ ...this.defaultFileData });
-            this.emitFileList();
+            if (this.FileList.length > 4) {
+                alert('첨부파일은 최대 5개까지 등록 가능합니다.');
+            } else {
+                this.FileList.push({ ...this.defaultFileData });
+                this.emitFileList();
+            }
         },
         fileDelete(file) {
             const idx = this.FileList.findIndex(el => {
@@ -332,37 +286,6 @@ export default {
         fileSelect() {
             this.$refs.uploadIpt.value = null;
             this.$refs.uploadIpt.click();
-        },
-
-        async getFolderDetailFile() {
-            try {
-                const {
-                    data: { data: response },
-                } = await getContentsViewFile(
-                    this.$route.meta.topMenuCode,
-                    this.$route.params.pathMatch.toUpperCase(),
-                    this.$route.params.id,
-                    {
-                        page: this.page,
-                        size: 999,
-                        sectionCode: 'ALL',
-                        orderType: '',
-                        fileExtension: '',
-                    }
-                );
-                if (response.content && response.content.length) {
-                    this.FileList = response.content;
-                } else {
-                    const obj = JSON.parse(
-                        JSON.stringify(this.defaultFileData)
-                    );
-                    this.FileList = [obj];
-                }
-                this.emitFileList();
-                this.$emit('getAuthList', this.$route.params.id);
-            } catch (error) {
-                console.error(error);
-            }
         },
     },
 };

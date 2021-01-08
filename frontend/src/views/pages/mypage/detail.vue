@@ -20,7 +20,12 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="noticeDetail.contents"></div>
-            <template v-if="noticeDetail.fileList">
+            <template
+                v-if="
+                    noticeDetail.fileList &&
+                        noticeArticleSectionCode === 'NOTICE'
+                "
+            >
                 <div
                     class="detail-file"
                     v-if="noticeDetail.fileList.length > 0"
@@ -37,74 +42,82 @@
                     </ul>
                 </div>
             </template>
-            <ul class="news-file-list">
-                <li>
-                    <button type="button" @click="accordion()">
-                        P20_Nsw_Nike_Gallery_graphic_1_700x1000.pdf
-                    </button>
-                    <transition
-                        @enter="itemOpen"
-                        @leave="itemClose"
-                        :css="false"
+            <template
+                v-if="
+                    noticeDetail.fileList && noticeArticleSectionCode === 'NEWS'
+                "
+            >
+                <ul
+                    class="news-file-list"
+                    v-if="noticeDetail.fileList.length > 0"
+                >
+                    <li
+                        v-for="item in noticeDetail.fileList"
+                        :key="item.noticeFileSeq"
                     >
-                        <div class="detail" v-if="openFile">
-                            <div class="inner">
-                                <div class="img-item">
-                                    <img
-                                        src="https://devupload.nikespace.co.kr/BANNER/202010133880004esdadOHdU.JPG?Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHBzOi8vZGV2dXBsb2FkLm5pa2VzcGFjZS5jby5rci9CQU5ORVIvMjAyMDEwMTMzODgwMDA0ZXNkYWRPSGRVLkpQRyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTYxMDAwOTQ0MX0sIklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUdyZWF0ZXJUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2MTAwMDkzMjF9fX1dfQ__&Signature=MVZVlq5HnSRpHh680U4-GVyRVqEyJ0F0--WioZSAmi6176MK2VOJBZ8cQ~2GTXOqehsAOObRoLjfiEUSd7THsOyBFGBUiXdR3ew3mS7l2Rvs48emwzAC4F~vMKbyuO3VjXn0uEeW~PHrpRanzSfcUm-PFrr1iXX4P-ca~6YRyAijjOp00dsgEiZ8TLPkEJK5AXfhZ1XY0vqiIcSzOKOPaaJxjCaQRhffWZhtOCCZDd1n85XzPRAiGKUoT2I8gjaIX~otvadP9V7tkr3dH-s6qzBXlJnMDtRylikwT71ka0KXb2zoT8eD1FIZSYDRoLo3koN7yVNwsgJ41FLo2ehqsA__&Key-Pair-Id=APKAJNYFE4SZH6RSWVMA"
-                                        alt=""
-                                    />
+                        <template>
+                            <button
+                                type="button"
+                                @click="accordion(item.noticeFileSeq)"
+                                v-if="item.fileName"
+                            >
+                                {{ item.fileName }}
+                            </button>
+                            <button
+                                type="button"
+                                @click="accordion(item.noticeFileSeq)"
+                                v-if="item.title"
+                            >
+                                {{ item.title }}
+                            </button>
+                        </template>
+                        <transition
+                            @enter="itemOpen"
+                            @leave="itemClose"
+                            :css="false"
+                        >
+                            <div
+                                class="detail"
+                                v-if="openFile === item.noticeFileSeq"
+                            >
+                                <div class="inner">
+                                    <div
+                                        class="img-item"
+                                        v-if="item.fileKindCode === 'FILE'"
+                                    >
+                                        <img
+                                            :src="item.filePhysicalName"
+                                            :alt="item.fileName"
+                                        />
+                                    </div>
+                                    <div
+                                        class="video-item"
+                                        v-if="item.fileKindCode === 'VIDEO'"
+                                    >
+                                        <template v-if="item.url">
+                                            {{ item.url }}
+                                            <iframe
+                                                :src="item.url"
+                                                frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen
+                                            ></iframe>
+                                        </template>
+                                        <template v-else
+                                            ><video>
+                                                <source
+                                                    src=""
+                                                    type="video/mp4"
+                                                />
+                                            </video>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </transition>
-                </li>
-                <li>
-                    <button type="button">
-                        P20_Nsw_Nike_Gallery_graphic_1_700x1000.pdf
-                    </button>
-                    <transition
-                        @enter="itemOpen"
-                        @leave="itemClose"
-                        :css="false"
-                    >
-                        <div class="detail" v-if="openFile">
-                            <div class="inner">
-                                <div class="video-item">
-                                    <video controls>
-                                        <source src="" type="video/mp4" />
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
-                </li>
-                <li>
-                    <button type="button">
-                        P20_Nsw_Nike_Gallery_graphic_1_700x1000.pdf
-                    </button>
-                    <transition
-                        @enter="itemOpen"
-                        @leave="itemClose"
-                        :css="false"
-                    >
-                        <div class="detail" v-if="openFile">
-                            <div class="inner">
-                                <div class="video-item">
-                                    <iframe
-                                        width="560"
-                                        height="315"
-                                        src="https://www.youtube.com/embed/R19OFo8Wivs"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen
-                                    ></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
-                </li>
-            </ul>
+                        </transition>
+                    </li>
+                </ul>
+            </template>
         </div>
         <div class="btn-area">
             <button type="button" class="btn-s-black" @click="listRoute">
@@ -140,8 +153,7 @@ export default {
     },
     methods: {
         accordion(seq) {
-            this.openFile = !this.openFile;
-            //this.openFile = this.openFile === seq ? null : seq;
+            this.openFile = this.openFile === seq ? null : seq;
         },
         itemOpen(el, done) {
             gsap.set(el, {

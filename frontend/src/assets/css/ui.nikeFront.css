@@ -3512,9 +3512,11 @@ img.image-grayscale {
     background: url(../images/svg/icon-view-download.svg) no-repeat center;
 }
 
-.detail-view .news-file-list li + li {
-    margin-top: 15px;
+.detail-view .news-file-list {
+    padding: 7px 0;
+    border-bottom: 1px solid #ccc;
 }
+
 .detail-view .news-file-list li button {
     position: relative;
     display: block;
@@ -3550,6 +3552,9 @@ img.image-grayscale {
     width: 20px;
     height: 20px;
     background: url(../images/svg/icon-view-unfold-black.svg) no-repeat center;
+}
+.detail-view .news-file-list li:last-child .detail {
+    margin-bottom: 7px;
 }
 .detail-view .news-file-list li .detail {
     position: relative;
