@@ -3604,7 +3604,6 @@ img.image-grayscale {
 .detail-view .news-file-list .video-item iframe {
     max-width: 100%;
     vertical-align: top;
-    height: auto;
 }
 .faq-tab {
     display: flex;

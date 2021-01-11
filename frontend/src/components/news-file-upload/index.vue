@@ -16,14 +16,7 @@
                 @change="uploadIptChange"
                 style="position: absolute; opacity: 0;"
             />
-            <draggable
-                ref="fileListUl"
-                v-model="FileList"
-                v-bind="dragOptions"
-                @end="emitFileList"
-                class="file-setting-list"
-                tag="ul"
-            >
+            <ul class="file-setting-list">
                 <FileItem
                     v-for="file in FileList"
                     :listLength="FileList.length"
@@ -33,7 +26,7 @@
                     @fileSelect="fileSelect"
                     @fileDelete="fileDelete(file)"
                 />
-            </draggable>
+            </ul>
         </div>
         <div class="btn-area-file">
             <button class="btn-file-full" v-on:click.prevent="fileAdd">
