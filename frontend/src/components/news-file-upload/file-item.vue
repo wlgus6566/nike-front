@@ -96,22 +96,10 @@ export default {
         listLength: Number,
         menuCode: String,
     },
-    watch: {
-        'file.fileSectionCode'() {
-            //this.file.fileKindCode = 'FILE';
-            // asset 일때 select width 조정 (components filter-select 동일)
-        },
-    },
+    watch: {},
     computed: {
         emptyCheck() {
             return this.file.fileName || this.file.title || this.file.url;
-            /*return (
-                (this.file.fileKindCode === 'FILE' && this.file.fileName) ||
-                (this.file.fileKindCode === 'VIDEO' &&
-                    (this.file.url || this.file.title)) ||
-                (this.file.fileKindCode === 'VR' &&
-                    (this.file.url || this.file.title))
-            );*/
         },
     },
     methods: {},

@@ -245,6 +245,7 @@ export default {
                     this.$route.params.id
                 );
                 this.newsDetail = response;
+                await this.$refs.fileSet.getFolderDetailFile(response);
             } catch (error) {
                 console.error(error);
             }

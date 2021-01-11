@@ -48,6 +48,8 @@ import draggable from 'vuedraggable';
 import FileItem from '@/components/news-file-upload/file-item.vue';
 import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
+import { getContentsViewFile } from '@/api/contents';
+import { getCustomerDetail } from '@/api/customer';
 export default {
     name: 'FileSettings',
     data() {
@@ -55,16 +57,6 @@ export default {
             uploadFile: [],
             errorFile: [],
 
-            test: {
-                fileContentType: '',
-                fileExtension: '',
-                fileKindCode: 'FILE',
-                fileName: '',
-                filePhysicalName: '',
-                fileSize: 0,
-                title: '',
-                url: '',
-            },
             FileList: [
                 {
                     fileContentType: '',
@@ -111,6 +103,16 @@ export default {
         draggable,
     },
     methods: {
+        getFolderDetailFile(file) {
+            if (file && file.fileList.length) {
+                this.FileList = file.fileList;
+            } else {
+                const obj = JSON.parse(JSON.stringify(this.defaultFileData));
+                this.FileList = [obj];
+            }
+            this.emitFileList();
+        },
+
         fileReset() {
             this.FileList = [
                 {
@@ -142,22 +144,34 @@ export default {
                 });
             });
 
-            if (mergeArray.length + files.length > 5) {
-                alert('첨부파일은 최대 5개까지 등록 가능합니다.');
-                if (files.length === 5) return;
-                let maxNum = 5;
-                if (files.length > 0) {
-                    maxNum = 5 - files.length;
-                }
-                mergeArray.splice(maxNum, 9999);
-            }
             if (mergeArray.length !== files.length) {
                 alert('이미 등록된 파일입니다.');
             }
+            let maxLength = this.uploadFile.length;
+            if (this.$route.meta.modify) {
+                let fileLength = 0;
+                this.FileList.forEach((aa, index) => {
+                    if (aa.fileName || aa.title) {
+                        fileLength = index + 1;
+                    }
+                });
+
+                maxLength = this.uploadFile.length + Number(fileLength);
+            }
+
+            if (mergeArray.length + maxLength > 5) {
+                alert('파일은 최대 5개까지 등록 가능합니다.');
+                let maxNum = 5;
+                if (maxLength === 5) return;
+                if (mergeArray.length + maxLength > 5) {
+                    maxNum = 5 - (mergeArray.length + maxLength);
+                }
+                mergeArray.splice(Number(maxNum), 9999);
+            }
 
             mergeArray.forEach(el => {
-                const idx = this.FileList.findIndex(el => {
-                    return el.fileKindCode === 'FILE' && !el.fileName;
+                const idx = this.FileList.findIndex(item => {
+                    return item.fileKindCode === 'FILE' && !item.fileName;
                 });
 
                 if (idx !== -1) {
@@ -166,13 +180,13 @@ export default {
                     this.FileList[idx].fileSize = el.size;
                 } else {
                     this.FileList.push({
+                        fileKindCode: 'FILE',
                         fileContentType: el.type,
                         fileName: el.name,
                         fileOrder: this.FileList.length,
                         fileSize: el.size,
                         title: '',
                         url: '',
-                        ...this.test,
                     });
                 }
             });
@@ -180,6 +194,7 @@ export default {
             this.uploadFile = this.uploadFile.concat(mergeArray);
             //this.uploadFiles(mergeArray);
         },
+
         async uploadFiles() {
             if (this.$route.meta.modify) {
                 if (!confirm('수정하시겠습니까?')) {
@@ -252,11 +267,11 @@ export default {
                 });
         },
         fileAdd() {
-            if (this.FileList.length > 4) {
-                alert('첨부파일은 최대 5개까지 등록 가능합니다.');
-            } else {
+            if (this.FileList.length < 5) {
                 this.FileList.push({ ...this.defaultFileData });
                 this.emitFileList();
+            } else {
+                alert('첨부파일 5개 이상 등록 불가');
             }
         },
         fileDelete(file) {
