@@ -56,28 +56,28 @@
                         :key="item.noticeFileSeq"
                         :class="{ active: openFile === item.noticeFileSeq }"
                     >
-                        <template>
-                            <button
-                                type="button"
-                                @click="accordion(item.noticeFileSeq)"
-                                v-if="item.fileName"
-                                :disabled="
+                        <button
+                            type="button"
+                            @click="accordion(item.noticeFileSeq)"
+                            v-if="item.fileName"
+                            :disabled="
+                                item.fileContentType.split('/')[0] !==
+                                    'IMAGE' &&
                                     item.fileContentType.split('/')[0] !==
-                                        'IMAGE' &&
-                                        item.fileContentType.split('/')[0] !==
-                                            'VIDEO'
-                                "
-                            >
+                                        'VIDEO'
+                            "
+                        >
+                            <template>
                                 {{ item.fileName }}
-                            </button>
-                            <button
-                                type="button"
-                                @click="accordion(item.noticeFileSeq)"
-                                v-if="item.title"
-                            >
-                                {{ item.title }}
-                            </button>
-                        </template>
+                            </template>
+                        </button>
+                        <button
+                            type="button"
+                            @click="accordion(item.noticeFileSeq)"
+                            v-if="item.title"
+                        >
+                            {{ item.title }}
+                        </button>
                         <transition
                             @enter="itemOpen"
                             @leave="itemClose"
@@ -89,20 +89,6 @@
                             >
                                 <div class="inner">
                                     <div
-                                        class="img-item"
-                                        v-if="
-                                            item.fileKindCode === 'FILE' &&
-                                                item.fileContentType.split(
-                                                    '/'
-                                                )[0] !== 'VIDEO'
-                                        "
-                                    >
-                                        <img
-                                            :src="item.filePhysicalName"
-                                            :alt="item.fileName"
-                                        />
-                                    </div>
-                                    <div
                                         class="video-item"
                                         v-if="
                                             item.fileKindCode === 'VIDEO' ||
@@ -111,24 +97,25 @@
                                                 )[0] === 'VIDEO'
                                         "
                                     >
-                                        <template v-if="item.url">
-                                            <youtube
-                                                :video-id="
-                                                    videoCheck(item.url).id
-                                                "
-                                                :player-vars="{
-                                                    autoplay: 1,
-                                                }"
-                                            ></youtube>
-                                        </template>
-                                        <template v-else>
-                                            <video controls>
-                                                <source
-                                                    :src="item.filePhysicalName"
-                                                    type="video/mp4"
-                                                />
-                                            </video>
-                                        </template>
+                                        <youtube
+                                            v-if="item.url"
+                                            :video-id="videoCheck(item.url).id"
+                                            :player-vars="{
+                                                autoplay: 1,
+                                            }"
+                                        ></youtube>
+                                        <video controls v-else>
+                                            <source
+                                                :src="item.filePhysicalName"
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                    </div>
+                                    <div class="img-item" v-else>
+                                        <img
+                                            :src="item.filePhysicalName"
+                                            :alt="item.fileName"
+                                        />
                                     </div>
                                 </div>
                             </div>
