@@ -20,7 +20,12 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="noticeDetail.contents"></div>
-            <template v-if="noticeDetail.fileList">
+            <template
+                v-if="
+                    noticeDetail.fileList &&
+                        noticeArticleSectionCode === 'NOTICE'
+                "
+            >
                 <div
                     class="detail-file"
                     v-if="noticeDetail.fileList.length > 0"
@@ -37,6 +42,88 @@
                     </ul>
                 </div>
             </template>
+            <template
+                v-if="
+                    noticeDetail.fileList && noticeArticleSectionCode === 'NEWS'
+                "
+            >
+                <ul
+                    class="news-file-list"
+                    v-if="noticeDetail.fileList.length > 0"
+                >
+                    <li
+                        v-for="item in noticeDetail.fileList"
+                        :key="item.noticeFileSeq"
+                        :class="{ active: openFile === item.noticeFileSeq }"
+                    >
+                        <template>
+                            <button
+                                type="button"
+                                @click="accordion(item.noticeFileSeq)"
+                                v-if="item.fileName"
+                                :disabled="
+                                    item.fileContentType.split('/')[0] !==
+                                        'IMAGE'
+                                "
+                            >
+                                {{ item.fileName }}
+                            </button>
+                            <button
+                                type="button"
+                                @click="accordion(item.noticeFileSeq)"
+                                v-if="item.title"
+                            >
+                                {{ item.title }}
+                            </button>
+                        </template>
+                        <transition
+                            @enter="itemOpen"
+                            @leave="itemClose"
+                            :css="false"
+                        >
+                            <div
+                                class="detail"
+                                v-if="openFile === item.noticeFileSeq"
+                            >
+                                <div class="inner">
+                                    <div
+                                        class="img-item"
+                                        v-if="item.fileKindCode === 'FILE'"
+                                    >
+                                        <img
+                                            :src="item.filePhysicalName"
+                                            :alt="item.fileName"
+                                        />
+                                    </div>
+                                    <div
+                                        class="video-item"
+                                        v-if="item.fileKindCode === 'VIDEO'"
+                                    >
+                                        <template v-if="item.url">
+                                            <youtube
+                                                :video-id="
+                                                    videoCheck(item.url).id
+                                                "
+                                                :player-vars="{
+                                                    autoplay: 1,
+                                                }"
+                                            ></youtube>
+                                        </template>
+                                        <template v-else
+                                            ><video>
+                                                <source
+                                                    src=""
+                                                    type="video/mp4"
+                                                />
+                                            </video>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                    </li>
+                </ul>
+            </template>
         </div>
         <div class="btn-area">
             <button type="button" class="btn-s-black" @click="listRoute">
@@ -48,11 +135,13 @@
 
 <script>
 import { getCustomerDetail, deleteCustomer } from '@/api/customer';
+import { Cubic, gsap } from 'gsap/all';
 
 export default {
     name: 'notice-view',
     data() {
         return {
+            openFile: false,
             noticeArticleSectionCode: null,
             noticeDetail: {
                 title: '',
@@ -69,6 +158,55 @@ export default {
         BtnArea: () => import('@/components/asset-view/btn-area.vue'),
     },
     methods: {
+        videoCheck(url) {
+            url.match(
+                /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
+            );
+            if (RegExp.$3.indexOf('youtu') > -1) {
+                return {
+                    type: 'youtube',
+                    id: RegExp.$6,
+                };
+            } else if (RegExp.$3.indexOf('vimeo') > -1) {
+                return {
+                    type: 'vimeo',
+                    id: RegExp.$6,
+                };
+            } else if (url.indexOf('brightcove') > -1) {
+                return {
+                    type: 'brightcove',
+                    id: url,
+                };
+            } else {
+                return {
+                    type: 'mp4',
+                    id: url,
+                };
+            }
+        },
+        accordion(seq) {
+            this.openFile = this.openFile === seq ? null : seq;
+        },
+        itemOpen(el, done) {
+            gsap.set(el, {
+                height: 'auto',
+            });
+            gsap.from(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: function() {
+                    el.style.height = 'auto';
+                    done();
+                },
+            });
+        },
+        itemClose(el, done) {
+            gsap.to(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
         goToList() {
             this.$router.push(
                 `/mypage/${this.$route.meta.sectionCode}`.toLowerCase()

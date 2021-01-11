@@ -64,6 +64,12 @@
                 </li>
             </ul>
             <hr class="hr-gray" />
+            <newFileUplad
+                ref="fileSet"
+                @FileListUpdate="FileListUpdate"
+                @submitForm="submitForm"
+                @modifyForm="modifyForm"
+            />
             <div class="btn-area">
                 <router-link to="/mypage/news" class="btn-s-white">
                     <span>취소</span>
@@ -79,7 +85,9 @@
 <script>
 import { getCustomerDetail, postNews, putNews } from '@/api/customer';
 import thumbnail from '@/components/thumbnail/index';
+import NewFileUplad from '@/components/news-file-upload/index.vue';
 import { getAuthFromCookie } from '@/utils/cookies';
+import bus from '@/utils/bus';
 
 export default {
     name: 'notice-form',
@@ -99,6 +107,7 @@ export default {
                 thumbnailFileName: null,
                 thumbnailFilePhysicalName: null,
                 thumbnailFileSize: null,
+                fileList: [],
             },
             file: '',
             msg: null,
@@ -115,6 +124,7 @@ export default {
     },
     components: {
         thumbnail,
+        NewFileUplad,
     },
     created() {
         this.$store.state.saveFolder = false;
@@ -136,13 +146,16 @@ export default {
         }
     },
     methods: {
+        FileListUpdate(fileList) {
+            this.newsDetail.fileList = fileList;
+        },
         //이미지 받아오기
         cropImage(imageBase64, imgName) {
             this.newsDetail.imageBase64 = imageBase64;
             this.newsDetail.thumbnailFileName = imgName;
         },
         validateSelect(e, prop) {
-            this.$refs.form.validateField(prop, (error) => {
+            this.$refs.form.validateField(prop, error => {
                 if (!error) {
                     alert('submit!');
                 } else {
@@ -152,17 +165,12 @@ export default {
             });
         },
         submitData() {
-            if (this.$route.meta.modify) {
-                this.modifyData();
-            } else {
-                //console.log(this.newsDetail.thumbnailFileName);
-                this.saveData();
-            }
+            bus.$emit('pageLoading', true);
+            this.$refs.fileSet.uploadFiles();
         },
-        async saveData() {
-            if (!confirm('저장하시겠습니까?')) {
-                return false;
-            }
+        async submitForm() {
+            console.log('submitForm');
+
             try {
                 const response = await postNews({
                     noticeArticleSectionCode: this.noticeArticleSectionCode,
@@ -174,6 +182,7 @@ export default {
                         .thumbnailFilePhysicalName,
                     thumbnailFileSize: this.newsDetail.thumbnailFileSize,
                     useYn: this.useYn,
+                    fileList: this.newsDetail.fileList,
                 });
 
                 //console.log(response);
@@ -194,10 +203,7 @@ export default {
         },
 
         //공지사항 수정
-        async modifyData() {
-            if (!confirm('수정하시겠습니까?')) {
-                return false;
-            }
+        async modifyForm() {
             if (this.$route.meta.modify) {
                 try {
                     const response = await putNews(this.$route.params.id, {
@@ -211,6 +217,7 @@ export default {
                         thumbnailFileSize: this.newsDetail.thumbnailFileSize,
                         title: this.newsDetail.title,
                         useYn: this.useYn,
+                        fileList: this.newsDetail.fileList,
                     });
                     //console.log(response);
                     console.log(this.newsDetail.imageBase64);
@@ -238,7 +245,7 @@ export default {
                     this.$route.params.id
                 );
                 this.newsDetail = response;
-                //console.log(response);
+                await this.$refs.fileSet.getFolderDetailFile(response);
             } catch (error) {
                 console.error(error);
             }
@@ -250,8 +257,9 @@ export default {
             this.newsDetail.thumbnailFileName = null;
             this.newsDetail.thumbnailFilePhysicalName = null;
             this.newsDetail.thumbnailFileSize = null;
+            this.newsDetail.fileList = [];
         },
-        onEditorInput: function (e) {
+        onEditorInput: function(e) {
             this.newsDetail.contents = e.editor._.editable.$.innerHTML;
         },
     },

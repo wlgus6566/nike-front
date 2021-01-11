@@ -90,7 +90,7 @@ export default {
 @import url('assets/css/ui.nikeFront.css');
 .page-loading {
     flex-direction: column;
-    z-index: 2000;
+    z-index: 2010;
     position: fixed;
     top: 0;
     left: 0;

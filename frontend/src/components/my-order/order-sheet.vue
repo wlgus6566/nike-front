@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title=""
-        class="modal-wrap"
+        class="modal-wrap order-sheet-modal"
         :visible="visible"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
@@ -11,7 +11,7 @@
                 <div>
                     <h3 class="form-title mt0">ORDER</h3>
                     <hr class="hr-black mt10" />
-                    <ul class="form-list-colunm">
+                    <ul class="form-list">
                         <li class="form-row">
                             <div class="form-column">
                                 <span class="label-title">주문자</span>
@@ -19,19 +19,123 @@
                             <div class="form-column">
                                 <span class="form-val">
                                     {{ userNickname }}
+                                    <span class="val-dec">
+                                        {{ userIdVal }}
+                                    </span>
                                 </span>
                             </div>
                         </li>
-                        <li class="form-row">
-                            <div class="form-column">
-                                <span class="label-title">주문일시</span>
-                            </div>
-                            <div class="form-column">
-                                <span class="form-val">
-                                    {{ orderDetailData.registrationDt }}
-                                </span>
-                            </div>
-                        </li>
+                        <template v-if="orderDetailData.orderRecipientList">
+                            <li
+                                class="form-row"
+                                v-if="
+                                    orderDetailData.orderRecipientList.length >
+                                        0
+                                "
+                            >
+                                <div class="form-column">
+                                    <span class="label-title">수신자</span>
+                                </div>
+                                <div class="form-column">
+                                    <div class="check-select" ref="checkSelect">
+                                        <button
+                                            type="button"
+                                            class="txt txt-click user-item"
+                                            @click="accordion"
+                                            v-if="
+                                                orderDetailData
+                                                    .orderRecipientList.length >
+                                                    1
+                                            "
+                                        >
+                                            <span class="nickname">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .nickname
+                                                }}
+                                            </span>
+                                            <span class="mail">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .userId
+                                                }} </span
+                                            >,외{{
+                                                orderDetailData
+                                                    .orderRecipientList.length -
+                                                    1
+                                            }}명
+                                        </button>
+                                        <span class="txt user-item" v-else>
+                                            <span class="nickname">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .nickname
+                                                }}
+                                            </span>
+                                            <span class="mail">
+                                                {{
+                                                    orderDetailData
+                                                        .orderRecipientList[0]
+                                                        .userId
+                                                }}
+                                            </span>
+                                        </span>
+                                        <div class="bottom-fixed">
+                                            <transition
+                                                @enter="itemOpen"
+                                                @leave="itemClose"
+                                                :css="false"
+                                            >
+                                                <div
+                                                    class="check-list-wrap"
+                                                    v-if="userListOpen"
+                                                >
+                                                    <el-scrollbar
+                                                        view-class="check-list-scroll"
+                                                        :native="false"
+                                                        v-if="userListOpen"
+                                                    >
+                                                        <ul
+                                                            class="check-list"
+                                                            ref="checkList"
+                                                        >
+                                                            <li
+                                                                v-for="user in orderDetailData.orderRecipientList"
+                                                                :key="
+                                                                    user.userSeq
+                                                                "
+                                                            >
+                                                                <div
+                                                                    class="user-item"
+                                                                >
+                                                                    <span
+                                                                        class="nickname"
+                                                                    >
+                                                                        {{
+                                                                            user.nickname
+                                                                        }}
+                                                                    </span>
+                                                                    <span
+                                                                        class="mail"
+                                                                    >
+                                                                        {{
+                                                                            user.userId
+                                                                        }}
+                                                                    </span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </el-scrollbar>
+                                                </div>
+                                            </transition>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
                         <li class="form-row">
                             <div class="form-column">
                                 <span class="label-title">총 예상 금액</span>
@@ -45,6 +149,16 @@
                                         }}
                                     </em>
                                     원
+                                </span>
+                            </div>
+                        </li>
+                        <li class="form-row">
+                            <div class="form-column">
+                                <span class="label-title">주문일시</span>
+                            </div>
+                            <div class="form-column">
+                                <span class="form-val">
+                                    {{ orderDetailData.registrationDt }}
                                 </span>
                             </div>
                         </li>
@@ -73,24 +187,55 @@
                                         :alt="item.product.imageFileName"
                                     />
                                 </span>
-                                <span class="info-box">
-                                    <strong class="title">
-                                        {{ item.product.goodsName }}
-                                    </strong>
-                                    <p class="txt">
-                                        {{ item.product.goodsDescription }}
-                                    </p>
-                                    <span class="desc-txt-box">
-                                        <p class="desc">
-                                            {{ item.product.agency.agencyName }}
+                                <div class="info-box-wrap">
+                                    <span class="info-box">
+                                        <strong class="title">
+                                            {{ item.product.goodsName }}
+                                        </strong>
+                                        <p class="txt">
+                                            {{ item.product.goodsDescription }}
                                         </p>
+                                        <span class="desc-txt-box">
+                                            <p class="desc">
+                                                {{
+                                                    item.product.agency
+                                                        .agencyName
+                                                }}
+                                            </p>
+                                        </span>
                                     </span>
-                                </span>
-                                <span class="quantity-txt">
-                                    <!-- 주문수량  -->
-                                    <em> {{ item.orderQuantity }}</em>
-                                    개
-                                </span>
+                                    <span class="quantity-txt">
+                                        <!-- 주문수량  -->
+                                        <em> {{ item.orderQuantity }}</em>
+                                        개
+                                    </span>
+                                </div>
+                                <ul class="add-order-list">
+                                    <li
+                                        v-if="
+                                            item.orderProductFileList.length > 0
+                                        "
+                                    >
+                                        <span class="key">첨부파일</span>
+                                        <span class="val">
+                                            <ul class="file-list">
+                                                <li
+                                                    v-for="(fileItem,
+                                                    fileIndex) in item.orderProductFileList"
+                                                    :key="fileIndex"
+                                                >
+                                                    {{ fileItem.fileName }}
+                                                </li>
+                                            </ul>
+                                        </span>
+                                    </li>
+                                    <li v-if="item.productDescription">
+                                        <span class="key">요청사항</span>
+                                        <span class="val">
+                                            {{ item.productDescription }}
+                                        </span>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </el-scrollbar>
@@ -128,10 +273,13 @@ import {
     getUserIdFromCookie,
     getUserNickFromCookie,
 } from '@/utils/cookies';
+import { Cubic, gsap } from 'gsap/all';
 
 export default {
     data() {
-        return {};
+        return {
+            userListOpen: false,
+        };
     },
     props: ['visible', 'orderDetailData'],
     created() {
@@ -141,9 +289,59 @@ export default {
         userNickname() {
             return this.$store.state.nick || getUserNickFromCookie();
         },
+        userIdVal() {
+            return getUserIdFromCookie();
+        },
     },
     mounted() {},
-    methods: {},
+    methods: {
+        htmlClick(e) {
+            const target = e.target;
+            if (
+                !target.closest('.check-list') &&
+                !target.closest('.txt') &&
+                !target.closest('.view-list')
+            ) {
+                this.userListOpen = false;
+            }
+            /* if (
+            target.closest('.check-select') !== this.$refs.checkSelect &&
+            !target.closest('.txt')
+        ) {
+            this.userListOpen = false;
+        }*/
+        },
+        compMount() {
+            document
+                .querySelector('html')
+                .addEventListener('click', this.htmlClick);
+        },
+        itemOpen(el, done) {
+            gsap.set(el, {
+                height: 'auto',
+            });
+
+            gsap.from(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: function() {
+                    el.style.height = 'auto';
+                    done();
+                },
+            });
+        },
+        itemClose(el, done) {
+            gsap.to(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        accordion() {
+            this.userListOpen = !this.userListOpen;
+            this.compMount();
+        },
+    },
 };
 </script>
 <style scoped>
@@ -154,7 +352,6 @@ export default {
 }
 ::v-deep .el-dialog {
     margin: 0 !important;
-    width: 600px;
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
@@ -162,8 +359,5 @@ export default {
 ::v-deep .el-dialog,
 ::v-deep .el-dialog__body {
     box-sizing: border-box;
-}
-.form-desc {
-    font-size: 10px;
 }
 </style>

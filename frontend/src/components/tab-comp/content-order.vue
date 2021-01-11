@@ -77,11 +77,12 @@
             </p>
         </div>
         <OrderSheet
-            v-if="basketList.length"
+            v-if="visible.orderSheet"
             :visible.sync="visible.orderSheet"
             :basketList="basketList"
             :totalPrice="totalPrice"
             @orderSave="orderSave"
+            @closeSheet="closeSheet"
         />
     </div>
 </template>
@@ -134,6 +135,9 @@ export default {
     },
     mounted() {},
     methods: {
+        closeSheet() {
+            this.visible.orderSheet = false;
+        },
         // quantityUpdate(e, item) {
         //     console.log(e.target);
         //     //const value = e.target.value;
@@ -173,13 +177,12 @@ export default {
         },
 
         // 주문서 발송
-        async orderSave(orderComment) {
+        async orderSave(orderProductFileList) {
+            console.log('orderSave');
             try {
-                const { data: response } = await postOrderSave({
-                    orderDescription: orderComment,
-                    orderProductList: this.basketList,
-                    totalAmount: this.totalPrice,
-                });
+                const { data: response } = await postOrderSave(
+                    orderProductFileList
+                );
                 //console.log(response);
                 if (response.existMsg) {
                     await getExistMsg(response);
