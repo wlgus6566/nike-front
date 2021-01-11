@@ -63,7 +63,9 @@
                                 v-if="item.fileName"
                                 :disabled="
                                     item.fileContentType.split('/')[0] !==
-                                        'IMAGE'
+                                        'IMAGE' &&
+                                        item.fileContentType.split('/')[0] !==
+                                            'VIDEO'
                                 "
                             >
                                 {{ item.fileName }}
@@ -97,7 +99,12 @@
                                     </div>
                                     <div
                                         class="video-item"
-                                        v-if="item.fileKindCode === 'VIDEO'"
+                                        v-if="
+                                            item.fileKindCode === 'VIDEO' ||
+                                                item.fileContentType.split(
+                                                    '/'
+                                                )[0] === 'VIDEO'
+                                        "
                                     >
                                         <template v-if="item.url">
                                             <youtube
@@ -109,10 +116,10 @@
                                                 }"
                                             ></youtube>
                                         </template>
-                                        <template v-else
-                                            ><video>
+                                        <template v-else>
+                                            <video controls>
                                                 <source
-                                                    src=""
+                                                    :src="item.filePhysicalName"
                                                     type="video/mp4"
                                                 />
                                             </video>
