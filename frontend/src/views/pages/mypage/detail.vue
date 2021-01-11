@@ -90,7 +90,12 @@
                                 <div class="inner">
                                     <div
                                         class="img-item"
-                                        v-if="item.fileKindCode === 'FILE'"
+                                        v-if="
+                                            item.fileKindCode === 'FILE' &&
+                                                item.fileContentType.split(
+                                                    '/'
+                                                )[0] !== 'VIDEO'
+                                        "
                                     >
                                         <img
                                             :src="item.filePhysicalName"
