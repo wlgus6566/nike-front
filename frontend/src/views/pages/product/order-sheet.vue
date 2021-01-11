@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         title=""
-        class="modal-wrap"
+        class="modal-wrap order-sheet-modal"
         :visible="visible"
         :append-to-body="true"
         @close="$emit('update:visible', false)"
@@ -18,10 +18,121 @@
                         <div class="form-column">
                             <span class="form-val">
                                 {{ userNickname }}
-                                <!-- <span class="val-dec">
+                                <span class="val-dec">
                                     {{ userIdVal }}
-                                </span>-->
+                                </span>
                             </span>
+                        </div>
+                    </li>
+
+                    <li class="form-row" v-if="userList.length > 0">
+                        <div class="form-column">
+                            <span class="label-title">수신자</span>
+                        </div>
+                        <div class="form-column">
+                            <div class="check-select" ref="checkSelect">
+                                <button
+                                    type="button"
+                                    class="txt txt-click"
+                                    @click="accordion"
+                                >
+                                    <strong>선택</strong>
+                                </button>
+                                <el-scrollbar
+                                    class="view-list-wrap"
+                                    view-class="view-list-scroll"
+                                    :native="false"
+                                    v-if="
+                                        this.orderList.recipientList.length > 0
+                                    "
+                                >
+                                    <ul class="view-list">
+                                        <li
+                                            v-for="checkUser in this.orderList
+                                                .recipientList"
+                                            :key="checkUser.userSeq"
+                                        >
+                                            <span>
+                                                {{ checkUser.nickname }}
+                                            </span>
+                                            <span>
+                                                {{ checkUser.userId }}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                ref="viewBtn"
+                                                @click="userDelEvent(checkUser)"
+                                            >
+                                                삭제
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </el-scrollbar>
+                                <div class="bottom-fixed">
+                                    <transition
+                                        @enter="itemOpen"
+                                        @leave="itemClose"
+                                        :css="false"
+                                    >
+                                        <div
+                                            class="check-list-wrap"
+                                            v-if="userListOpen"
+                                        >
+                                            <el-scrollbar
+                                                view-class="check-list-scroll"
+                                                :native="false"
+                                            >
+                                                <ul
+                                                    class="check-list"
+                                                    ref="checkList"
+                                                    v-if="userListOpen"
+                                                >
+                                                    <li
+                                                        v-for="user in userList"
+                                                        :key="user.userSeq"
+                                                    >
+                                                        <label
+                                                            class="user-item"
+                                                        >
+                                                            <span
+                                                                class="checkbox"
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    :value="
+                                                                        user.userSeq
+                                                                    "
+                                                                    v-model="
+                                                                        checked
+                                                                    "
+                                                                    @change="
+                                                                        userCheckEvent(
+                                                                            user
+                                                                        )
+                                                                    "
+                                                                />
+                                                                <i></i>
+                                                            </span>
+                                                            <span
+                                                                class="nickname"
+                                                            >
+                                                                {{
+                                                                    user.nickname
+                                                                }}
+                                                            </span>
+                                                            <span class="mail">
+                                                                {{
+                                                                    user.userId
+                                                                }}
+                                                            </span>
+                                                        </label>
+                                                    </li>
+                                                </ul>
+                                            </el-scrollbar>
+                                        </div>
+                                    </transition>
+                                </div>
+                            </div>
                         </div>
                     </li>
                     <li class="form-row">
@@ -51,7 +162,7 @@
                     <ul class="sheet-list">
                         <li
                             class="sheet-item"
-                            v-for="(item, index) in basketList"
+                            v-for="(item, index) in orderList.orderProductList"
                             :key="index"
                         >
                             <span class="thumbnail">
@@ -60,102 +171,84 @@
                                     :alt="item.product.imageFileName"
                                 />
                             </span>
-                            <span class="info-box">
-                                <strong class="title">
-                                    {{ item.product.goodsName }}
-                                </strong>
-                                <p class="txt">
-                                    {{ item.product.goodsDescription }}
-                                </p>
-                                <span class="desc-txt-box">
-                                    <p class="desc">
+                            <div class="info-box-wrap">
+                                <span class="info-box">
+                                    <strong class="title">
                                         {{ item.product.goodsName }}
+                                    </strong>
+                                    <p class="txt">
+                                        {{ item.product.goodsDescription }}
                                     </p>
+                                    <span class="desc-txt-box">
+                                        <p class="desc">
+                                            {{ item.product.goodsName }}
+                                        </p>
+                                    </span>
                                 </span>
-                            </span>
-                            <span class="quantity-txt">
-                                <em>{{ item.orderQuantity }}</em>
-                                개
-                            </span>
-                            <!--  <span class="add-file">
-                                <div class="upload-file-box">
-                                    &lt;!&ndash;active&ndash;&gt;
-                                    <ul
-                                        style="height:96px;"
-                                        class="upload-file-list"
-                                        :class="{
-                                            'is-file':
-                                                item.uploadFileList.length > 0,
-                                        }"
-                                    >
+                                <span class="quantity-txt">
+                                    <em>{{ item.orderQuantity }}</em>
+                                    개
+                                </span>
+                            </div>
+                            <span class="add-file">
+                                <div
+                                    class="order-upload-file-box"
+                                    v-if="item.product.category2Code === 'MNQ'"
+                                >
+                                    <!--active-->
+                                    <ul class="order-upload-file-list">
                                         <template
-                                            v-if="
-                                                item.orderProductFileList
-                                                    .fileList
-                                            "
+                                            v-if="item.fileList.length > 0"
                                         >
                                             <li
-                                                v-for="orderFile in item
-                                                    .orderProductFileList
-                                                    .fileList"
+                                                v-for="orderFile in item.fileList"
                                                 :key="orderFile.fileOrder"
                                             >
-                                                <label>
-                                                    <span class="checkbox">
-                                                        <input
-                                                            type="checkbox"
-                                                            :value="
+                                                <span class="txt">
+                                                    {{ orderFile.fileName }}
+                                                    <button
+                                                        type="button"
+                                                        class="del"
+                                                        @click="
+                                                            removeFile(
+                                                                index,
                                                                 orderFile.fileOrder
-                                                            "
-                                                            v-model="
-                                                                item.checkedFile
-                                                            "
-                                                        />
-                                                        <i></i>
-                                                    </span>
-                                                    <span class="txt">
-                                                        {{ orderFile.fileName }}
-                                                    </span>
-                                                </label>
+                                                            )
+                                                        "
+                                                    >
+                                                        <span>삭제</span>
+                                                    </button>
+                                                </span>
                                             </li>
                                         </template>
+                                        <li v-else>
+                                            <span class="txt"
+                                                >첨부 파일은 최대 3장까지
+                                                가능합니다.</span
+                                            >
+                                        </li>
                                     </ul>
                                     <div class="btn-box">
-                                        <div class="fine-file">
-                                            <span class="btn-form-gray"
-                                                ><span>찾기</span></span
-                                            >
-                                            <input
-                                                type="file"
-                                                ref="fileInput"
-                                                accept="image/*"
-                                                multiple
-                                                @change="
-                                                    uploadIptChange(
-                                                        $event,
-                                                        index
-                                                    )
-                                                "
-                                            />
-                                        </div>
-                                        <button
-                                            type="button"
-                                            class="btn-form"
-                                            @click="removeFile(index)"
+                                        <span class="btn-form-gray"
+                                            ><span>찾기</span></span
                                         >
-                                            <span>삭제</span>
-                                        </button>
+                                        <input
+                                            type="file"
+                                            ref="fileInput"
+                                            accept="image/*"
+                                            multiple
+                                            @change="
+                                                uploadIptChange($event, index)
+                                            "
+                                        />
                                     </div>
                                 </div>
                                 <span class="textarea">
                                     <textarea
-                                        v-model="
-                                            item.orderProductFileList
-                                                .productDescription
-                                        "
+                                        v-model="item.productDescription"
                                     ></textarea>
                                 </span>
-                            </span>-->
+                            </span>
                         </li>
                     </ul>
                 </el-scrollbar>
@@ -165,7 +258,7 @@
                         <textarea
                             style="height: 80px;"
                             placeholder="에이전시에서 오더 확인 후 연락 가능한 매장 연락처, 업무용 이메일, 배송 받으실 주소를 기재하시길 바랍니다."
-                            v-model="orderComment"
+                            v-model="orderList.orderDescription"
                         />
                     </span>
                 </div>
@@ -189,14 +282,24 @@
 
 <script>
 import { getUserIdFromCookie, getUserNickFromCookie } from '@/utils/cookies';
+import { recipientList } from '@/api/product';
 import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
+import { getCustomerList } from '@/api/customer';
+import { Cubic, gsap } from 'gsap/all';
 
 export default {
     data() {
         return {
-            orderComment: '',
-            orderList: [],
+            userListOpen: false,
+            checked: [],
+            orderList: {
+                orderProductList: [],
+                totalAmount: '',
+                orderDescription: null,
+                recipientList: [],
+            },
+            userList: [],
         };
     },
     computed: {
@@ -207,30 +310,191 @@ export default {
             return getUserIdFromCookie();
         },
     },
+    components: {},
     props: ['visible', 'basketList', 'totalPrice'],
     created() {
-        //this.basketArray();
+        this.basketArray();
+        this.userListInit();
     },
     watch: {
         basketList() {
-            //this.basketArray();
+            this.basketArray();
         },
     },
     methods: {
+        htmlClick(e) {
+            const target = e.target;
+            if (
+                !target.closest('.check-list') &&
+                !target.closest('.txt') &&
+                !target.closest('.view-list')
+            ) {
+                this.userListOpen = false;
+            }
+        },
+        compMount() {
+            document
+                .querySelector('html')
+                .addEventListener('click', this.htmlClick);
+        },
+        itemOpen(el, done) {
+            gsap.set(el, {
+                height: el.offsetHeight + 'px',
+            });
+
+            gsap.from(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: function() {
+                    el.style.height = el.offsetHeight + 'px';
+                    done();
+                },
+            });
+        },
+        itemClose(el, done) {
+            gsap.to(el, 0.3, {
+                height: 0,
+                ease: Cubic.easeInOut,
+                onComplete: done,
+            });
+        },
+        accordion() {
+            this.userListOpen = !this.userListOpen;
+            this.compMount();
+        },
+        userDelEvent(user) {
+            const checkIndex = this.checked.findIndex(check => {
+                return check === user.userSeq;
+            });
+            this.checked.splice(checkIndex, 1);
+            const userIndex = this.orderList.recipientList.findIndex(el => {
+                return el.userSeq === user.userSeq;
+            });
+            this.orderList.recipientList.splice(userIndex, 1);
+        },
+        userCheckEvent(user) {
+            const index = this.checked.findIndex(check => {
+                return check === user.userSeq;
+            });
+            if (index !== -1) {
+                this.orderList.recipientList.push(user);
+            } else {
+                const userIndex = this.orderList.recipientList.findIndex(el => {
+                    return el.userSeq === user.userSeq;
+                });
+                this.orderList.recipientList.splice(userIndex, 1);
+            }
+        },
+        async userListInit() {
+            try {
+                const {
+                    data: { data: response },
+                } = await recipientList();
+                if (response.existMsg) {
+                    alert(response.msg);
+                    return;
+                }
+                if (response.depthCheckYn === 'Y') {
+                    this.userList = response.userList;
+                }
+                /*this.userList = [
+                    {
+                        nickname: '테스트계정',
+                        userId:
+                            ' test@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.krtest@nike.co.kr',
+                        userSeq: 0,
+                    },
+                    {
+                        nickname: '테스트계정1',
+                        userId: 'test@nike.co.kr1',
+                        userSeq: 1,
+                    },
+                    {
+                        nickname: '테스트계정2',
+                        userId: 'test@nike.co.kr2',
+                        userSeq: 2,
+                    },
+                    {
+                        nickname: '테스트계정3',
+                        userId: 'test@nike.co.kr3',
+                        userSeq: 3,
+                    },
+                    {
+                        nickname: '테스트계정4',
+                        userId: 'test@nike.co.kr4',
+                        userSeq: 4,
+                    },
+                    {
+                        nickname: '테스트계정5',
+                        userId: 'test@nike.co.kr5',
+                        userSeq: 5,
+                    },
+                    {
+                        nickname: '테스트계정6',
+                        userId: 'test@nike.co.kr6',
+                        userSeq: 6,
+                    },
+                    {
+                        nickname: '테스트계정7',
+                        userId: 'test@nike.co.kr7',
+                        userSeq: 7,
+                    },
+                    {
+                        nickname: '테스트계정8',
+                        userId: 'test@nike.co.kr8',
+                        userSeq: 8,
+                    },
+                    {
+                        nickname: '테스트계정9',
+                        userId: 'test@nike.co.kr9',
+                        userSeq: 9,
+                    },
+                    {
+                        nickname: '테스트계정10',
+                        userId: 'test@nike.co.kr10',
+                        userSeq: 10,
+                    },
+                    {
+                        nickname: '테스트계정11',
+                        userId: 'test@nike.co.kr11',
+                        userSeq: 11,
+                    },
+                    {
+                        nickname: '테스트계정12',
+                        userId: 'test@nike.co.kr12',
+                        userSeq: 12,
+                    },
+                    {
+                        nickname: '테스트계정13',
+                        userId: 'test@nike.co.kr13',
+                        userSeq: 13,
+                    },
+                    {
+                        nickname: '테스트계정14',
+                        userId: 'test@nike.co.kr14',
+                        userSeq: 14,
+                    },
+                ];*/
+            } catch (error) {
+                console.error(error);
+            }
+        },
         orderSave() {
-            this.$emit('orderSave', this.orderComment);
+            this.uploadFiles();
         },
 
         // basketList add file , comment
         basketArray() {
+            this.orderList.totalAmount = this.totalPrice;
             this.basketList.forEach(el => {
-                el.orderProductFileList = {};
-                el.orderProductFileList.fileList = [];
-                el.orderProductFileList.goodsSeq = el.goodsSeq;
-                el.orderProductFileList.orderQuantity = el.orderQuantity;
-                el.orderProductFileList.productDescription = null;
-                el.uploadFileList = [];
-                el.checkedFile = [];
+                this.orderList.orderProductList.push({
+                    fileList: [],
+                    goodsSeq: el.goodsSeq,
+                    orderQuantity: el.orderQuantity,
+                    productDescription: null,
+                    uploadFileList: [],
+                    product: el.product,
+                });
             });
         },
         //file 업로드
@@ -239,46 +503,63 @@ export default {
             if (!files.length) return;
 
             let mergeArray = Array.from(files).filter(item => {
-                return this.basketList[
-                    index
-                ].orderProductFileList.fileList.every(el => {
-                    return (
-                        item.name !== el.fileName && item.size !== el.fileSize
-                    );
-                });
+                return this.orderList.orderProductList[index].fileList.every(
+                    el => {
+                        return (
+                            item.name !== el.fileName &&
+                            item.size !== el.fileSize
+                        );
+                    }
+                );
             });
             if (
                 mergeArray.length +
-                    this.basketList[index].uploadFileList.length >
+                    this.orderList.orderProductList[index].uploadFileList
+                        .length >
                 3
             ) {
                 alert('3개 이상 등록 할 수 없습니다.');
-                if (this.basketList[index].uploadFileList.length === 3) return;
+                if (
+                    this.orderList.orderProductList[index].uploadFileList
+                        .length === 3
+                )
+                    return;
                 let maxNum = 3;
-                if (this.basketList[index].uploadFileList.length > 0) {
-                    maxNum = 3 - this.basketList[index].uploadFileList.length;
+                if (
+                    this.orderList.orderProductList[index].uploadFileList
+                        .length > 0
+                ) {
+                    maxNum =
+                        3 -
+                        this.orderList.orderProductList[index].uploadFileList
+                            .length;
                 }
                 mergeArray.splice(maxNum, 9999);
             }
 
             mergeArray.forEach(el => {
-                this.basketList[index].orderProductFileList.fileList.push({
-                    fileOrder: this.basketList[index].orderProductFileList
-                        .fileList.length,
+                this.orderList.orderProductList[index].fileList.push({
+                    fileOrder: this.orderList.orderProductList[index].fileList
+                        .length,
                     fileName: el.name,
                     fileSize: el.size,
                     fileContentType: el.type,
                     progress: 0,
                 });
             });
-            this.basketList[index].uploadFileList = this.basketList[
+            this.orderList.orderProductList[
+                index
+            ].uploadFileList = this.orderList.orderProductList[
                 index
             ].uploadFileList.concat(mergeArray);
+            console.log(this.orderList.orderProductList[index].uploadFileList);
         },
+
         async uploadFiles() {
+            console.log('uploadFiles');
             bus.$emit('pageLoading', true);
             await Promise.all(
-                this.basketList.map(async basket => {
+                this.orderList.orderProductList.map(async basket => {
                     await Promise.all(
                         basket.uploadFileList.map(async el => {
                             try {
@@ -290,18 +571,16 @@ export default {
                                             (progressEvent.loaded * 100) /
                                                 progressEvent.total
                                         );
-                                        basket.orderProductFileList.fileList.forEach(
-                                            item => {
-                                                if (
-                                                    item.fileName === el.name &&
-                                                    item.fileContentType ===
-                                                        el.type &&
-                                                    item.fileSize === el.size
-                                                ) {
-                                                    item.progress = percentCompleted;
-                                                }
+                                        basket.fileList.forEach(item => {
+                                            if (
+                                                item.fileName === el.name &&
+                                                item.fileContentType ===
+                                                    el.type &&
+                                                item.fileSize === el.size
+                                            ) {
+                                                item.progress = percentCompleted;
                                             }
-                                        );
+                                        });
                                     },
                                 };
                                 formData.append('menuCode', 'order');
@@ -313,58 +592,53 @@ export default {
                                 if (response.existMsg) {
                                     alert(response.msg);
                                 }
-                                basket.orderProductFileList.fileList.forEach(
-                                    (item, idx, array) => {
-                                        if (
-                                            item.fileName === el.name &&
-                                            item.fileContentType === el.type &&
-                                            item.fileSize === el.size
-                                        ) {
-                                            array[idx] = {
-                                                progress: 100,
-                                                fileOrder: idx,
-                                                ...response.data.data,
-                                            };
-                                        }
+                                basket.fileList.forEach((item, idx, array) => {
+                                    if (
+                                        item.fileName === el.name &&
+                                        item.fileContentType === el.type &&
+                                        item.fileSize === el.size
+                                    ) {
+                                        array[idx] = {
+                                            progress: 100,
+                                            fileOrder: idx,
+                                            ...response.data.data,
+                                        };
                                     }
-                                );
+                                });
                             } catch (error) {
                                 console.log(error);
                             }
                         })
                     );
-                    this.orderList.push(basket.orderProductFileList);
                 })
             );
-            await console.log(this.orderList);
-            await this.$emit('orderSave', this.orderComment, this.orderList);
+            await this.$emit('orderSave', this.orderList);
         },
-        removeFile(index) {
-            this.basketList[index].checkedFile.forEach(a => {
-                this.basketList[
-                    index
-                ].orderProductFileList.fileList = this.basketList[
-                    index
-                ].orderProductFileList.fileList.filter(b => b.fileOrder !== a);
-            });
-            this.basketList[index].checkedFile = [];
+        removeFile(index, fileOrder) {
+            this.orderList.orderProductList[
+                index
+            ].fileList = this.orderList.orderProductList[index].fileList.filter(
+                b => b.fileOrder !== fileOrder
+            );
             this.fileOrderSet(index);
         },
         fileOrderSet(index) {
-            this.basketList[index].uploadFileList = this.basketList[
+            this.orderList.orderProductList[
+                index
+            ].uploadFileList = this.orderList.orderProductList[
                 index
             ].uploadFileList.filter(a => {
-                return this.basketList[
-                    index
-                ].orderProductFileList.fileList.some(b => {
-                    return (
-                        a.name === b.fileName &&
-                        a.type === b.fileContentType &&
-                        a.size === b.fileSize
-                    );
-                });
+                return this.orderList.orderProductList[index].fileList.some(
+                    b => {
+                        return (
+                            a.name === b.fileName &&
+                            a.type === b.fileContentType &&
+                            a.size === b.fileSize
+                        );
+                    }
+                );
             });
-            this.basketList[index].orderProductFileList.fileList.forEach(
+            this.orderList.orderProductList[index].fileList.forEach(
                 (el, index) => {
                     el.fileOrder = index;
                 }
@@ -381,12 +655,31 @@ export default {
 }
 ::v-deep .el-dialog {
     margin: 0 !important;
-    width: 600px;
 }
 .modal-wrap .el-scrollbar__wrap {
     max-height: 80vh;
 }
-.form-desc {
-    font-size: 10px;
+.drag-item {
+    opacity: 1 !important;
+    border: none !important;
+    background: transparent !important;
+}
+.drag-item .list {
+    padding: 0;
+}
+.drag-item .checkbox {
+    display: none;
+}
+.drag-item .thumbnail {
+    border: 1px solid #ddd;
+}
+.drag-item .info-box {
+    display: none;
+}
+.drag-item .btn-box {
+    display: none;
+}
+.drag-item ul {
+    display: none !important;
 }
 </style>

@@ -320,6 +320,14 @@ export default {
         window.removeEventListener('scroll', this.calDetailClose);
     },
     methods: {
+        scrollEvent(e) {
+            console.log(1);
+            this.visible.calendar = false;
+        },
+        compMount() {
+            console.log(2);
+            window.addEventListener('scroll', this.scrollEvent);
+        },
         trCheck() {
             document.querySelector('body').setAttribute('data-index', 'dd');
             document
@@ -336,6 +344,7 @@ export default {
         },
         calDetailOpen() {
             this.visible.calendar = true;
+            this.compMount();
         },
         mouserLeaveEvent() {
             setTimeout(() => {
