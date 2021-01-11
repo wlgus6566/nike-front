@@ -3553,6 +3553,14 @@ img.image-grayscale {
     height: 20px;
     background: url(../images/svg/icon-view-unfold-black.svg) no-repeat center;
 }
+
+.detail-view .news-file-list li button:disabled:after {
+    background: url(../images/svg/icon-view-unfold-gray.svg) no-repeat center;
+}
+.detail-view .news-file-list .active button:after {
+    background: url(../images/svg/icon-view-unfold-black-up.svg) no-repeat
+        center;
+}
 .detail-view .news-file-list li:last-child .detail {
     margin-bottom: 7px;
 }

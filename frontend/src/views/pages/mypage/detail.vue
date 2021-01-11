@@ -54,12 +54,17 @@
                     <li
                         v-for="item in noticeDetail.fileList"
                         :key="item.noticeFileSeq"
+                        :class="{ active: openFile === item.noticeFileSeq }"
                     >
                         <template>
                             <button
                                 type="button"
                                 @click="accordion(item.noticeFileSeq)"
                                 v-if="item.fileName"
+                                :disabled="
+                                    item.fileContentType.split('/')[0] !==
+                                        'IMAGE'
+                                "
                             >
                                 {{ item.fileName }}
                             </button>
@@ -95,13 +100,14 @@
                                         v-if="item.fileKindCode === 'VIDEO'"
                                     >
                                         <template v-if="item.url">
-                                            {{ item.url }}
-                                            <iframe
-                                                :src="item.url"
-                                                frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen
-                                            ></iframe>
+                                            <youtube
+                                                :video-id="
+                                                    videoCheck(item.url).id
+                                                "
+                                                :player-vars="{
+                                                    autoplay: 1,
+                                                }"
+                                            ></youtube>
                                         </template>
                                         <template v-else
                                             ><video>
@@ -152,6 +158,32 @@ export default {
         BtnArea: () => import('@/components/asset-view/btn-area.vue'),
     },
     methods: {
+        videoCheck(url) {
+            url.match(
+                /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
+            );
+            if (RegExp.$3.indexOf('youtu') > -1) {
+                return {
+                    type: 'youtube',
+                    id: RegExp.$6,
+                };
+            } else if (RegExp.$3.indexOf('vimeo') > -1) {
+                return {
+                    type: 'vimeo',
+                    id: RegExp.$6,
+                };
+            } else if (url.indexOf('brightcove') > -1) {
+                return {
+                    type: 'brightcove',
+                    id: url,
+                };
+            } else {
+                return {
+                    type: 'mp4',
+                    id: url,
+                };
+            }
+        },
         accordion(seq) {
             this.openFile = this.openFile === seq ? null : seq;
         },

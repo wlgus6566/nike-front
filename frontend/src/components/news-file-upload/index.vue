@@ -181,7 +181,6 @@ export default {
             //this.uploadFiles(mergeArray);
         },
         async uploadFiles() {
-            console.log(1);
             if (this.$route.meta.modify) {
                 if (!confirm('수정하시겠습니까?')) {
                     return false;
@@ -212,7 +211,6 @@ export default {
                             ) {
                                 array[idx] = {
                                     fileKindCode: 'FILE',
-                                    progress: 100,
                                     title: '',
                                     url: '',
                                     ...response.data.data,
@@ -229,7 +227,6 @@ export default {
                                 alert(
                                     `${item.fileName} 파일 업로드에 실패 하였습니다.`
                                 );
-                                item.progress = true;
                                 this.errorFile.push(item);
                             }
                         });
@@ -243,7 +240,7 @@ export default {
                         if (this.$route.meta.modify) {
                             this.$emit('modifyForm');
                         } else {
-                            this.$emit('submitForm'``);
+                            this.$emit('submitForm');
                         }
                     } else {
                         bus.$emit('pageLoading', false);
