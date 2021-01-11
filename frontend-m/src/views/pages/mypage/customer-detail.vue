@@ -16,7 +16,12 @@
                 </div>
             </div>
             <div class="detail-cont" v-html="customerData.contents"></div>
-            <template v-if="customerData.fileList">
+            <template
+                v-if="
+                    customerData.fileList &&
+                        customerData.noticeArticleSectionCode === 'NOTICE'
+                "
+            >
                 <div
                     class="detail-file"
                     v-if="customerData.fileList.length > 0"
@@ -33,6 +38,39 @@
                     </ul>
                 </div>
             </template>
+            <template
+                v-if="
+                    customerData.fileList &&
+                        customerData.noticeArticleSectionCode === 'NEWS'
+                "
+            >
+                <ul
+                    class="news-file-list"
+                    v-if="customerData.fileList.length > 0"
+                >
+                    <li
+                        v-for="item in customerData.fileList"
+                        :key="item.customerData"
+                    >
+                        <template>
+                            <button
+                                type="button"
+                                v-if="item.fileName"
+                                @click="fileDetailModal(item)"
+                            >
+                                {{ item.fileName }}
+                            </button>
+                            <button
+                                type="button"
+                                v-if="item.title"
+                                @click="fileDetailModal(item)"
+                            >
+                                {{ item.title }}
+                            </button>
+                        </template>
+                    </li>
+                </ul>
+            </template>
         </div>
         <div class="btn-area">
             <button
@@ -43,22 +81,45 @@
                 <span>목록</span>
             </button>
         </div>
+        <fileDetailPopup
+            v-if="visible.modalEx"
+            :visible.sync="visible.modalEx"
+            :filePopupFile="filePopupFile"
+            @closeModal="closeModal"
+        />
     </div>
 </template>
 <script>
 import { getCustomerDetail } from '@/api/customer/';
+import fileDetailPopup from '@/views/pages/mypage/file-Detail-Popup.vue';
 
 export default {
     name: 'news-detail',
     data() {
         return {
             customerData: {},
+            visible: {
+                modalEx: false,
+            },
+            filePopupFile: '',
         };
     },
     mounted() {
         this.getNoticeDetail();
     },
+    components: {
+        fileDetailPopup,
+    },
     methods: {
+        fileDetailModal(item) {
+            console.log(item);
+            this.filePopupFile = item;
+            this.visible.modalEx = true;
+        },
+        closeModal() {
+            this.visible.modalEx = false;
+            this.filePopupFile = '';
+        },
         async getNoticeDetail() {
             try {
                 const { data: response } = await getCustomerDetail(

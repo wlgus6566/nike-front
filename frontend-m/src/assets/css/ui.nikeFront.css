@@ -1493,10 +1493,10 @@
     display: block;
     padding-left: 25px;
     line-height: 20px;
-    /*  text-overflow:ellipsis;
-	  white-space:nowrap;
-	  word-wrap:normal;
-	  overflow:hidden;*/
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
 }
 
 .detail-view .detail-file-list li a:before {
@@ -1508,6 +1508,37 @@
     width: 20px;
     height: 20px;
     background: url(../images/svg/icon-view-download.svg) no-repeat center;
+}
+.detail-view .news-file-list {
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+}
+.detail-view .news-file-list li + li {
+    margin-top: 15px;
+}
+.detail-view .news-file-list li button {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    padding-left: 25px;
+    line-height: 20px;
+    text-align: left;
+    color: #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+}
+
+.detail-view .news-file-list li button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(../images/svg/icon-btn-clip-black.svg) no-repeat center;
 }
 /* NEWS > 목록 */
 .news-list {
