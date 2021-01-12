@@ -557,6 +557,13 @@ export default {
             }, 1000 * 60 * 4);
         }
     },
+    destroyed() {
+        console.log(2)
+        if (this.$route.params.id) {
+            this.deleteOccupyFn();
+            clearInterval(this.occupyInterval);
+        }
+    },
     deactivated() {
         if (this.$route.params.id) {
             this.deleteOccupyFn();
