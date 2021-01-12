@@ -340,7 +340,7 @@ export default {
         },
         calDetailClose() {
             this.visible.calendar = false;
-            this.openClassRemove();
+           this.openClassRemove();
         },
         calDetailOpen() {
             this.visible.calendar = true;
@@ -393,11 +393,17 @@ export default {
                 const gnbLeft = 300;
                 const titleHeight = 72;
                 const theadHeight = 25;
-                const tr = e.el.closest('tr');
-                const elWrapTop = e.el.closest('.fc-daygrid-day-events')
-                    .offsetTop;
-                const elItemBoxTop = e.el.closest('.fc-daygrid-event-harness ')
-                    .offsetTop;
+                //const tr = e.el.closest('tr');
+                const elItemBox = e.el.parentNode
+                const elWrap = elItemBox.parentNode
+                const tr = elWrap.parentNode.parentNode.parentNode;
+                console.log(tr)
+                //const elWrapTop = e.el.closest('.fc-daygrid-day-events').offsetTop;
+
+                const elWrapTop = elWrap.offsetTop
+                //const elItemBoxTop = e.el.closest('.fc-daygrid-event-harness ').offsetTop;
+
+                const elItemBoxTop = elItemBox.offsetTop
                 tr.classList.add('open-tr');
                 e.el.classList.add('open');
                 fullCalendar.appendChild(modal);
@@ -428,6 +434,7 @@ export default {
                     100 * tr.getAttribute('data-index') +
                     'px';
                 // top css
+                console.log(tr)
                 if (tr.getAttribute('data-index') > 2) {
                     if (
                         tr.getAttribute('data-index') > 3 ||

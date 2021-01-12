@@ -56,6 +56,9 @@ export default {
 };
 </script>
 <style scoped>
+::v-deep .el-dialog__inner{
+    padding-bottom:3px;
+}
 .alarm-title {
     display: block;
     margin-top: 30px;

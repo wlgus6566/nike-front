@@ -352,7 +352,7 @@ export default {
     margin-right: 0;
 }
 .check-label {
-    margin-right: 16px;
+    margin-right: 13px;
 }
 .check-label:last-child {
     margin-right: 0;
