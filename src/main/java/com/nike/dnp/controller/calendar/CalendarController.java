@@ -76,7 +76,10 @@ public class CalendarController {
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "Calendar 조회")
     @ValidField
-    public SingleResult<List<CalendarResultDTO>> findAllContents(@Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO, @ApiIgnore final BindingResult result) {
+    public SingleResult<List<CalendarResultDTO>> findAllContents(
+            @Valid @ModelAttribute final CalendarSearchDTO calendarSearchDTO
+            , @ApiIgnore final BindingResult result
+    ) {
         log.info("CalendarController.findAllContents");
         return responseService.getSingleResult(calendarService.findAll(calendarSearchDTO));
     }

@@ -47,9 +47,11 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 		final int searchYearMonth =Integer.parseInt(calendarSearchDTO.getYyyyMm());
 		return queryFactory.selectFrom(calendar)
-					.where(calendar.beginDt.yearMonth().eq(searchYearMonth)
-										   .or(calendar.endDt.yearMonth().eq(searchYearMonth)))
-						   .orderBy(calendar.registrationDt.desc()).fetch();
+					.where(
+							(calendar.beginDt.yearMonth().eq(searchYearMonth).or(calendar.endDt.yearMonth().eq(searchYearMonth)))
+							.or(calendar.beginDt.before(calendarSearchDTO.getStartDate())).and(calendar.endDt.after(calendarSearchDTO.getEndDate()))
+					)
+					.orderBy(calendar.registrationDt.desc()).fetch();
 	}
 
 }

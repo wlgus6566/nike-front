@@ -16,6 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -113,8 +114,25 @@ public class CalendarService {
      */
     public List<CalendarResultDTO> findAll(final CalendarSearchDTO calendarSearchDTO) {
         log.info("CalendarService.findAll");
-        calendarSearchDTO.setYyyyMm(calendarSearchDTO.getYyyyMm().replace(".", ""));
+        String searchYyyyMm = calendarSearchDTO.getYyyyMm();
+//        String searchCalendar = calendarSearchDTO.getYyyyMm().replace(".", "");
+        calendarSearchDTO.setYyyyMm(searchYyyyMm.replace(".", ""));
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        String yyyy = searchYyyyMm.substring(0, 4);
+        String mm = searchYyyyMm.substring(5, 7);
+        cal.set(java.util.Calendar.YEAR, Integer.parseInt(yyyy));
+        cal.set(java.util.Calendar.MONTH, Integer.parseInt(mm)-1);
+
+        String startDd = cal.getActualMinimum(java.util.Calendar.DAY_OF_MONTH)+"";
+        if (startDd.length() != 2) {
+            startDd = "0"+cal.getActualMinimum(java.util.Calendar.DAY_OF_MONTH);
+        }
+        calendarSearchDTO.setStartDate(LocalDateTime.parse(yyyy+"-"+mm+"-"+startDd+" 01:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        calendarSearchDTO.setEndDate(LocalDateTime.parse(yyyy+"-"+mm+"-"+cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH)+" 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
         return ObjectMapperUtil.mapAll(calendarRepository.findByMonthSearch(calendarSearchDTO), CalendarResultDTO.class);
+
     }
 
     /**
