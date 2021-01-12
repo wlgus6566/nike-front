@@ -48,8 +48,8 @@ public class CalendarRepositoryImpl extends QuerydslRepositorySupport implements
 		final int searchYearMonth =Integer.parseInt(calendarSearchDTO.getYyyyMm());
 		return queryFactory.selectFrom(calendar)
 					.where(
-							(calendar.beginDt.yearMonth().eq(searchYearMonth).or(calendar.endDt.yearMonth().eq(searchYearMonth)))
-							.or(calendar.beginDt.before(calendarSearchDTO.getStartDate())).and(calendar.endDt.after(calendarSearchDTO.getEndDate()))
+							(calendar.beginDt.before(calendarSearchDTO.getStartDate())).and(calendar.endDt.after(calendarSearchDTO.getEndDate()))
+							.or(calendar.beginDt.yearMonth().eq(searchYearMonth).or(calendar.endDt.yearMonth().eq(searchYearMonth)))
 					)
 					.orderBy(calendar.registrationDt.desc()).fetch();
 	}
