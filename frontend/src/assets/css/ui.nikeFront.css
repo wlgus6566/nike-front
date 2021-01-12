@@ -4605,12 +4605,10 @@ img.image-grayscale {
 }
 .check-select .view-list-wrap .el-scrollbar__wrap {
     max-height: 91px !important;
+    padding-bottom: 17px;
     overflow: hidden;
     overflow-y: scroll;
-}
-
-.check-select .view-list-scroll {
-    padding-bottom: 17px;
+    box-sizing:border-box;
 }
 
 .check-select .view-list {
@@ -4692,8 +4690,8 @@ img.image-grayscale {
     overflow-y: scroll;
 }
 .check-select .check-list-scroll {
+    padding-bottom: 13px;
     overflow: hidden;
-    padding-bottom: 14px;
 }
 .check-select .check-list {
     padding: 10px;
