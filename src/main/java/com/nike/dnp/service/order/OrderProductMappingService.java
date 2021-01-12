@@ -197,8 +197,6 @@ builder.append("				</td>");
 builder.append("				<td style=\"width:425px;\">");
 builder.append("					<p style=\"margin:0; width:300px; font-size:12px; color:#333; line-height:18px;\">");
 builder.append(dto.getProductName()+"<br><br>");
-				builder.append("CloudFrontUtil" + CloudFrontUtil.getCustomSignedUrl(dto.getImageFilePhysicalName(), 259200)+"<br><br>");
-				builder.append("NON CloudFront" + dto.getImageFilePhysicalName());
 builder.append("					</p>");
 builder.append("					<p style=\"margin:5px 0 0 0; width:300px; font-size:11px; color:#555; line-height:17px;\">");
 builder.append(dto.getProductDesc());
