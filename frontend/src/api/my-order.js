@@ -13,7 +13,7 @@ function getMyOrderDetail(orderSeq) {
 
 //MYPAGE 주문내역 등록
 function postOrderSave(data) {
-    return myOrder.post(`/order/save/2nd`, data);
+    return myOrder.post(`/order/save`, data);
 }
 
 export { getMyOrder, getMyOrderDetail, postOrderSave };
