@@ -4605,7 +4605,7 @@ img.image-grayscale {
 }
 .check-select .view-list-wrap .el-scrollbar__wrap {
     max-height: 91px !important;
-    padding-bottom: 17px;
+
     overflow: hidden;
     overflow-y: scroll;
     box-sizing:border-box;
@@ -4615,6 +4615,7 @@ img.image-grayscale {
     display: flex;
     flex-wrap: wrap;
     margin-top: -5px;
+    padding-bottom: 17px;
 }
 .check-select .view-list li {
     position: relative;
@@ -4703,6 +4704,7 @@ img.image-grayscale {
     margin-top: 20px;
 }
 .check-select .check-list li .checkbox {
+    flex:0 0 auto;
     margin-right: 5px;
 }
 .sheet-list-scroll {
