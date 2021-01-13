@@ -192,7 +192,7 @@ public class NoticeService {
         // news일 경우 상세 이미지 추가 작업
         if (NoticeArticleSectionEnumCode.NEWS.toString().equals(sectionCode)
             && !ObjectUtils.isEmpty(cutCustomerFileSaveDTO.getDetailThumbnailFilePhysicalName()) && cutCustomerFileSaveDTO.getDetailThumbnailFilePhysicalName().contains("/temp/")) {
-            cutCustomerFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(cutCustomerFileSaveDTO.getFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
+            cutCustomerFileSaveDTO.setDetailThumbnailFilePhysicalName(this.fileMoveTempToRealPath(cutCustomerFileSaveDTO.getDetailThumbnailFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
         }
 
         return cutCustomerFileSaveDTO;
