@@ -244,7 +244,7 @@
                         <div class="mt10">
                             <span class="textarea">
                                 <textarea
-                                    style="height: 80px;"
+                                    style="height: 60px;"
                                     readonly
                                     :value="orderDetailData.orderDescription"
                                 />
@@ -359,5 +359,9 @@ export default {
 ::v-deep .el-dialog,
 ::v-deep .el-dialog__body {
     box-sizing: border-box;
+}
+textarea[readonly] {
+    background: #fff;
+    color: #000;
 }
 </style>

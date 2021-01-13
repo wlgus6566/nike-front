@@ -4339,7 +4339,7 @@ img.image-grayscale {
     padding: 15px 20px 15px 10px;
 }
 .sheet-item + .sheet-item {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #eee;
 }
 .sheet-item .thumbnail {
     position: relative;
@@ -4381,6 +4381,7 @@ img.image-grayscale {
     color: #555;
 }
 .sheet-item .info-box .desc-txt-box {
+    display: block;
     margin-top: 5px;
 }
 .sheet-item .info-box .desc {
@@ -4390,9 +4391,10 @@ img.image-grayscale {
     color: #555;
 }
 .sheet-item .info-box-wrap .quantity-txt {
-    display: block;
+    display: flex;
     flex-shrink: 1;
     flex-grow: 0;
+    align-items: center;
     white-space: nowrap;
     margin-left: 15px;
     white-space: nowrap;
@@ -4405,9 +4407,8 @@ img.image-grayscale {
 .sheet-item .add-file {
     width: calc(100% - 65px);
     margin: 15px 0 0 65px;
-    padding: 10px 0 5px;
+    padding: 0 0 5px;
     box-sizing: border-box;
-    border-top: 1px solid #ddd;
 }
 .sheet-item .add-file .textarea {
     margin-top: 5px;
@@ -4505,7 +4506,7 @@ img.image-grayscale {
     height: 14px;
     background: url(../images/svg/icon-btn-clip-gray.svg) no-repeat center;
 }
-.order-upload-file-box .order-upload-file-list .txt {
+.order-upload-file-box .order-upload-file-list [class^='txt'] {
     position: relative;
     display: inline-block;
     padding-right: 23px;
@@ -4515,8 +4516,9 @@ img.image-grayscale {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.order-upload-file-box .order-upload-file-list .gray {
+.order-upload-file-box .order-upload-file-list .txt-gray {
     color: #888;
+    font-weight: 300;
 }
 .order-upload-file-box .order-upload-file-list .del {
     position: absolute;
@@ -4525,13 +4527,13 @@ img.image-grayscale {
     display: block;
     width: 18px;
     height: 18px;
-    background: url(../images/svg/icon-filter-deleted.svg) no-repeat center;
+    background: url(../images/svg/icon-filter-deleted-gray.svg) no-repeat center;
     text-indent: -999px;
     overflow: hidden;
 }
 .order-upload-file-box .btn-box {
     position: absolute;
-    right: 5px;
+    right: 3px;
     bottom: 3px;
     height: 24px;
 }
@@ -4601,14 +4603,13 @@ img.image-grayscale {
     background: #ddd;
 }
 .check-select .view-list-wrap {
-    margin-top: 15px;
 }
 .check-select .view-list-wrap .el-scrollbar__wrap {
     max-height: 91px !important;
 
     overflow: hidden;
     overflow-y: scroll;
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 .check-select .view-list {
@@ -4677,7 +4678,7 @@ img.image-grayscale {
     z-index: 99;
     position: absolute;
     top: 10px;
-    left: -20px;
+    left: -10px;
     width: calc(100% + 20px);
     border: 1px solid #ddd;
     box-sizing: border-box;
@@ -4704,16 +4705,19 @@ img.image-grayscale {
     margin-top: 20px;
 }
 .check-select .check-list li .checkbox {
-    flex:0 0 auto;
+    flex: 0 0 auto;
     margin-right: 5px;
 }
+
 .sheet-list-scroll {
     box-sizing: border-box;
     overflow: hidden;
     height: 255px;
     margin-top: 20px;
-    border: 1px solid #ddd;
     background: #f7f7f7;
+}
+.sheet-list-scroll .el-scrollbar__bar {
+    right: 10px;
 }
 .cart-item-list {
     padding: 8px 18px;
@@ -5975,8 +5979,14 @@ img.image-grayscale {
 /*}*/
 
 /* order-sheet-modal */
+.order-sheet-modal .el-dialog {
+    width: 660px;
+}
+.order-sheet-modal .form-list {
+    padding: 0;
+}
 .order-sheet-modal .form-row {
-    padding: 10px 0;
+    padding: 10px;
 }
 .order-sheet-modal .form-column {
     align-items: center;

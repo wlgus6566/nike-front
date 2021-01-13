@@ -222,7 +222,7 @@
                                             </li>
                                         </template>
                                         <li v-else>
-                                            <span class="txt"
+                                            <span class="txt-gray"
                                                 >첨부 파일은 최대 3장까지
                                                 가능합니다.</span
                                             >
@@ -256,7 +256,7 @@
                 <div class="mt10">
                     <span class="textarea">
                         <textarea
-                            style="height: 80px;"
+                            style="height: 60px;"
                             placeholder="에이전시에서 오더 확인 후 연락 가능한 매장 연락처, 업무용 이메일, 배송 받으실 주소를 기재하시길 바랍니다."
                             v-model="orderList.orderDescription"
                         />
@@ -397,7 +397,7 @@ export default {
                 if (response.depthCheckYn === 'Y') {
                     this.userList = response.userList;
                 }
-                /*this.userList = [
+                /* this.userList = [
                     {
                         nickname: '테스트계정',
                         userId:
