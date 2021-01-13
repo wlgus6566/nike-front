@@ -113,7 +113,9 @@
                                     </div>
                                     <div class="img-item" v-else>
                                         <img
-                                            :src="item.filePhysicalName"
+                                            :src="
+                                                item.detailThumbnailFilePhysicalName
+                                            "
                                             :alt="item.fileName"
                                         />
                                     </div>
