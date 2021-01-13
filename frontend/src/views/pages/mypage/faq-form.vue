@@ -86,15 +86,22 @@ import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
 import { getCode } from '@/api/code';
 import { getAuthFromCookie } from '@/utils/cookies';
 
-// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
-// npm install --save @ckeditor/ckeditor5-build-classic
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 
-import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
-import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
-// import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
-import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+
+// import CKEditor from '@ckeditor/ckeditor5-vue2';
+//
+// import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
+// import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
+// import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
+// // import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
+// import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
+// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
+// import Link from '@ckeditor/ckeditor5-link/src/link.js';
 
 export default {
     name: 'faq-form',
@@ -142,23 +149,16 @@ export default {
               fileTools_requestHeaders: {
                   Authorization: '',
               },
-              /**
-               * end
-               */
               plugins: [
-                EssentialsPlugin,
-                BoldPlugin,
-                ItalicPlugin,
-                // LinkPlugin,
-                ParagraphPlugin
+                Bold,
+                Italic,
+                Underline
               ],
               toolbar: {
                 items: [
                   'bold',
                   'italic',
-                  // 'link',
-                  'undo',
-                  'redo'
+                  'underline'
                 ]
               }
             }

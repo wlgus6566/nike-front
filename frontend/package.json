@@ -11,9 +11,13 @@
     "dependencies": {
         "@babel/polyfill": "^7.10.1",
         "@ckeditor/ckeditor5-basic-styles": "^24.0.0",
+        "@ckeditor/ckeditor5-dev-utils": "^24.0.0",
+        "@ckeditor/ckeditor5-dev-webpack-plugin": "^24.0.0",
+        "@ckeditor/ckeditor5-editor-classic": "^24.0.0",
         "@ckeditor/ckeditor5-essentials": "^24.0.0",
         "@ckeditor/ckeditor5-link": "^24.0.0",
         "@ckeditor/ckeditor5-paragraph": "^24.0.0",
+        "@ckeditor/ckeditor5-theme-lark": "^24.0.0",
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
         "@fullcalendar/core": "^5.2.1",
         "@fullcalendar/daygrid": "^5.2.0",
@@ -38,6 +42,8 @@
         "jszip-utils": "^0.1.0",
         "lodash": "^4.17.19",
         "lottie-web": "^5.7.1",
+        "postcss-loader": "^3.0.0",
+        "raw-loader": "^0.5.1",
         "sortablejs": "^1.10.2",
         "swiper": "^5.4.1",
         "v-calendar": "^1.0.8",
@@ -89,6 +95,7 @@
         "prettier": "1.19.1",
         "stylus": "^0.54.7",
         "stylus-loader": "^3.0.2",
+        "terser-webpack-plugin": "^5.1.1",
         "vue-template-compiler": "^2.6.11"
     }
 }
