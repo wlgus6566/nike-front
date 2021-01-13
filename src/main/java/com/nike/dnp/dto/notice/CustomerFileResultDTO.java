@@ -78,6 +78,30 @@ public class CustomerFileResultDTO {
     private String filePhysicalName;
 
     /**
+     * 상세 썸네일 명
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+    /**
      * 사용 여부
      *
      * @author [이소정]
@@ -123,6 +147,25 @@ public class CustomerFileResultDTO {
             fileName = fileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
             fileName = fileName.replaceAll("#39;", "'");
             return fileName;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets detail thumbnail file name.
+     *
+     * @return the detail thumbnail file name
+     * @author [이소정]
+     * @implNote 상세이미지 파일명 특수문자 처리
+     * @since 2021. 1. 13. 오후 7:21:47
+     */
+    public String getDetailThumbnailFileName() {
+        if (!ObjectUtils.isEmpty(detailThumbnailFileName)) {
+            detailThumbnailFileName = detailThumbnailFileName.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+            detailThumbnailFileName = detailThumbnailFileName.replaceAll("#40;", "(").replaceAll("#41;", ")");
+            detailThumbnailFileName = detailThumbnailFileName.replaceAll("#39;", "'");
+            return detailThumbnailFileName;
         } else {
             return null;
         }

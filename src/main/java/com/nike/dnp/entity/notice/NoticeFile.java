@@ -98,6 +98,33 @@ public class NoticeFile extends BaseTimeEntity {
     private String filePhysicalName;
 
     /**
+     * 상세 썸네일 명
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DETAIL_THUMBNAIL_FILE_NAME")
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DETAIL_THUMBNAIL_FILE_SIZE")
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
+     */
+    @Column(name = "DETAIL_THUMBNAIL_FILE_PHYSICAL_NAME")
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+    /**
      * 사용 여부
      *
      * @author [이소정]
@@ -167,6 +194,9 @@ public class NoticeFile extends BaseTimeEntity {
         noticeFile.setFileName(isFile ? customerFileSaveDTO.getFileName(): null);
         noticeFile.setFileSize(isFile ? customerFileSaveDTO.getFileSize(): null);
         noticeFile.setFilePhysicalName(isFile ? customerFileSaveDTO.getFilePhysicalName(): null);
+        noticeFile.setDetailThumbnailFileName(isFile ? customerFileSaveDTO.getDetailThumbnailFileName() : null);
+        noticeFile.setDetailThumbnailFileSize(isFile ? customerFileSaveDTO.getDetailThumbnailFileSize() : null);
+        noticeFile.setDetailThumbnailFilePhysicalName(isFile ? customerFileSaveDTO.getDetailThumbnailFilePhysicalName() : null);
 
         noticeFile.setTitle(isFile ? null : customerFileSaveDTO.getTitle());
         noticeFile.setUrl(isFile ? null : customerFileSaveDTO.getUrl());
@@ -192,6 +222,9 @@ public class NoticeFile extends BaseTimeEntity {
         this.fileName = isFile ? customerFileSaveDTO.getFileName(): null;
         this.fileSize = isFile ? customerFileSaveDTO.getFileSize(): null;
         this.filePhysicalName = isFile ? customerFileSaveDTO.getFilePhysicalName().replace(cdnUrl, ""): null;
+        this.detailThumbnailFileName = isFile ? customerFileSaveDTO.getDetailThumbnailFileName() : null;
+        this.detailThumbnailFileSize = isFile ? customerFileSaveDTO.getDetailThumbnailFileSize() : null;
+        this.detailThumbnailFilePhysicalName = isFile ? customerFileSaveDTO.getDetailThumbnailFilePhysicalName().replace(cdnUrl, "") : null;
         
         this.title = isFile ? null : customerFileSaveDTO.getTitle();
         this.url = isFile ? null : customerFileSaveDTO.getUrl();
