@@ -619,7 +619,7 @@ export default {
         async deleteOccupyFn() {
             const response = await joinDelete({
                 menuName: this.$route.meta.topMenuCode,
-                seq: this.$route.params.id,
+                seq: this.routeId,
             });
             //console.log(response);
         },
