@@ -53,7 +53,7 @@
                             </span>
                         </span>
                         <img
-                            :src="filePopupFile.filePhysicalName"
+                            :src="filePopupFile.detailThumbnailFilePhysicalName"
                             :alt="filePopupFile.fileName"
                             v-else
                         />
