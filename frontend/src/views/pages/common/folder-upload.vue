@@ -324,6 +324,7 @@ export default {
     name: 'UPLOAD',
     data() {
         return {
+            routeId: this.$route.params.id,
             fileUploadingInterval: null,
             occupyInterval: null,
             maxMemo: 150,
@@ -538,7 +539,7 @@ export default {
         this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
         this.folderSetting();
         clearInterval(this.occupyInterval);
-        if (this.$route.params.id) {
+        if (this.routeId) {
             this.joinOccupyFn();
             this.occupyInterval = setInterval(() => {
                 this.joinOccupyFn();
@@ -550,7 +551,7 @@ export default {
         this.pageMenuCodeAuth(this.$route.meta.topMenuCode, 'CREATE');
         this.folderSetting();
         clearInterval(this.occupyInterval);
-        if (this.$route.params.id) {
+        if (this.routeId) {
             this.joinOccupyFn();
             this.occupyInterval = setInterval(() => {
                 this.joinOccupyFn();
@@ -558,14 +559,13 @@ export default {
         }
     },
     destroyed() {
-        console.log(2)
-        if (this.$route.params.id) {
+        if (this.routeId) {
             this.deleteOccupyFn();
             clearInterval(this.occupyInterval);
         }
     },
     deactivated() {
-        if (this.$route.params.id) {
+        if (this.routeId) {
             this.deleteOccupyFn();
             clearInterval(this.occupyInterval);
         }
@@ -609,6 +609,7 @@ export default {
             const response = await getLoginUpdate();
         },
         async joinOccupyFn() {
+            console.log('joinOccupyFn');
             const response = await joinInit({
                 menuName: this.$route.meta.topMenuCode,
                 seq: this.$route.params.id,
