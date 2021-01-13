@@ -224,7 +224,7 @@ public class NoticeFile extends BaseTimeEntity {
         this.filePhysicalName = isFile ? customerFileSaveDTO.getFilePhysicalName().replace(cdnUrl, ""): null;
         this.detailThumbnailFileName = isFile ? customerFileSaveDTO.getDetailThumbnailFileName() : null;
         this.detailThumbnailFileSize = isFile ? customerFileSaveDTO.getDetailThumbnailFileSize() : null;
-        this.detailThumbnailFilePhysicalName = isFile ? customerFileSaveDTO.getDetailThumbnailFilePhysicalName().replace(cdnUrl, "") : null;
+        this.detailThumbnailFilePhysicalName = isFile && customerFileSaveDTO.getDetailThumbnailFilePhysicalName() != null ? customerFileSaveDTO.getDetailThumbnailFilePhysicalName().replace(cdnUrl, "") : null;
         
         this.title = isFile ? null : customerFileSaveDTO.getTitle();
         this.url = isFile ? null : customerFileSaveDTO.getUrl();

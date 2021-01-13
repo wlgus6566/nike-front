@@ -90,7 +90,7 @@ public class CustomerFileSaveDTO {
      * @author [이소정]
      */
     @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
-    private String detailThumbnailFilePhysicalName;
+    private String detailThumbnailFilePhysicalName = null;
 
     /**
      * 사용 여부
