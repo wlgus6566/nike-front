@@ -49,12 +49,14 @@
                         <label class="label-title required">답변</label>
                     </div>
                     <div class="form-column">
-                        <ckeditor
-                            v-model="faqDetail.contents"
-                            :config="editorConfig"
-                            @blur="onEditorInput"
-                            style="width: 100%;"
-                        />
+<!--                        <ckeditor-->
+<!--                            v-model="faqDetail.contents"-->
+<!--                            :config="editorConfig"-->
+<!--                            @blur="onEditorInput"-->
+<!--                            style="width: 100%;"-->
+<!--                        />-->
+
+                      <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
                         <!--                        <span class="textarea">
                             <textarea
                                 cols="100"
@@ -84,6 +86,16 @@ import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
 import { getCode } from '@/api/code';
 import { getAuthFromCookie } from '@/utils/cookies';
 
+// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
+// npm install --save @ckeditor/ckeditor5-build-classic
+
+import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
+import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
+// import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
+import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+
 export default {
     name: 'faq-form',
     watch: {
@@ -105,14 +117,52 @@ export default {
                 noticeArticleCategoryCode: null,
             },
             // 에디터 업로드 설정
+            // editorConfig: {
+            //     // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
+            //     filebrowserImageUploadUrl: '',
+            //     // TODO 현재 로그인한 계정의 auth값 가져오기
+            //     fileTools_requestHeaders: {
+            //         Authorization: '',
+            //     },
+            // },
+
+
+          /**
+           * ckeditor5 설정
+           */
+            editor: ClassicEditor,
+            editorData: '<p>Content of the editor.</p>',
             editorConfig: {
-                // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
-                filebrowserImageUploadUrl: '',
-                // TODO 현재 로그인한 계정의 auth값 가져오기
-                fileTools_requestHeaders: {
-                    Authorization: '',
-                },
-            },
+              /**
+               * 기존내용 추가
+               */
+              // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
+              filebrowserImageUploadUrl: '',
+              // TODO 현재 로그인한 계정의 auth값 가져오기
+              fileTools_requestHeaders: {
+                  Authorization: '',
+              },
+              /**
+               * end
+               */
+              plugins: [
+                EssentialsPlugin,
+                BoldPlugin,
+                ItalicPlugin,
+                // LinkPlugin,
+                ParagraphPlugin
+              ],
+              toolbar: {
+                items: [
+                  'bold',
+                  'italic',
+                  // 'link',
+                  'undo',
+                  'redo'
+                ]
+              }
+            }
+
         };
     },
     created() {
