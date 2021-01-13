@@ -155,12 +155,15 @@ public class NoticeService {
             if (!ObjectUtils.isEmpty(customerSaveDTO.getFileList())) {
                 for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
                     customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
-                    // NEWS 일 경우 파일 종류는 FILE
+                    // NOTICE 일 경우 파일 종류는 FILE
                     if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
                         customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
+                        customerFileSaveDTO.setDetailThumbnailFileName(null);
+                        customerFileSaveDTO.setDetailThumbnailFileSize(null);
+                        customerFileSaveDTO.setDetailThumbnailFilePhysicalName(null);
                     }
 
-                    noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))));
+                    noticeFileList.add(noticeFileRepository.save(new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerSaveDTO.getNoticeArticleSectionCode(), customerFileSaveDTO))));
                 }
             }
         }
@@ -179,11 +182,18 @@ public class NoticeService {
      * @implNote 게시물 저장 > 파일 경로(temp -> contents) 변경 후 set
      * @since 2020. 12. 16. 오후 7:18:49
      */
-    public CustomerFileSaveDTO s3FileCopySave(final CustomerFileSaveDTO cutCustomerFileSaveDTO) {
+    public CustomerFileSaveDTO s3FileCopySave(final String sectionCode, final CustomerFileSaveDTO cutCustomerFileSaveDTO) {
         log.info("ContentsService.s3FileCopySave");
         if (!ObjectUtils.isEmpty(cutCustomerFileSaveDTO.getFilePhysicalName()) && cutCustomerFileSaveDTO.getFilePhysicalName().contains("/temp/")) {
             cutCustomerFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(cutCustomerFileSaveDTO.getFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
         }
+
+        // news일 경우 상세 이미지 추가 작업
+        if (NoticeArticleSectionEnumCode.NEWS.toString().equals(sectionCode)
+            && !ObjectUtils.isEmpty(cutCustomerFileSaveDTO.getDetailThumbnailFilePhysicalName()) && cutCustomerFileSaveDTO.getDetailThumbnailFilePhysicalName().contains("/temp/")) {
+            cutCustomerFileSaveDTO.setFilePhysicalName(this.fileMoveTempToRealPath(cutCustomerFileSaveDTO.getFilePhysicalName(), ServiceCode.FileFolderEnumCode.NOTICE.getFolder()));
+        }
+
         return cutCustomerFileSaveDTO;
     }
 
@@ -302,13 +312,16 @@ public class NoticeService {
                 // NEWS 일 경우 파일 종류는 FILE
                 if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(updatedNoticeArticle.getNoticeArticleSectionCode())) {
                     customerFileSaveDTO.setFileKindCode(ServiceCode.NoticeFileKindCode.FILE.toString());
+                    customerFileSaveDTO.setDetailThumbnailFileName(null);
+                    customerFileSaveDTO.setDetailThumbnailFileSize(null);
+                    customerFileSaveDTO.setDetailThumbnailFilePhysicalName(null);
                 }
 
 //                this.checkReportFileValidation(reportFileSaveDTO);
-                this.s3FileCopySave(customerFileSaveDTO);
+                this.s3FileCopySave(updatedNoticeArticle.getNoticeArticleSectionCode(), customerFileSaveDTO);
                 customerFileSaveDTO.setNoticeArticleSeq(noticeSeq);
                 final NoticeFile saveReportFile = reportFile.orElse(
-                    new NoticeFile().saveNoticeFile(this.s3FileCopySave(customerFileSaveDTO))
+                    new NoticeFile().saveNoticeFile(this.s3FileCopySave(updatedNoticeArticle.getNoticeArticleSectionCode(), customerFileSaveDTO))
                 );
 
                 if (0l != noticeFileSeq) {

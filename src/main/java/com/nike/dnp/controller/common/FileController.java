@@ -97,9 +97,12 @@ public class FileController {
 			folder = ServiceCode.FileFolderEnumCode.ORDER_PRODUCT.getFolder();
 			downloadYn = "N";
 			privateYn = "N";
-		} else if (!StringUtils.isEmpty(menuCode) && (menuCode.equals("notice") || menuCode.equals("news"))) {
+		} else if (!StringUtils.isEmpty(menuCode) && (menuCode.equals("notice"))) {
 			privateYn = "N";
 			resize = false;
+		} else if (!StringUtils.isEmpty(menuCode) && menuCode.equals("news")) {
+			privateYn = "N";
+			resize = true;
 		}
 		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO, folder, resize);
 		S3Util.upload(fileResultDTO, privateYn, downloadYn);
