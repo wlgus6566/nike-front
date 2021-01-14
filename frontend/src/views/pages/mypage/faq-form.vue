@@ -50,6 +50,7 @@
                         <label class="label-title required">답변</label>
                     </div>
                     <div class="form-column">
+<!--                      ASIS-->
 <!--                        <ckeditor-->
 <!--                            v-model="faqDetail.contents"-->
 <!--                            :config="editorConfig"-->
@@ -61,18 +62,9 @@
                           :editor="editor"
                           v-model="faqDetail.contents"
                           :config="editorConfig"
-                          style="width: 100%;"
-                      >
+                          style="width: 100%;">
                       </ckeditor>
-                        <!--                        <span class="textarea">
-                            <textarea
-                                cols="100"
-                                rows="2"
-                                style="height: 300px;"
-                                v-model="faqDetail.contents"
-                                required
-                            ></textarea>
-                        </span>-->
+<!--                      <div id="editor"></div>-->
                     </div>
                 </li>
             </ul>
@@ -86,14 +78,20 @@
                 </button>
             </div>
         </form>
+
     </div>
 </template>
+
+<!--<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>-->
+
 <script>
 import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
 import { getCode } from '@/api/code';
 import { getAuthFromCookie } from '@/utils/cookies';
 
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
 import AutoFormat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
@@ -110,7 +108,12 @@ import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js';
 import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
+
+import ListUi from '@ckeditor/ckeditor5-list/src/listui';
+import ListEditing from '@ckeditor/ckeditor5-list/src/listediting';
+import ListStyle from '@ckeditor/ckeditor5-list/src/liststyle';
 
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link.js';
@@ -129,9 +132,23 @@ import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 
-//
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
+
+import autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
+
+
+
+// window.onload = function () {
+//   console.log("실행");
+//   alert("onload call");
+//
+//   ClassicEditor
+//       .create( document.querySelector( '#editor' ) )
+//       .catch( error => {
+//         console.error( error );
+//       } );
+// }
 
 export default {
     name: 'faq-form',
@@ -165,13 +182,12 @@ export default {
 
           // CKEditor5 설정
             editor: ClassicEditor,
-            editorData: '',
             editorConfig: {
               /**
                * 기존내용 추가
                */
               fileTools_requestHeaders: {
-                  Authorization: '',
+                Authorization: '',
               },
               plugins: [
                 Alignment,
@@ -208,7 +224,11 @@ export default {
                 TodoList,
                 Underline,
                 SimpleUploadAdapter,
-                ImageResize
+                ImageResize,
+                IndentBlock,
+                ListUi,
+                ListEditing,
+                ListStyle
               ],
               toolbar: {
                 items: [
@@ -257,6 +277,10 @@ export default {
                   Authorization: ''
                 }
               },
+              indentBlock: {
+                offset: 1,
+                unit: 'em'
+              },
               image: {
                 styles: [
                   'alignLeft', 'alignCenter', 'alignRight'
@@ -291,7 +315,7 @@ export default {
         };
     },
     created() {
-        this.$store.state.saveFolder = false;
+       this.$store.state.saveFolder = false;
         // this.editorConfig.filebrowserImageUploadUrl =
         //     process.env.VUE_APP_API_URL +
         //     `/api/customer/${this.$route.meta.sectionCode}/images`;
@@ -425,10 +449,10 @@ export default {
             this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
         },
-        onEditorInput: function (e) {
-          console.log(e.editor)
-            this.faqDetail.contents = this.editorData;
-        },
+        // onEditorInput: function (e) {
+        //   console.log(e.editor)
+        //     this.faqDetail.contents = this.editorData;
+        // },
     },
     beforeRouteLeave(to, from, next) {
         if (!this.$store.state.saveFolder) {
