@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.SocketUtils;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -143,9 +144,12 @@ public class OrderProductMappingService {
 			sendDTOList.add(sendDTO);
 		}
 		log.info("sendDTOList : ", sendDTOList.size());
+		System.out.println("============================================================");
+		System.out.println("sendDTOList : "+sendDTOList.size());
 		for (SendDTO sendDTO : sendDTOList) {
-			log.info("메일 목록 조회 : ", sendDTO.getEmail());
+			System.out.println("메일 목록 조회 : "+sendDTO.getEmail());
 		}
+		System.out.println("============================================================");
 
 		// 선택한 수신자 목록 메일 발송
 		if (!recipientList.isEmpty()) {
