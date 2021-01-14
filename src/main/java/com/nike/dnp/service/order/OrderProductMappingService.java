@@ -142,6 +142,10 @@ public class OrderProductMappingService {
 			sendDTO.setProductList(productList);
 			sendDTOList.add(sendDTO);
 		}
+		log.info("sendDTOList : ", sendDTOList.size());
+		for (SendDTO sendDTO : sendDTOList) {
+			log.info("메일 목록 조회 : ", sendDTO.getEmail());
+		}
 
 		// 선택한 수신자 목록 메일 발송
 		if (!recipientList.isEmpty()) {
@@ -200,7 +204,9 @@ builder.append(dto.getProductName());
 //builder.append(dto.getProductName()+"<br><br>");
 builder.append("					</p>");
 builder.append("					<p style=\"margin:5px 0 0 0; width:300px; font-size:11px; color:#555; line-height:17px;\">");
-builder.append(dto.getProductDesc());
+if (!ObjectUtils.isEmpty(dto.getProductDesc())) {
+	builder.append(dto.getProductDesc());
+}
 builder.append("					</p>");
 builder.append("				</td>");
 builder.append("			</tr>");
