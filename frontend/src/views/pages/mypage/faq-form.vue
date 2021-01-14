@@ -1,3 +1,4 @@
+<script src="src/utils/uploadAdapter.js"></script>
 <template>
     <div>
         <h2 class="page-title">
@@ -56,7 +57,13 @@
 <!--                            style="width: 100%;"-->
 <!--                        />-->
 
-                      <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+                      <ckeditor
+                          :editor="editor"
+                          v-model="faqDetail.contents"
+                          :config="editorConfig"
+                          style="width: 100%;"
+                      >
+                      </ckeditor>
                         <!--                        <span class="textarea">
                             <textarea
                                 cols="100"
@@ -86,22 +93,45 @@ import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
 import { getCode } from '@/api/code';
 import { getAuthFromCookie } from '@/utils/cookies';
 
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
+import AutoFormat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
+import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
+import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder.js';
+import CKFinderUploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter.js';
+import FontBackgroundColor from '@ckeditor/ckeditor5-font/src/fontbackgroundcolor.js';
+import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor.js';
+import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily.js';
+import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
+import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
+import Image from '@ckeditor/ckeditor5-image/src/image.js';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
+import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
+import Link from '@ckeditor/ckeditor5-link/src/link.js';
+import List from '@ckeditor/ckeditor5-list/src/list.js';
+import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
+import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak.js';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
+import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
+import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters.js';
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
+import Table from '@ckeditor/ckeditor5-table/src/table.js';
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
+import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
+import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
+import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
+import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 
-
-// import CKEditor from '@ckeditor/ckeditor5-vue2';
 //
-// import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
-// import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
-// import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
-// // import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
-// import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
-// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
-// import Link from '@ckeditor/ckeditor5-link/src/link.js';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 export default {
     name: 'faq-form',
@@ -143,22 +173,120 @@ export default {
               /**
                * 기존내용 추가
                */
-              // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
-              filebrowserImageUploadUrl: '',
-              // TODO 현재 로그인한 계정의 auth값 가져오기
               fileTools_requestHeaders: {
                   Authorization: '',
               },
               plugins: [
+                Alignment,
+                AutoFormat,
+                BlockQuote,
                 Bold,
+                CKFinder,
+                CKFinderUploadAdapter,
+                Essentials,
+                FontBackgroundColor,
+                FontColor,
+                FontFamily,
+                FontSize,
+                Heading,
+                Image,
+                ImageCaption,
+                ImageStyle,
+                ImageToolbar,
+                ImageUpload,
+                Indent,
                 Italic,
-                Underline
+                Link,
+                List,
+                MediaEmbed,
+                PageBreak,
+                Paragraph,
+                PasteFromOffice,
+                SpecialCharacters,
+                Strikethrough,
+                Table,
+                TableCellProperties,
+                TableProperties,
+                TableToolbar,
+                TextTransformation,
+                TodoList,
+                Underline,
+                SimpleUploadAdapter,
+                ImageResize
               ],
               toolbar: {
                 items: [
+                  'heading',
+                  '|',
                   'bold',
                   'italic',
-                  'underline'
+                  'link',
+                  'bulletedList',
+                  'numberedList',
+                  '|',
+                  'indent',
+                  '|',
+                  'imageUpload',
+                  'blockQuote',
+                  'insertTable',
+                  'mediaEmbed',
+                  'undo',
+                  'redo',
+                  'alignment',
+                  'fontSize',
+                  'fontColor',
+                  'fontBackgroundColor',
+                  'fontFamily',
+                  'underline',
+                  'strikethrough',
+                  'specialCharacters'
+                ]
+              },
+              language: 'en',
+              table: {
+                contentToolbar: [
+                  'tableColumn',
+                  'tableRow',
+                  'mergeTableCells',
+                  'tableCellProperties',
+                  'tableProperties'
+                ]
+              },
+              simpleUpload: {
+                uploadUrl: '',
+                withCredentials: true,
+                headers: {
+                  'X-CSRF-TOKEN': 'CSRF-Token',
+                  Authorization: ''
+                }
+              },
+              image: {
+                styles: [
+                  'alignLeft', 'alignCenter', 'alignRight'
+                ],
+                resizeOptions: [
+                  {
+                    name: 'imageResize:original',
+                    label: 'Original',
+                    value: null
+                  },
+                  {
+                    name: 'imageResize:50',
+                    label: '50%',
+                    value: '50'
+                  },
+                  {
+                    name: 'imageResize:75',
+                    label: '75%',
+                    value: '75'
+                  }
+                ],
+                toolbar: [
+                  'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+                  '|',
+                  'imageResize',
+                  '|',
+                  'imageTextAlternative'
                 ]
               }
             }
@@ -167,10 +295,17 @@ export default {
     },
     created() {
         this.$store.state.saveFolder = false;
-        this.editorConfig.filebrowserImageUploadUrl =
+        // this.editorConfig.filebrowserImageUploadUrl =
+        //     process.env.VUE_APP_API_URL +
+        //     `/api/customer/${this.$route.meta.sectionCode}/images`;
+        // this.editorConfig.fileTools_requestHeaders.Authorization =
+        //     this.$store.state.token || getAuthFromCookie();
+
+        // 업로드 설정 추가
+        this.editorConfig.simpleUpload.uploadUrl =
             process.env.VUE_APP_API_URL +
             `/api/customer/${this.$route.meta.sectionCode}/images`;
-        this.editorConfig.fileTools_requestHeaders.Authorization =
+        this.editorConfig.simpleUpload.headers.Authorization =
             this.$store.state.token || getAuthFromCookie();
     },
     mounted() {
@@ -293,9 +428,10 @@ export default {
             this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
         },
-        onEditorInput: function (e) {
-            this.faqDetail.contents = e.editor._.editable.$.innerHTML;
-        },
+        // onEditorInput: function (e) {
+        //   console.log(e.editor)
+        //     this.faqDetail.contents = e.editor._.editable.$.innerHTML;
+        // },
     },
     beforeRouteLeave(to, from, next) {
         if (!this.$store.state.saveFolder) {
