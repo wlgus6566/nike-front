@@ -165,7 +165,6 @@ export default {
             });
         },
         submitData() {
-            bus.$emit('pageLoading', true);
             this.$refs.fileSet.uploadFiles();
         },
         async submitForm() {

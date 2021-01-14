@@ -245,12 +245,14 @@ export default {
                 .then(values => {
                     if (!this.errorFile.length) {
                         this.uploadFile = [];
+                        bus.$emit('pageLoading', true);
                         if (this.$route.meta.modify) {
                             this.$emit('modifyForm');
                         } else {
                             this.$emit('submitForm');
                         }
                     } else {
+                        console.log(2);
                         bus.$emit('pageLoading', false);
                     }
                 })
