@@ -111,10 +111,10 @@ import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
+
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link.js';
 import List from '@ckeditor/ckeditor5-list/src/list.js';
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
 import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak.js';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph.js';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
@@ -135,11 +135,11 @@ import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleu
 
 export default {
     name: 'faq-form',
-    watch: {
-        $route() {
-            this.$destroy();
-        },
-    },
+    // watch: {
+    //     $route() {
+    //         this.$destroy();
+    //     },
+    // },
     data() {
         return {
             noticeArticleSeq: null,
@@ -163,12 +163,9 @@ export default {
             //     },
             // },
 
-
-          /**
-           * ckeditor5 설정
-           */
+          // CKEditor5 설정
             editor: ClassicEditor,
-            editorData: '<p>Content of the editor.</p>',
+            editorData: '',
             editorConfig: {
               /**
                * 기존내용 추가
@@ -198,7 +195,6 @@ export default {
                 Italic,
                 Link,
                 List,
-                MediaEmbed,
                 PageBreak,
                 Paragraph,
                 PasteFromOffice,
@@ -225,11 +221,11 @@ export default {
                   'numberedList',
                   '|',
                   'indent',
+                  'outdent',
                   '|',
                   'imageUpload',
                   'blockQuote',
                   'insertTable',
-                  'mediaEmbed',
                   'undo',
                   'redo',
                   'alignment',
@@ -240,7 +236,8 @@ export default {
                   'underline',
                   'strikethrough',
                   'specialCharacters'
-                ]
+                ],
+                shouldNotGroupWhenFull: true
               },
               language: 'en',
               table: {
@@ -428,10 +425,10 @@ export default {
             this.categoryCodeList.value = '';
             this.noticeArticleSeq = '';
         },
-        // onEditorInput: function (e) {
-        //   console.log(e.editor)
-        //     this.faqDetail.contents = e.editor._.editable.$.innerHTML;
-        // },
+        onEditorInput: function (e) {
+          console.log(e.editor)
+            this.faqDetail.contents = this.editorData;
+        },
     },
     beforeRouteLeave(to, from, next) {
         if (!this.$store.state.saveFolder) {
@@ -452,5 +449,8 @@ export default {
 <style scoped>
 ::v-deep .el-input__suffix {
     right: 10px;
+}
+::v-deep .ck.ck-content.ck-editor__editable {
+  min-height: 500px;
 }
 </style>
