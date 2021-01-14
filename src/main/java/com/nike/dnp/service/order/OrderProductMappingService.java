@@ -143,13 +143,6 @@ public class OrderProductMappingService {
 			sendDTO.setProductList(productList);
 			sendDTOList.add(sendDTO);
 		}
-		log.info("sendDTOList : ", sendDTOList.size());
-		System.out.println("============================================================");
-		System.out.println("sendDTOList : "+sendDTOList.size());
-		for (SendDTO sendDTO : sendDTOList) {
-			System.out.println("메일 목록 조회 : "+sendDTO.getEmail());
-		}
-		System.out.println("============================================================");
 
 		// 선택한 수신자 목록 메일 발송
 		if (!recipientList.isEmpty()) {
@@ -181,13 +174,6 @@ public class OrderProductMappingService {
 			}
 
 		}
-
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		System.out.println("sendDTOList : "+sendDTOList.size());
-		for (SendDTO sendDTO : sendDTOList) {
-			System.out.println("메일 목록 조회 : "+sendDTO.getEmail());
-		}
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
 		for (final SendDTO sendDTO : sendDTOList){
 			final DecimalFormat format = new DecimalFormat("###,###");
