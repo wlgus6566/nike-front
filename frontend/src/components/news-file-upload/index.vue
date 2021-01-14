@@ -198,6 +198,7 @@ export default {
                     return false;
                 }
             }
+            bus.$emit('pageLoading', true);
             this.errorFile = [];
             Promise.all(
                 this.uploadFile.map(async el => {
@@ -245,7 +246,7 @@ export default {
                 .then(values => {
                     if (!this.errorFile.length) {
                         this.uploadFile = [];
-                        bus.$emit('pageLoading', true);
+
                         if (this.$route.meta.modify) {
                             this.$emit('modifyForm');
                         } else {
