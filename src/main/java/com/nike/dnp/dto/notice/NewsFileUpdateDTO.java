@@ -77,6 +77,30 @@ public class NewsFileUpdateDTO extends BasicDTO {
     private String filePhysicalName;
 
     /**
+     * 상세 썸네일 명
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileName", value ="상세 썸네일 명", example = "graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFileName;
+
+    /**
+     * 상세 썸네일 사이즈
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFileSize", value ="상세 썸네일 사이즈", example = "700")
+    private String detailThumbnailFileSize;
+
+    /**
+     * 상세 썸네일 물리 경로
+     *
+     * @author [이소정]
+     */
+    @ApiModelProperty(name = "detailThumbnailFilePhysicalName", value ="상세 썸네일 물리 명", example = "http://cdnUrl/file/contents/graphic_file_name_detail_thumbnail.jpg")
+    private String detailThumbnailFilePhysicalName;
+
+    /**
      * 사용 여부
      *
      * @author [이소정]

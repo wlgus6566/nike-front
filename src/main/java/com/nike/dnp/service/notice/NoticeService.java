@@ -2,6 +2,7 @@ package com.nike.dnp.service.notice;
 
 import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.contents.ContentsFileSaveDTO;
 import com.nike.dnp.dto.notice.*;
 import com.nike.dnp.dto.report.ReportFileSaveDTO;
 import com.nike.dnp.entity.notice.NoticeArticle;
@@ -153,8 +154,11 @@ public class NoticeService {
         // NOTICE, NEW 인 경우에만 fileList 저장
         if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())
             || NoticeArticleSectionEnumCode.NEWS.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
-            if (!ObjectUtils.isEmpty(customerSaveDTO.getFileList())) {
-                for (CustomerFileSaveDTO customerFileSaveDTO : customerSaveDTO.getFileList()) {
+            if (!ObjectUtils.isEmpty(customerSaveDTO.getFileList()) && !customerSaveDTO.getFileList().isEmpty()) {
+                // 비어있는 파일이 있는지 확인
+                List<CustomerFileSaveDTO> checkedFileList = this.checkAndRemoveFile(customerSaveDTO.getNoticeArticleSectionCode(), customerSaveDTO.getFileList());
+
+                for (CustomerFileSaveDTO customerFileSaveDTO : checkedFileList) {
                     customerFileSaveDTO.setNoticeArticleSeq(savedNoticeArticle.getNoticeArticleSeq());
                     // NOTICE 일 경우 파일 종류는 FILE
                     if (NoticeArticleSectionEnumCode.NOTICE.toString().equals(customerSaveDTO.getNoticeArticleSectionCode())) {
@@ -175,8 +179,44 @@ public class NoticeService {
     }
 
     /**
+     * Check and remove file list.
+     *
+     * @param noticeArticleSectionCode the notice article section code
+     * @param customerFileList         the customer file list
+     * @return the list
+     * @author [이소정]
+     * @implNote 파일, 동영상 아무것도 선택하지 않은 경우 저장하지 않고 pass
+     * @since 2020. 8. 14. 오후 9:36:19
+     */
+    public List<CustomerFileSaveDTO> checkAndRemoveFile(final String noticeArticleSectionCode, final List<CustomerFileSaveDTO> customerFileList) {
+        log.info("NoticeService.checkAndRemoveFile");
+        List<CustomerFileSaveDTO> checkedFileList = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(customerFileList) && !customerFileList.isEmpty()) {
+            for (CustomerFileSaveDTO fileSaveDTO : customerFileList) {
+                if (NoticeArticleSectionEnumCode.NEWS.toString().equals(noticeArticleSectionCode)
+                        && ServiceCode.NoticeFileKindCode.VIDEO.toString().equals(fileSaveDTO.getFileKindCode())
+                ) {
+                    if (!ObjectUtils.isEmpty(fileSaveDTO.getUrl()) || !ObjectUtils.isEmpty(fileSaveDTO.getTitle())) {
+                        checkedFileList.add(fileSaveDTO);
+                    }
+                } else {
+                    if (!ObjectUtils.isEmpty(fileSaveDTO.getFileName())
+                            && !ObjectUtils.isEmpty(fileSaveDTO.getFilePhysicalName())
+                            && !ObjectUtils.isEmpty(fileSaveDTO.getFilePhysicalName())) {
+                        checkedFileList.add(fileSaveDTO);
+                    }
+                }
+
+            }
+        }
+
+        return checkedFileList;
+    }
+
+    /**
      * S 3 file copy save notice file save dto.
      *
+     * @param sectionCode            the section code
      * @param cutCustomerFileSaveDTO the cut customer file save dto
      * @return the notice file save dto
      * @author [이소정]
@@ -282,7 +322,10 @@ public class NoticeService {
                 lastBeforeFileList.add(reportFile);
             }
         }
-        final List<CustomerFileSaveDTO> newFileList = customerUpdateDTO.getFileList();
+//        final List<CustomerFileSaveDTO> newFileList = customerUpdateDTO.getFileList();
+        // 비어있는 파일이 있는지 확인
+        List<CustomerFileSaveDTO> newFileList = this.checkAndRemoveFile(customerUpdateDTO.getNoticeArticleSectionCode(), customerUpdateDTO.getFileList());
+
         List<Long> keepFileSeqList = new ArrayList<>();
 
         if (!ObjectUtils.isEmpty(beforeFileList) && !beforeFileList.isEmpty()
@@ -319,7 +362,7 @@ public class NoticeService {
                 }
 
 //                this.checkReportFileValidation(reportFileSaveDTO);
-                this.s3FileCopySave(updatedNoticeArticle.getNoticeArticleSectionCode(), customerFileSaveDTO);
+//                this.s3FileCopySave(updatedNoticeArticle.getNoticeArticleSectionCode(), customerFileSaveDTO);
                 customerFileSaveDTO.setNoticeArticleSeq(noticeSeq);
                 final NoticeFile saveReportFile = reportFile.orElse(
                     new NoticeFile().saveNoticeFile(this.s3FileCopySave(updatedNoticeArticle.getNoticeArticleSectionCode(), customerFileSaveDTO))
