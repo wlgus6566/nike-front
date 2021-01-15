@@ -20,7 +20,7 @@
             </a>
             <transition @enter="itemOpen" @leave="itemClose">
                 <div class="cont" v-if="isActive === item.noticeArticleSeq">
-                    <div class="cont-unit" v-html="item.contents"></div>
+                    <div class="cont-unit ck-content" v-html="item.contents"></div>
                     <div
                         class="btn-area"
                         v-if="

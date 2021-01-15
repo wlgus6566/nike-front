@@ -16,10 +16,7 @@
 	--ck-image-style-spacing: 1.5em;
 	--ck-todo-list-checkmark-size: 16px;
 }
-
-.ck-content .image-box{
-	overflow:hidden;
-}
+.cont-unit.ck-content{overflow:hidden}
 /* ckeditor5-image/theme/imageresize.css */
 .ck-content .image.image_resized {
 	max-width: 100%;
