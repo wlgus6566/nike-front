@@ -191,14 +191,14 @@ builder.append("			<tr>");
 builder.append("				<td style=\"width:65px; margin:0; vertical-align:top\">");
 builder.append("					<div style=\"width:50px; height:50px; overflow:hidden; margin:0; padding:0; line-height:50px; background:#f7f7f7; \" >");
 builder.append("			<img width=\"50\" style=\"width:50px; vertical-align:middle;\" src=\"");
-builder.append(dto.getImageFilePhysicalName());
+//builder.append(dto.getImageFilePhysicalName());
+builder.append(CloudFrontUtil.getCustomSignedUrl(dto.getImageFilePhysicalName(), 259200));
 builder.append("\">");
 builder.append("					</div>");
 builder.append("				</td>");
 builder.append("				<td style=\"width:425px;\">");
 builder.append("					<p style=\"margin:0; width:300px; font-size:12px; color:#333; line-height:18px;\">");
 builder.append(dto.getProductName());
-//builder.append(dto.getProductName()+"<br><br>");
 builder.append("					</p>");
 builder.append("					<p style=\"margin:5px 0 0 0; width:300px; font-size:11px; color:#555; line-height:17px;\">");
 if (!ObjectUtils.isEmpty(dto.getProductDesc())) {
@@ -214,49 +214,54 @@ builder.append("					주문수량");
 builder.append("					</span>");
 builder.append("				</td>");
 builder.append("				<td style=\"width:425px;  padding-top:15px; vertical-align:top;\">");
-builder.append("					<span style=\"line-height:18px; font-size:12px; color:#000;\"strong>");
+builder.append("					<span style=\"line-height:18px; font-size:12px; color:#000;\"><strong>");
 builder.append(format.format(dto.getAmount()));
-builder.append("					</strong> 개</span>");
+builder.append("</strong> 개</span>");
 builder.append("				</td>");
 builder.append("			</tr>");
-builder.append("			<tr>");
-builder.append("				<td style=\"width:65px; margin:0; padding-top:5px; vertical-align:top;\">");
-builder.append("					<span style=\"line-height:18px; font-size:12px; color:#888;\">");
-builder.append("					첨부파일");
-builder.append("					</span>");
-builder.append("				</td>");
-builder.append("				<td style=\"width:425px;  padding-top:5px; vertical-align:top;\">");
-builder.append("					<div style=\"overflow:hidden\">");
-List<OrderProductFile> productFileList = dto.getProductFileList();
-for (OrderProductFile orderProductFileSaveDTO : productFileList) {
-	builder.append("						<a href=\"");
-	builder.append(cdnUrl+orderProductFileSaveDTO.getFilePhysicalName());
-	builder.append("						\" style=\"float:left; display:block; margin-right:5px;\">");
-	builder.append("							<span style=\"display:inline-block;\">");
-	builder.append("								<img style=\"width:40px; height:40px; vertical-align:middle;\" src=\"");
+if (!ObjectUtils.isEmpty(dto.getProductFileList()) && dto.getProductFileList().size() > 0) {
+	builder.append("			<tr>");
+	builder.append("				<td style=\"width:65px; margin:0; padding-top:5px; vertical-align:top;\">");
+	builder.append("					<span style=\"line-height:18px; font-size:12px; color:#888;\">");
+	builder.append("					첨부파일");
+	builder.append("					</span>");
+	builder.append("				</td>");
+	builder.append("				<td style=\"width:425px;  padding-top:5px; vertical-align:top;\">");
+	builder.append("					<div style=\"overflow:hidden\">");
+	List<OrderProductFile> productFileList = dto.getProductFileList();
+	for (OrderProductFile orderProductFileSaveDTO : productFileList) {
+		builder.append("						<a href=\"");
+		builder.append(cdnUrl+orderProductFileSaveDTO.getFilePhysicalName());
+		builder.append("						\" style=\"float:left; display:block; margin-right:5px;\">");
+		builder.append("							<span style=\"display:inline-block;\">");
+		builder.append("								<img style=\"width:40px; height:40px; vertical-align:middle;\" src=\"");
 
-	builder.append(cdnUrl+orderProductFileSaveDTO.getThumbnailFilePhysicalName());
+		builder.append(cdnUrl+orderProductFileSaveDTO.getThumbnailFilePhysicalName());
 
-	builder.append("								\" alt=\"\">");
-	builder.append("							</span>");
-	builder.append("						</a>");
+		builder.append("								\" alt=\"\">");
+		builder.append("							</span>");
+		builder.append("						</a>");
+	}
+
+	builder.append("					</div>");
+	builder.append("				</td>");
+	builder.append("			</tr>");
 }
 
-builder.append("					</div>");
-builder.append("				</td>");
-builder.append("			</tr>");
-builder.append("			<tr>");
-builder.append("				<td style=\"width:65px; margin:0; padding-top:15px; vertical-align:top;\">");
-builder.append("					<span style=\"line-height:18px; font-size:12px; color:#888;\">");
-builder.append("					요청사항");
-builder.append("					</span>");
-builder.append("				</td>");
-builder.append("				<td style=\"width:425px;  padding-top:10px; vertical-align:top;\">");
-builder.append("					<span style=\"line-height:18px; font-size:12px; color:#888;\">");
-builder.append(dto.getProductComment());
-builder.append("					</span>");
-builder.append("				</td>");
-builder.append("			</tr>");
+if (!ObjectUtils.isEmpty(dto.getProductComment())) {
+	builder.append("			<tr>");
+	builder.append("				<td style=\"width:65px; margin:0; padding-top:15px; vertical-align:top;\">");
+	builder.append("					<span style=\"line-height:18px; font-size:12px; color:#888;\">");
+	builder.append("					요청사항");
+	builder.append("					</span>");
+	builder.append("				</td>");
+	builder.append("<td style=\"width:425px;  padding-top:10px; vertical-align:top;\">");
+	builder.append("<span style=\"line-height:18px; font-size:12px; color:#888;\">");
+	builder.append(dto.getProductComment());
+	builder.append("</span>");
+	builder.append("</td>");
+	builder.append("</tr>");
+}
 builder.append("			</tbody>");
 builder.append("		</table>");
 builder.append("	</td>");
