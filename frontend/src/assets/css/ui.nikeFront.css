@@ -4336,7 +4336,7 @@ img.image-grayscale {
 .sheet-item {
     display: flex;
     flex-wrap: wrap;
-    padding: 15px 20px 15px 10px;
+    padding: 20px 45px 25px 10px;
 }
 .sheet-item + .sheet-item {
     border-top: 1px solid #eee;
@@ -4407,7 +4407,6 @@ img.image-grayscale {
 .sheet-item .add-file {
     width: calc(100% - 65px);
     margin: 15px 0 0 65px;
-    padding: 0 0 5px;
     box-sizing: border-box;
 }
 .sheet-item .add-file .textarea {
@@ -4484,6 +4483,9 @@ img.image-grayscale {
     background: #fff;
     overflow: hidden;
 }
+.order-upload-file-box.active {
+   background:#f7f7f7;
+}
 .order-upload-file-box .order-upload-file-list {
     float: left;
     width: calc(100% - 58px);
@@ -4558,7 +4560,9 @@ img.image-grayscale {
     width: 100%;
 }
 .check-select [class^='txt'] {
-    display: inline-block;
+    display: flex;
+    height:30px;
+    align-items:center;
     box-sizing: border-box;
     font-size: 12px;
     line-height: 18px;
@@ -4567,6 +4571,9 @@ img.image-grayscale {
 .check-select .txt-click {
     padding-right: 25px;
     background: url(../images/svg/icon-filter-arrow-down.svg) no-repeat right;
+}
+.check-select.active .txt-click {
+    background: url(../images/svg/icon-filter-arrow-up.svg) no-repeat right;
 }
 .check-select .user-item {
     display: flex;
@@ -4590,6 +4597,12 @@ img.image-grayscale {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.check-select .user-item .ect {
+    display: block;
+    flex: 0 0 auto;
+    margin-left: 5px;
+    align-items:center;
 }
 .check-select .user-item .mail:before {
     content: '';
@@ -4615,7 +4628,6 @@ img.image-grayscale {
 .check-select .view-list {
     display: flex;
     flex-wrap: wrap;
-    margin-top: -5px;
     padding-bottom: 17px;
 }
 .check-select .view-list li {
@@ -5988,8 +6000,8 @@ img.image-grayscale {
 .order-sheet-modal .form-row {
     padding: 10px;
 }
-.order-sheet-modal .form-column {
-    align-items: center;
+.order-sheet-modal .form-column:first-child {
+    align-items: flex-start;
     flex-basis: 70px;
 }
 .order-sheet-modal .form-column + .form-column {

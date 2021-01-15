@@ -186,13 +186,13 @@
                                     </span>
                                 </span>
                                 <span class="quantity-txt">
-                                    <em>{{ item.orderQuantity }}</em>
-                                    개
+                                    <span><em>{{ item.orderQuantity }}</em> 개</span>
                                 </span>
                             </div>
                             <span class="add-file">
                                 <div
                                     class="order-upload-file-box"
+                                    :class="{active : item.fileList.length > 0}"
                                     v-if="item.product.category2Code === 'MNQ'"
                                 >
                                     <!--active-->
@@ -397,7 +397,7 @@ export default {
                 if (response.depthCheckYn === 'Y') {
                     this.userList = response.userList;
                 }
-                /* this.userList = [
+               /*  this.userList = [
                     {
                         nickname: '테스트계정',
                         userId:
