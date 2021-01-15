@@ -87,21 +87,21 @@ export default {
         },
         //공지사항 상세
         async getNoticeDetail() {
-            try {
+            // try {
                 const {
                     data: { data: response },
                 } = await getCustomerDetail(
                     this.$route.meta.sectionCode,
                     this.$route.params.id
                 );
-                //console.log(response);
-
                 this.noticeDetail = response;
+                this.noticeDetail.contents
+                    = this.noticeDetail.contents.replace('<figure', '<div class="image-box"> <figure').replace('</figure>', '</figure> </div>');
                 this.noticeArticleSectionCode =
                     response.noticeArticleSectionCode;
-            } catch (error) {
-                console.error(error);
-            }
+            // } catch (error) {
+            //     console.error(error);
+            // }
         },
 
         //게시판 수정페이지 이동
