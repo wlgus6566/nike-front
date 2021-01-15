@@ -4414,6 +4414,7 @@ img.image-grayscale {
 }
 .sheet-item .add-file textarea {
     font-size: 11px;
+    font-weight:300;
 }
 .sheet-item .add-file textarea::placeholder {
     font-size: 11px;
@@ -4441,6 +4442,7 @@ img.image-grayscale {
     display: block;
     width: calc(100% - 70px);
     color: #333;
+    font-weight:300;
 }
 .sheet-item .add-order-list .name {
     display: flex;
@@ -4465,6 +4467,7 @@ img.image-grayscale {
 .sheet-item .add-order-list .file-list li {
     position: relative;
     padding-left: 19px;
+    font-weight:400;
 }
 .sheet-item .add-order-list .file-list li:before {
     content: '';
