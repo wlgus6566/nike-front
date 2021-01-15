@@ -235,7 +235,8 @@ public class FileUtil {
 	public static FileResultDTO fileSave(final MultipartFile uploadFile,
 										 final String folder,
 										 final boolean resize,
-										 final String resizeExt) throws IOException {
+										 final String resizeExt,
+										 final String menuCode) throws IOException {
 		log.info("FileUtil.fileSave  start");
 
 		String originalFileName = uploadFile.getOriginalFilename();
@@ -333,7 +334,12 @@ public class FileUtil {
 				if(extension.contains("PSD") || extension.contains("AI") || extension.contains("TIF") || extension.contains("GIF")){
 					detailCommand.append("[0]");
 				}
-				detailCommand.append(" -resize 700x700 -background #f7f7f7 -gravity center -extent 700x700 ").append(detailPath);
+
+				if ("news".equals(menuCode)) {
+					detailCommand.append(" -background #f7f7f7").append(detailPath);
+				} else {
+					detailCommand.append(" -resize 700x700 -background #f7f7f7 -gravity center -extent 700x700 ").append(detailPath);
+				}
 
 				try{
 					final String cmd = whiteListing(detailCommand.toString(), folder);
@@ -374,7 +380,11 @@ public class FileUtil {
 				if(extension.contains("PSD") || extension.contains("AI")){
 					command.append("[0]");
 				}
-				command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
+				if ("order".equals(menuCode)) {
+					command.append(" -resize 40X40 -background white -gravity center -extent 40X40 ").append(thumbnailPath);
+				} else {
+					command.append(" -resize 100x100 -background white -gravity center -extent 100x100 ").append(thumbnailPath);
+				}
 
 				try{
 					final String cmd = whiteListing(command.toString(), folder);
@@ -498,9 +508,9 @@ public class FileUtil {
 	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
-	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile, final boolean resize, final String folder) throws IOException {
+	public static FileResultDTO fileTempSaveAndImageResize(final MultipartFile uploadFile, final boolean resize, final String folder, final String menuCode) throws IOException {
 		log.info("FileUtil.fileTempSaveAndImageResize");
-		return fileSave(uploadFile, folder, resize, null);
+		return fileSave(uploadFile, folder, resize, null, menuCode);
 	}
 
 //	사용하지 않아서 주석처리
@@ -532,7 +542,7 @@ public class FileUtil {
 	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
-	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder) throws IOException {
+	public static FileResultDTO fileSave(final MultipartFile uploadFile, final String folder, final String menuCode) throws IOException {
 		log.info("FileUtil.fileSave");
 		String folderParam = whiteFolderSelect(folder);
 		// [공백 폴더명] 권한 없음 처리
@@ -552,7 +562,7 @@ public class FileUtil {
 					, MessageUtil.getMessage(FailCode.ConfigureError.INVALID_FILE.name())
 			);
 		}
-		return fileSave(uploadFile, folderParam, false, null);
+		return fileSave(uploadFile, folderParam, false, null, menuCode);
 	}
 
 	/**
@@ -565,9 +575,9 @@ public class FileUtil {
 	 * @implNote 설명]
 	 * @since 2020. 7. 13. 오후 4:55:25
 	 */
-	public static FileResultDTO fileTempSave(final MultipartFile uploadFile) throws IOException {
+	public static FileResultDTO fileTempSave(final MultipartFile uploadFile, final String menuCode) throws IOException {
 		log.info("FileUtil.fileTempSave");
-		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder());
+		return fileSave(uploadFile, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), menuCode);
 	}
 
 
