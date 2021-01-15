@@ -96,7 +96,8 @@ export default {
                 );
                 this.noticeDetail = response;
                 this.noticeDetail.contents
-                    = this.noticeDetail.contents.replace('<figure', '<div class="image-box"> <figure').replace('</figure>', '</figure> </div>');
+                    = this.noticeDetail.contents.replaceAll('<figure', '<div class="image-box"> <figure').replaceAll('</figure>', '</figure> </div>');
+                console.log('ddddddd after : ', this.noticeDetail.contents)
                 this.noticeArticleSectionCode =
                     response.noticeArticleSectionCode;
             } catch (error) {
