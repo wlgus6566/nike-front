@@ -104,7 +104,7 @@ public class FileController {
 			privateYn = "N";
 			resize = true;
 		}
-		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO, folder, resize);
+		final FileResultDTO fileResultDTO = fileUpload(fileUploadDTO, folder, resize, menuCode);
 		S3Util.upload(fileResultDTO, privateYn, downloadYn);
 		return responseService.getSingleResult(fileResultDTO);
 	}
@@ -130,7 +130,7 @@ public class FileController {
 		fileUploadDTO.getUploadFileList().forEach(multipartFile -> {
 			final FileUploadDTO fileParam = new FileUploadDTO();
 			fileParam.setUploadFile(multipartFile);
-			final FileResultDTO fileResultDTO = fileUpload(fileParam, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true);
+			final FileResultDTO fileResultDTO = fileUpload(fileParam, ServiceCode.FileFolderEnumCode.TEMP.getFolder(), true, null);
 			S3Util.upload(fileResultDTO, "Y", "Y");
 			resultList.add(fileResultDTO);
 		});
@@ -147,10 +147,10 @@ public class FileController {
 	 * @implNote
 	 * @since 2020. 7. 28. 오전 11:08:35
 	 */
-	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO, final String folder, final boolean resize) {
+	private FileResultDTO fileUpload(final FileUploadDTO fileUploadDTO, final String folder, final boolean resize, String menuCode) {
 		log.info("FileController.fileUpload");
 		try{
-			return FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile(), resize, folder);
+			return FileUtil.fileTempSaveAndImageResize(fileUploadDTO.getUploadFile(), resize, folder, menuCode);
 		} catch(IOException e) {
 			throw new FileHandleException();
 		}

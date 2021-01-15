@@ -11,6 +11,7 @@ import com.nike.dnp.entity.order.OrderEntity;
 import com.nike.dnp.entity.order.OrderProductFile;
 import com.nike.dnp.entity.order.OrderProductMapping;
 import com.nike.dnp.entity.product.Product;
+import com.nike.dnp.util.CloudFrontUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -108,7 +109,6 @@ public class OrderProductResultDTO {
 	private String orderDescription;
 
 	private Long orderGoodsSeq;
-
 
 	/**
 	 * 이미지 파일
