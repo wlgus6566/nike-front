@@ -5608,3 +5608,16 @@ img.image-grayscale {
 .ck-editor__editable i{
     font-style:italic;
 }
+.cont-unit .image_resized{margin:20px 0}
+.cont-unit .image_resized img{
+    vertical-align:top
+;}
+.cont-unit .image-style-align-left{
+    text-align:left;
+}
+.cont-unit .image-style-align-right {
+    text-align:right;
+}
+.cont-unit .image-style-align-center {
+    text-align:center;
+}
