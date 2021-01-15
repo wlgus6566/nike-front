@@ -161,6 +161,7 @@ import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
 import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder.js';
 import CKFinderUploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter.js';
+import Font from "@ckeditor/ckeditor5-font/src/font";
 import FontBackgroundColor from '@ckeditor/ckeditor5-font/src/fontbackgroundcolor.js';
 import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor.js';
 import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily.js';
@@ -256,7 +257,8 @@ export default {
                 Underline,
                 SimpleUploadAdapter,
                 ImageResize,
-                IndentBlock
+                IndentBlock,
+                Font
               ],
               toolbar: {
                 items: [
@@ -337,7 +339,31 @@ export default {
                   '|',
                   'imageTextAlternative'
                 ]
-              }
+              },
+              fontSize: {
+                options: [
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  23,
+                  25,
+                  27,
+                  29,
+                  31,
+                  33,
+                  35
+                ]
+              },
           }
         };
     },

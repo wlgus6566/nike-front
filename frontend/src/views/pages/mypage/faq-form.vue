@@ -93,6 +93,7 @@ import FontBackgroundColor from '@ckeditor/ckeditor5-font/src/fontbackgroundcolo
 import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor.js';
 import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily.js';
 import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
+import Font from "@ckeditor/ckeditor5-font/src/font";
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
 import Image from '@ckeditor/ckeditor5-image/src/image.js';
 import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js';
@@ -187,7 +188,8 @@ export default {
                 Underline,
                 SimpleUploadAdapter,
                 ImageResize,
-                IndentBlock
+                IndentBlock,
+                Font
               ],
               toolbar: {
                 items: [
@@ -268,7 +270,31 @@ export default {
                   '|',
                   'imageTextAlternative'
                 ]
-              }
+              },
+              fontSize: {
+                options: [
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  23,
+                  25,
+                  27,
+                  29,
+                  31,
+                  33,
+                  35
+                ]
+              },
             }
         };
     },
