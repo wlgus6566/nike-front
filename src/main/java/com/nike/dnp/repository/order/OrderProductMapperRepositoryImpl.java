@@ -54,9 +54,12 @@ public class OrderProductMapperRepositoryImpl extends QuerydslRepositorySupport 
 		final QAgency agency = QAgency.agency;
 		final JPAQueryFactory queryFactory = new JPAQueryFactory(this.getEntityManager());
 		return queryFactory.select(
-				Projections.bean(OrderProductResultDTO.class, orderProductMapping.orderSeq,
+				Projections.bean(OrderProductResultDTO.class,
+						orderProductMapping.orderSeq,
 						orderProductMapping.registrationDt,
 						orderProductMapping.orderQuantity,
+						orderProductMapping.productDescription,
+						orderProductMapping.orderGoodsSeq,
 						product.goodsName,
 						product.goodsDescription,
 						product.imageFilePhysicalName,

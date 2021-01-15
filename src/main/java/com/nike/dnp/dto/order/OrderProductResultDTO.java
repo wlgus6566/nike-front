@@ -134,23 +134,23 @@ public class OrderProductResultDTO {
 	 */
 	@ApiModelProperty(name = "orderProductFileList", value = "주문 상품 파일 목록")
 	private List<OrderProductFileSaveDTO> orderProductFile;
-
-	public OrderProductResultDTO(OrderProductMapping orderProductMapping
-			, Product product, Agency agency, OrderEntity order) {
-		this.orderSeq = orderProductMapping.getOrderSeq();
-		this.registrationDt = orderProductMapping.getRegistrationDt();
-		this.orderQuantity = orderProductMapping.getOrderQuantity();
-		this.goodsName = product.getGoodsName();
-		this.goodsDescription = product.getGoodsDescription();
-		this.imageFilePhysicalName = product.getImageFilePhysicalName();
-		this.agencyName = agency.getAgencyName();
-		this.agencySeq = agency.getAgencySeq();
-		this.email = agency.getEmail();
-		this.orderDescription = order.getOrderDescription();
-		this.productDescription = orderProductMapping.getProductDescription();
-
-		this.orderGoodsSeq = orderProductMapping.getOrderGoodsSeq();
-	}
+//
+//	public OrderProductResultDTO(OrderProductMapping orderProductMapping
+//			, Product product, Agency agency, OrderEntity order) {
+//		this.orderSeq = orderProductMapping.getOrderSeq();
+//		this.registrationDt = orderProductMapping.getRegistrationDt();
+//		this.orderQuantity = orderProductMapping.getOrderQuantity();
+//		this.goodsName = product.getGoodsName();
+//		this.goodsDescription = product.getGoodsDescription();
+//		this.imageFilePhysicalName = product.getImageFilePhysicalName();
+//		this.agencyName = agency.getAgencyName();
+//		this.agencySeq = agency.getAgencySeq();
+//		this.email = agency.getEmail();
+//		this.orderDescription = order.getOrderDescription();
+//		this.productDescription = orderProductMapping.getProductDescription();
+//
+//		this.orderGoodsSeq = orderProductMapping.getOrderGoodsSeq();
+//	}
 
 
 
