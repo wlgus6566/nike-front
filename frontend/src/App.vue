@@ -88,6 +88,7 @@ export default {
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
 @import url('assets/css/ui.nikeFront.css');
+@import url('assets/css/ckeditor.css');
 .page-loading {
     flex-direction: column;
     z-index: 2010;

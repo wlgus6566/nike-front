@@ -7,10 +7,10 @@ import router from './router';
 import store from './store';
 import VueCookies from 'vue-cookies';
 import VueMoment from 'vue-moment';
-import CKEditor from 'ckeditor4-vue';
 import VueYoutube from 'vue-youtube';
 import vueVimeoPlayer from 'vue-vimeo-player';
 import lineClamp from './utils/lineclamp';
+import CKEditor from '@ckeditor/ckeditor5-vue2';
 
 Vue.config.productionTip = false;
 
