@@ -336,7 +336,7 @@ public class FileUtil {
 				}
 
 				if ("news".equals(menuCode)) {
-					detailCommand.append(" -background #f7f7f7").append(detailPath);
+					detailCommand.append(" -background #f7f7f7 -gravity center ").append(detailPath);
 				} else {
 					detailCommand.append(" -resize 700x700 -background #f7f7f7 -gravity center -extent 700x700 ").append(detailPath);
 				}
