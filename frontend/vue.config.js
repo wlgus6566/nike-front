@@ -36,7 +36,6 @@ module.exports = {
     transpileDependencies: [
         /ckeditor5-[^/\\]+[/\\]src[/\\].+\.js$/,
     ],
-
     configureWebpack: {
         plugins: [
             new CKEditorWebpackPlugin( {

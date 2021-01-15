@@ -50,13 +50,6 @@
                         <label class="label-title required">답변</label>
                     </div>
                     <div class="form-column">
-<!--                      ASIS-->
-<!--                        <ckeditor-->
-<!--                            v-model="faqDetail.contents"-->
-<!--                            :config="editorConfig"-->
-<!--                            @blur="onEditorInput"-->
-<!--                            style="width: 100%;"-->
-<!--                        />-->
                         <div class="ckeditor-wrap" onselectstart="event.cancelBubble=true;">
                             <ckeditor
                                     :editor="editor"
@@ -65,8 +58,6 @@
                                     style="width: 100%;">
                             </ckeditor>
                         </div>
-
-<!--                      <div id="editor"></div>-->
                     </div>
                 </li>
             </ul>
@@ -84,15 +75,13 @@
     </div>
 </template>
 
-<!--<script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>-->
-
 <script>
 import { getCustomerDetail, postFaq, putFaq } from '@/api/customer';
 import { getCode } from '@/api/code';
 import { getAuthFromCookie } from '@/utils/cookies';
 
+// CKEditor5 설정
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
 import AutoFormat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
@@ -112,10 +101,6 @@ import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
-
-import ListUi from '@ckeditor/ckeditor5-list/src/listui';
-import ListEditing from '@ckeditor/ckeditor5-list/src/listediting';
-import ListStyle from '@ckeditor/ckeditor5-list/src/liststyle';
 
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Link from '@ckeditor/ckeditor5-link/src/link.js';
@@ -137,21 +122,6 @@ import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
-import autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-
-
-
-// window.onload = function () {
-//   console.log("실행");
-//   alert("onload call");
-//
-//   ClassicEditor
-//       .create( document.querySelector( '#editor' ) )
-//       .catch( error => {
-//         console.error( error );
-//       } );
-// }
-
 export default {
     name: 'faq-form',
     // watch: {
@@ -172,17 +142,7 @@ export default {
                 contents: '',
                 noticeArticleCategoryCode: null,
             },
-            // 에디터 업로드 설정
-            // editorConfig: {
-            //     // TODO url에 NOTICE 부분 noticeArticleSectionCode에 맞게 변경 필요
-            //     filebrowserImageUploadUrl: '',
-            //     // TODO 현재 로그인한 계정의 auth값 가져오기
-            //     fileTools_requestHeaders: {
-            //         Authorization: '',
-            //     },
-            // },
-
-          // CKEditor5 설정
+            // CKEditor5 설정
             editor: ClassicEditor,
             editorConfig: {
               /**
@@ -227,10 +187,7 @@ export default {
                 Underline,
                 SimpleUploadAdapter,
                 ImageResize,
-                IndentBlock,
-                ListUi,
-                ListEditing,
-                ListStyle
+                IndentBlock
               ],
               toolbar: {
                 items: [
@@ -313,17 +270,10 @@ export default {
                 ]
               }
             }
-
         };
     },
     created() {
        this.$store.state.saveFolder = false;
-        // this.editorConfig.filebrowserImageUploadUrl =
-        //     process.env.VUE_APP_API_URL +
-        //     `/api/customer/${this.$route.meta.sectionCode}/images`;
-        // this.editorConfig.fileTools_requestHeaders.Authorization =
-        //     this.$store.state.token || getAuthFromCookie();
-
         // 업로드 설정 추가
         this.editorConfig.simpleUpload.uploadUrl =
             process.env.VUE_APP_API_URL +
@@ -477,6 +427,6 @@ export default {
     right: 10px;
 }
 ::v-deep .ck.ck-content.ck-editor__editable {
-  min-height: 500px;
+  min-height: 400px;
 }
 </style>
