@@ -95,9 +95,6 @@ export default {
                     this.$route.params.id
                 );
                 this.noticeDetail = response;
-                this.noticeDetail.contents
-                    = this.noticeDetail.contents.replaceAll('<figure', '<div class="image-box"> <figure').replaceAll('</figure>', '</figure> </div>');
-                console.log('ddddddd after : ', this.noticeDetail.contents)
                 this.noticeArticleSectionCode =
                     response.noticeArticleSectionCode;
             } catch (error) {
