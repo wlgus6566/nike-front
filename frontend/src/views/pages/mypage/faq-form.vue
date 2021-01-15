@@ -57,13 +57,15 @@
 <!--                            @blur="onEditorInput"-->
 <!--                            style="width: 100%;"-->
 <!--                        />-->
+                        <div class="ckeditor-wrap" onselectstart="event.cancelBubble=true;">
+                            <ckeditor
+                                    :editor="editor"
+                                    v-model="faqDetail.contents"
+                                    :config="editorConfig"
+                                    style="width: 100%;">
+                            </ckeditor>
+                        </div>
 
-                      <ckeditor
-                          :editor="editor"
-                          v-model="faqDetail.contents"
-                          :config="editorConfig"
-                          style="width: 100%;">
-                      </ckeditor>
 <!--                      <div id="editor"></div>-->
                     </div>
                 </li>

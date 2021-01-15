@@ -3550,7 +3550,7 @@ img.image-grayscale {
     border-top: 1px solid #000;
     border-bottom: 1px solid #ccc;
 }
-.faq-list li + li {
+.faq-list > li + li {
     border-top: 1px solid #eee;
 }
 .faq-list .sbj {
@@ -5582,3 +5582,29 @@ img.image-grayscale {
 /*.crop-editor.type2 .preview img {*/
 /*    transform: translateX(0) translateY(-75px);*/
 /*}*/
+
+/* ckeditor  변경 CSS 추가*/
+.ckeditor-wrap{
+    width:100%;
+}
+.ck.ck-editor{
+    width:100% !important;
+}
+.cont-unit ul,
+.ck-editor__editable ul{
+    margin-left: 20px;
+    list-style-type: circle;
+}
+.cont-unit ol,
+.ck-editor__editable ol{
+    margin-left: 20px;
+    list-style-type: decimal;
+}
+.cont-unit li,
+.ck-editor__editable  li{
+    list-style-type:inherit;
+}
+.cont-unit i,
+.ck-editor__editable i{
+    font-style:italic;
+}
