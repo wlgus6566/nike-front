@@ -19,7 +19,10 @@
                     <span class="date">{{ noticeDetail.updateDt }}</span>
                 </div>
             </div>
-            <div class="detail-cont" v-html="noticeDetail.contents"></div>
+            <div class="detail-cont">
+                <div class="cont-unit ck-content"  v-html="noticeDetail.contents"></div>
+
+            </div>
             <template v-if="noticeDetail.fileList">
                 <div
                     class="detail-file"
