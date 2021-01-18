@@ -1,15 +1,4 @@
 /* 이전 에디터 css */
-.cont-unit.ck-content ol {
-    list-style: decimal;
-}
-.cont-unit.ck-content ul {
-    list-style: disc;
-}
-
-.cont-unit.ck-content ol li,
-.cont-unit.ck-content ul li {
-    list-style: inherit;
-}
 .cont-unit.ck-content h1 {
     display: block;
     font-size: 2em;
@@ -37,7 +26,7 @@
     margin-inline-end: 0px;
     font-weight: bold;
 }
-.cont-unit.ck-content .detail-cont blockquote {
+.cont-unit.ck-content blockquote {
     font-style: italic;
     padding: 2px 0;
     border-style: solid;
@@ -45,87 +34,87 @@
     border-width: 0;
 }
 
-.cont-unit.ck-content .detail-cont table {
+.cont-unit.ck-content table {
     width: auto !important;
 }
-.cont-unit.ck-content .detail-cont blockquote {
+.cont-unit.ck-content blockquote {
     padding-left: 20px;
     padding-right: 8px;
     border-left-width: 5px;
 }
 
 /*
-.cont-unit.ck-content .detail-cont .cke_contents_rtl blockquote {
+.cont-unit.ck-content  .cke_contents_rtl blockquote {
     padding-left: 8px;
     padding-right: 20px;
     border-right-width: 5px;
 }
 */
 
-.cont-unit.ck-content .detail-cont a {
+.cont-unit.ck-content a {
     color: #0782c1;
 }
 
-.cont-unit.ck-content .detail-cont ol li {
+.cont-unit.ck-content ol li {
     list-style-type: decimal;
 }
-.cont-unit.ck-content .detail-cont ul li {
+.cont-unit.ck-content ul li {
     list-style-type: disc;
 }
-.cont-unit.ck-content .detail-cont ol,
-.cont-unit.ck-content .detail-cont ul,
-.cont-unit.ck-content .detail-cont dl {
+.cont-unit.ck-content ol,
+.cont-unit.ck-content ul,
+.cont-unit.ck-content dl {
     /* IE7: reset rtl list margin. (#7334) */
     *margin-right: 0px;
     /* Preserved spaces for list items with text direction different than the list. (#6249,#8049)*/
     padding: 0 40px;
 }
 
-.cont-unit.ck-content .detail-cont h1,
-.cont-unit.ck-content .detail-cont h2,
-.cont-unit.ck-content .detail-cont h3,
-.cont-unit.ck-content .detail-cont h4,
-.cont-unit.ck-content .detail-cont h5,
-.cont-unit.ck-content .detail-cont h6 {
+.cont-unit.ck-content h1,
+.cont-unit.ck-content h2,
+.cont-unit.ck-content h3,
+.cont-unit.ck-content h4,
+.cont-unit.ck-content h5,
+.cont-unit.ck-content h6 {
     font-weight: normal;
     line-height: 1.7;
 }
 
-.cont-unit.ck-content .detail-cont hr {
+.cont-unit.ck-content hr {
     border: 0;
     border-top: 1px solid #ccc;
 }
 
-.cont-unit.ck-content .detail-cont img.right {
+.cont-unit.ck-content img.right {
     border: 1px solid #ccc;
     float: right;
     margin-left: 15px;
     padding: 5px;
 }
 
-.cont-unit.ck-content .detail-cont img.left {
+.cont-unit.ck-content img.left {
     border: 1px solid #ccc;
     float: left;
     margin-right: 15px;
     padding: 5px;
 }
 
-.cont-unit.ck-content .detail-cont pre {
+.cont-unit.ck-content pre {
     white-space: pre-wrap; /* CSS 2.1 */
     word-wrap: break-word; /* IE7 */
     -moz-tab-size: 4;
     tab-size: 4;
 }
 
-.cont-unit.ck-content .detail-cont .marker {
+.cont-unit.ck-content .marker {
     background-color: Yellow;
 }
 
-.cont-unit.ck-content .detail-cont span[lang] {
+.cont-unit.ck-content span[lang] {
     font-style: italic;
 }
 
-.cont-unit.ck-content .detail-cont figure {
+.cont-unit.ck-content figure {
     text-align: center;
     outline: solid 1px #ccc;
     background: rgba(0, 0, 0, 0.05);
@@ -134,12 +123,12 @@
     display: inline-block;
 }
 
-.cont-unit.ck-content .detail-cont figure > figcaption {
+.cont-unit.ck-content figure > figcaption {
     text-align: center;
     display: block; /* For IE8 */
 }
 
-.cont-unit.ck-content .detail-cont a > img {
+.cont-unit.ck-content a > img {
     padding: 1px;
     margin: 1px;
     border: none;
@@ -147,82 +136,77 @@
 }
 
 /* Widget Styles */
-.cont-unit.ck-content .detail-cont .code-featured {
+.cont-unit.ck-content .code-featured {
     border: 5px solid red;
 }
 
-.cont-unit.ck-content .detail-cont .math-featured {
+.cont-unit.ck-content .math-featured {
     padding: 20px;
     box-shadow: 0 0 2px rgba(200, 0, 0, 1);
     background-color: rgba(255, 0, 0, 0.05);
     margin: 10px;
 }
 
-.cont-unit.ck-content .detail-cont .image-clean {
+.cont-unit.ck-content .image-clean {
     border: 0;
     background: none;
     padding: 0;
 }
 
-.cont-unit.ck-content .detail-cont .image-clean > figcaption {
+.cont-unit.ck-content .image-clean > figcaption {
     font-size: 0.9em;
     text-align: right;
 }
 
-.cont-unit.ck-content .detail-cont .image-grayscale {
+.cont-unit.ck-content .image-grayscale {
     background-color: white;
     color: #666;
 }
 
-.cont-unit.ck-content .detail-cont .image-grayscale img,
+.cont-unit.ck-content .image-grayscale img,
 img.image-grayscale {
     filter: grayscale(100%);
 }
 
-.cont-unit.ck-content .detail-cont .embed-240p {
+.cont-unit.ck-content .embed-240p {
     max-width: 426px;
     max-height: 240px;
     margin: 0 auto;
 }
 
-.cont-unit.ck-content .detail-cont .embed-360p {
+.cont-unit.ck-content .embed-360p {
     max-width: 640px;
     max-height: 360px;
     margin: 0 auto;
 }
 
-.cont-unit.ck-content .detail-cont .embed-480p {
+.cont-unit.ck-content .embed-480p {
     max-width: 854px;
     max-height: 480px;
     margin: 0 auto;
 }
 
-.cont-unit.ck-content .detail-cont .embed-720p {
+.cont-unit.ck-content .embed-720p {
     max-width: 1280px;
     max-height: 720px;
     margin: 0 auto;
 }
 
-.cont-unit.ck-content .detail-cont .embed-1080p {
+.cont-unit.ck-content .embed-1080p {
     max-width: 1920px;
     max-height: 1080px;
     margin: 0 auto;
 }
 
-.cont-unit.ck-content
-    .detail-cont
-    .marker
-    .cont-unit.ck-content
-    .detail-cont
-    .img:first-child {
+.cont-unit.ck-content .marker .cont-unit.ck-content .img:first-child {
     margin-top: 0;
 }
-.cont-unit.ck-content .detail-cont .img {
+.cont-unit.ck-content .img {
     margin: 40px 0;
     text-align: center;
 }
 
-.cont-unit.ck-content .detail-cont .img img {
+.cont-unit.ck-content .img img {
     vertical-align: top;
     max-width: 100%;
 }
