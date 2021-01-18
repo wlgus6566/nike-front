@@ -30,7 +30,7 @@ Vue.use(ElementUI, { locale });
 
 export default {
     name: 'App',
-    render: (h) => h(App),
+    render: h => h(App),
     data() {
         return {
             pageLoading: false,
@@ -38,12 +38,12 @@ export default {
     },
     created() {
         this.urlCheck();
-        bus.$on('pageLoading', (state) => {
+        bus.$on('pageLoading', state => {
             this.pageLoading = state;
         });
     },
     mounted() {
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', function(e) {
             const keyCode = e.keyCode;
             if (keyCode === 123) {
                 e.preventDefault();
@@ -88,7 +88,7 @@ export default {
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
 @import url('assets/css/ui.nikeFront.css');
-@import url('assets/css/ckeditor.css');
+@import url('assets/css/ckeditor4.css');
 .page-loading {
     flex-direction: column;
     z-index: 2010;
