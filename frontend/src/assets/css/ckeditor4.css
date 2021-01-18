@@ -1,186 +1,217 @@
-
 /* 이전 에디터 css */
-.detail-view .detail-cont blockquote {
-	font-style: italic;
-	padding: 2px 0;
-	border-style: solid;
-	border-color: #ccc;
-	border-width: 0;
+.cont-unit.ck-content h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.cont-unit.ck-content h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.cont-unit.ck-content h3 {
+    isplay: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.cont-unit.ck-content .detail-cont blockquote {
+    font-style: italic;
+    padding: 2px 0;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0;
 }
 
-.detail-view .detail-cont table {
-	width: auto !important;
+.cont-unit.ck-content .detail-cont table {
+    width: auto !important;
 }
-.detail-view .detail-cont blockquote {
-	padding-left: 20px;
-	padding-right: 8px;
-	border-left-width: 5px;
+.cont-unit.ck-content .detail-cont blockquote {
+    padding-left: 20px;
+    padding-right: 8px;
+    border-left-width: 5px;
 }
 
 /*
-.detail-view .detail-cont .cke_contents_rtl blockquote {
+.cont-unit.ck-content .detail-cont .cke_contents_rtl blockquote {
     padding-left: 8px;
     padding-right: 20px;
     border-right-width: 5px;
 }
 */
 
-.detail-view .detail-cont a {
-	color: #0782c1;
+.cont-unit.ck-content .detail-cont a {
+    color: #0782c1;
 }
 
-.detail-view .detail-cont ol li {
-	list-style-type: decimal;
+.cont-unit.ck-content .detail-cont ol li {
+    list-style-type: decimal;
 }
-.detail-view .detail-cont ul li {
-	list-style-type: disc;
+.cont-unit.ck-content .detail-cont ul li {
+    list-style-type: disc;
 }
-.detail-view .detail-cont ol,
-.detail-view .detail-cont ul,
-.detail-view .detail-cont dl {
-	/* IE7: reset rtl list margin. (#7334) */
-	*margin-right: 0px;
-	/* Preserved spaces for list items with text direction different than the list. (#6249,#8049)*/
-	padding: 0 40px;
-}
-
-.detail-view .detail-cont h1,
-.detail-view .detail-cont h2,
-.detail-view .detail-cont h3,
-.detail-view .detail-cont h4,
-.detail-view .detail-cont h5,
-.detail-view .detail-cont h6 {
-	font-weight: normal;
-	line-height: 1.7;
+.cont-unit.ck-content .detail-cont ol,
+.cont-unit.ck-content .detail-cont ul,
+.cont-unit.ck-content .detail-cont dl {
+    /* IE7: reset rtl list margin. (#7334) */
+    *margin-right: 0px;
+    /* Preserved spaces for list items with text direction different than the list. (#6249,#8049)*/
+    padding: 0 40px;
 }
 
-.detail-view .detail-cont hr {
-	border: 0;
-	border-top: 1px solid #ccc;
+.cont-unit.ck-content .detail-cont h1,
+.cont-unit.ck-content .detail-cont h2,
+.cont-unit.ck-content .detail-cont h3,
+.cont-unit.ck-content .detail-cont h4,
+.cont-unit.ck-content .detail-cont h5,
+.cont-unit.ck-content .detail-cont h6 {
+    font-weight: normal;
+    line-height: 1.7;
 }
 
-.detail-view .detail-cont img.right {
-	border: 1px solid #ccc;
-	float: right;
-	margin-left: 15px;
-	padding: 5px;
+.cont-unit.ck-content .detail-cont hr {
+    border: 0;
+    border-top: 1px solid #ccc;
 }
 
-.detail-view .detail-cont img.left {
-	border: 1px solid #ccc;
-	float: left;
-	margin-right: 15px;
-	padding: 5px;
+.cont-unit.ck-content .detail-cont img.right {
+    border: 1px solid #ccc;
+    float: right;
+    margin-left: 15px;
+    padding: 5px;
 }
 
-.detail-view .detail-cont pre {
-	white-space: pre-wrap; /* CSS 2.1 */
-	word-wrap: break-word; /* IE7 */
-	-moz-tab-size: 4;
-	tab-size: 4;
+.cont-unit.ck-content .detail-cont img.left {
+    border: 1px solid #ccc;
+    float: left;
+    margin-right: 15px;
+    padding: 5px;
 }
 
-.detail-view .detail-cont .marker {
-	background-color: Yellow;
+.cont-unit.ck-content .detail-cont pre {
+    white-space: pre-wrap; /* CSS 2.1 */
+    word-wrap: break-word; /* IE7 */
+    -moz-tab-size: 4;
+    tab-size: 4;
 }
 
-.detail-view .detail-cont span[lang] {
-	font-style: italic;
+.cont-unit.ck-content .detail-cont .marker {
+    background-color: Yellow;
 }
 
-.detail-view .detail-cont figure {
-	text-align: center;
-	outline: solid 1px #ccc;
-	background: rgba(0, 0, 0, 0.05);
-	padding: 10px;
-	margin: 10px 20px;
-	display: inline-block;
+.cont-unit.ck-content .detail-cont span[lang] {
+    font-style: italic;
 }
 
-.detail-view .detail-cont figure > figcaption {
-	text-align: center;
-	display: block; /* For IE8 */
+.cont-unit.ck-content .detail-cont figure {
+    text-align: center;
+    outline: solid 1px #ccc;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    margin: 10px 20px;
+    display: inline-block;
 }
 
-.detail-view .detail-cont a > img {
-	padding: 1px;
-	margin: 1px;
-	border: none;
-	outline: 1px solid #0782c1;
+.cont-unit.ck-content .detail-cont figure > figcaption {
+    text-align: center;
+    display: block; /* For IE8 */
+}
+
+.cont-unit.ck-content .detail-cont a > img {
+    padding: 1px;
+    margin: 1px;
+    border: none;
+    outline: 1px solid #0782c1;
 }
 
 /* Widget Styles */
-.detail-view .detail-cont .code-featured {
-	border: 5px solid red;
+.cont-unit.ck-content .detail-cont .code-featured {
+    border: 5px solid red;
 }
 
-.detail-view .detail-cont .math-featured {
-	padding: 20px;
-	box-shadow: 0 0 2px rgba(200, 0, 0, 1);
-	background-color: rgba(255, 0, 0, 0.05);
-	margin: 10px;
+.cont-unit.ck-content .detail-cont .math-featured {
+    padding: 20px;
+    box-shadow: 0 0 2px rgba(200, 0, 0, 1);
+    background-color: rgba(255, 0, 0, 0.05);
+    margin: 10px;
 }
 
-.detail-view .detail-cont .image-clean {
-	border: 0;
-	background: none;
-	padding: 0;
+.cont-unit.ck-content .detail-cont .image-clean {
+    border: 0;
+    background: none;
+    padding: 0;
 }
 
-.detail-view .detail-cont .image-clean > figcaption {
-	font-size: 0.9em;
-	text-align: right;
+.cont-unit.ck-content .detail-cont .image-clean > figcaption {
+    font-size: 0.9em;
+    text-align: right;
 }
 
-.detail-view .detail-cont .image-grayscale {
-	background-color: white;
-	color: #666;
+.cont-unit.ck-content .detail-cont .image-grayscale {
+    background-color: white;
+    color: #666;
 }
 
-.detail-view .detail-cont .image-grayscale img,
+.cont-unit.ck-content .detail-cont .image-grayscale img,
 img.image-grayscale {
-	filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
-.detail-view .detail-cont .embed-240p {
-	max-width: 426px;
-	max-height: 240px;
-	margin: 0 auto;
+.cont-unit.ck-content .detail-cont .embed-240p {
+    max-width: 426px;
+    max-height: 240px;
+    margin: 0 auto;
 }
 
-.detail-view .detail-cont .embed-360p {
-	max-width: 640px;
-	max-height: 360px;
-	margin: 0 auto;
+.cont-unit.ck-content .detail-cont .embed-360p {
+    max-width: 640px;
+    max-height: 360px;
+    margin: 0 auto;
 }
 
-.detail-view .detail-cont .embed-480p {
-	max-width: 854px;
-	max-height: 480px;
-	margin: 0 auto;
+.cont-unit.ck-content .detail-cont .embed-480p {
+    max-width: 854px;
+    max-height: 480px;
+    margin: 0 auto;
 }
 
-.detail-view .detail-cont .embed-720p {
-	max-width: 1280px;
-	max-height: 720px;
-	margin: 0 auto;
+.cont-unit.ck-content .detail-cont .embed-720p {
+    max-width: 1280px;
+    max-height: 720px;
+    margin: 0 auto;
 }
 
-.detail-view .detail-cont .embed-1080p {
-	max-width: 1920px;
-	max-height: 1080px;
-	margin: 0 auto;
+.cont-unit.ck-content .detail-cont .embed-1080p {
+    max-width: 1920px;
+    max-height: 1080px;
+    margin: 0 auto;
 }
 
-.detail-view .detail-cont .marker .detail-view .detail-cont .img:first-child {
-	margin-top: 0;
+.cont-unit.ck-content
+    .detail-cont
+    .marker
+    .cont-unit.ck-content
+    .detail-cont
+    .img:first-child {
+    margin-top: 0;
 }
-.detail-view .detail-cont .img {
-	margin: 40px 0;
-	text-align: center;
+.cont-unit.ck-content .detail-cont .img {
+    margin: 40px 0;
+    text-align: center;
 }
 
-.detail-view .detail-cont .img img {
-	vertical-align: top;
-	max-width: 100%;
+.cont-unit.ck-content .detail-cont .img img {
+    vertical-align: top;
+    max-width: 100%;
 }

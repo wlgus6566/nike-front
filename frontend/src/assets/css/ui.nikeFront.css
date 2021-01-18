@@ -2417,7 +2417,7 @@
     height: 30px;
     font-size: 0;
     background: url('../images/icon-close-mideum@2x.png') no-repeat center
-    center;
+        center;
     background-size: 30px auto;
 }
 .pw-find {
@@ -3376,7 +3376,7 @@
 }
 .detail-view .news-file-list .active button:after {
     background: url(../images/svg/icon-view-unfold-black-up.svg) no-repeat
-    center;
+        center;
 }
 .detail-view .news-file-list li:last-child .detail {
     margin-bottom: 7px;
@@ -3458,7 +3458,7 @@
     border-top: 1px solid #000;
     border-bottom: 1px solid #ccc;
 }
-.faq-list li + li {
+.faq-list > li + li {
     border-top: 1px solid #eee;
 }
 .faq-list .sbj {
@@ -4029,7 +4029,7 @@
     width: 120px;
     height: 120px;
     background: url('../images/svg/illust-page-folder-order-none.svg') no-repeat
-    center;
+        center;
 }
 .no-data .icon-data {
     background-image: url('../images/svg/illust-page-folder-order-none.svg');
@@ -4613,7 +4613,7 @@
     height: 20px;
     border: none;
     background: url('../../assets/images/svg/icon-spinner-minus.svg') no-repeat
-    center;
+        center;
 }
 .quantity [class*='el-input-number__'] i {
     display: none;
@@ -5315,14 +5315,14 @@
     height: 40px;
     width: 40px;
     background: url('../../assets/images/svg/icon-no-authority.svg') no-repeat
-    50% 50% / contain;
+        50% 50% / contain;
 }
 .folder-item .exposure i {
     display: inline-block;
     height: 40px;
     width: 40px;
     background: url('../../assets/images/svg/icon-writing.svg') no-repeat 50%
-    50% / contain;
+        50% / contain;
 }
 .folder-item a {
     z-index: 2;
@@ -5337,7 +5337,7 @@
     padding-top: 100%;
     overflow: hidden;
     background: url('../../assets/images/img-asset-none@2x.png') no-repeat
-    center;
+        center;
     background-size: 100%;
 }
 .folder-item .thumbnail img {
@@ -5452,7 +5452,7 @@
     height: 12px;
     margin-top: -6px;
     background: url('../../assets/images/svg/icon-mypage-route.svg') no-repeat
-    center;
+        center;
 }
 .folder-item .date {
     margin-top: 8px;
@@ -5494,7 +5494,7 @@
     height: 20px;
     margin-left: 2px;
     background: url('../../assets/images/svg/icon-view-small-w.svg') no-repeat
-    center;
+        center;
 }
 [class^='folder-list'] {
     width: 100%;

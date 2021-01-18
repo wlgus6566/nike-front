@@ -38,11 +38,11 @@
                                 </div>
                                 <div class="form-column">
                                     <div
-                                            :class="{
-                                                     'check-select' : true,
-                                                     active : userListOpen
-                                           }"
-                                            ref="checkSelect"
+                                        :class="{
+                                            'check-select': true,
+                                            active: userListOpen,
+                                        }"
+                                        ref="checkSelect"
                                     >
                                         <button
                                             type="button"
@@ -69,12 +69,12 @@
                                                 }} </span
                                             >,
                                             <span class="ect">
-                                            외{{
-                                            orderDetailData
-                                            .orderRecipientList.length -
-                                            1
-                                            }}명
-                                        </span>
+                                                외{{
+                                                    orderDetailData
+                                                        .orderRecipientList
+                                                        .length - 1
+                                                }}명
+                                            </span>
                                         </button>
                                         <span class="txt user-item" v-else>
                                             <span class="nickname">
@@ -215,7 +215,10 @@
                                     </span>
                                     <span class="quantity-txt">
                                         <!-- 주문수량  -->
-                                        <span><em>{{ item.orderQuantity }}</em> 개</span>
+                                        <span
+                                            ><em>{{ item.orderQuantity }}</em>
+                                            개</span
+                                        >
                                     </span>
                                 </div>
                                 <ul class="add-order-list">
@@ -372,5 +375,11 @@ textarea[readonly] {
     background: #fff;
     color: #000;
 }
-
+.check-select .check-list-wrap {
+    left: -20px;
+    width: calc(100% + 30px);
+}
+.check-select .check-list {
+    padding-left: 20px;
+}
 </style>
