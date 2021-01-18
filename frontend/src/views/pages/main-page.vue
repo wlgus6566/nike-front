@@ -340,7 +340,7 @@ export default {
         },
         calDetailClose() {
             this.visible.calendar = false;
-           this.openClassRemove();
+            this.openClassRemove();
         },
         calDetailOpen() {
             this.visible.calendar = true;
@@ -394,16 +394,16 @@ export default {
                 const titleHeight = 72;
                 const theadHeight = 25;
                 //const tr = e.el.closest('tr');
-                const elItemBox = e.el.parentNode
-                const elWrap = elItemBox.parentNode
+                const elItemBox = e.el.parentNode;
+                const elWrap = elItemBox.parentNode;
                 const tr = elWrap.parentNode.parentNode.parentNode;
-                console.log(tr)
+                console.log(tr);
                 //const elWrapTop = e.el.closest('.fc-daygrid-day-events').offsetTop;
 
-                const elWrapTop = elWrap.offsetTop
+                const elWrapTop = elWrap.offsetTop;
                 //const elItemBoxTop = e.el.closest('.fc-daygrid-event-harness ').offsetTop;
 
-                const elItemBoxTop = elItemBox.offsetTop
+                const elItemBoxTop = elItemBox.offsetTop;
                 tr.classList.add('open-tr');
                 e.el.classList.add('open');
                 fullCalendar.appendChild(modal);
@@ -434,7 +434,7 @@ export default {
                     100 * tr.getAttribute('data-index') +
                     'px';
                 // top css
-                console.log(tr)
+                console.log(tr);
                 if (tr.getAttribute('data-index') > 2) {
                     if (
                         tr.getAttribute('data-index') > 3 ||
@@ -1087,7 +1087,7 @@ border-top: 0;*/
 /*::v-deep .fc-active {*/
 /*    background-color: #fa5400;*/
 /*}*/
-::v-deep .fc-daygrid-day-bottom {
+/*::v-deep .fc-daygrid-day-bottom {
     width: 100%;
 }
 ::v-deep .fc-daygrid-more-link {
@@ -1098,7 +1098,7 @@ border-top: 0;*/
     width: 100%;
     height: 28px;
     font: 0/0 a;
-    /*text-indent: -99999px;*/
+    !*text-indent: -99999px;*!
 }
 ::v-deep .fc-daygrid-more-link:before {
     position: absolute;
@@ -1114,5 +1114,5 @@ border-top: 0;*/
 }
 ::v-deep .fc-popover-body .fc-daygrid-event-harness:first-child {
     display: none;
-}
+}*/
 </style>
