@@ -1,4 +1,15 @@
 /* 이전 에디터 css */
+.cont-unit.ck-content ol {
+    list-style: decimal;
+}
+.cont-unit.ck-content ul {
+    list-style: disc;
+}
+
+.cont-unit.ck-content ol li,
+.cont-unit.ck-content ul li {
+    list-style: inherit;
+}
 .cont-unit.ck-content h1 {
     display: block;
     font-size: 2em;
