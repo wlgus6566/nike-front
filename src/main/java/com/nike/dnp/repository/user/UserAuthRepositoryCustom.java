@@ -1,6 +1,9 @@
 package com.nike.dnp.repository.user;
 
+import com.nike.dnp.entity.user.UserAuth;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * UserRepositoryCustom
@@ -11,4 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserAuthRepositoryCustom {
+
+    List<UserAuth> findAllByAuthSeqNormal(Long authSeq);
+
 }

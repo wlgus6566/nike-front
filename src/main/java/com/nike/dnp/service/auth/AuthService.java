@@ -136,7 +136,7 @@ public class AuthService {
      * @since 2020. 9. 1. 오전 11:06:48
      */
     public int countByAuthSeq(final Long authSeq) {
-        return userAuthRepository.findAllByAuthSeq(authSeq).size();
+        return userAuthRepository.findAllByAuthSeqNormal(authSeq).size();
     }
 
     /**
