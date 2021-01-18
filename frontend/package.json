@@ -18,6 +18,7 @@
         "@fullcalendar/vue": "^5.2.0",
         "ansi-regex": "^5.0.0",
         "axios": "^0.19.2",
+        "ckeditor4-vue": "^1.0.1",
         "compress.js": "^1.1.2",
         "compressorjs": "^1.0.6",
         "core-js": "^3.6.5",
@@ -34,8 +35,6 @@
         "jszip-utils": "^0.1.0",
         "lodash": "^4.17.19",
         "lottie-web": "^5.7.1",
-        "postcss-loader": "^3.0.0",
-        "raw-loader": "^0.5.1",
         "sortablejs": "^1.10.2",
         "swiper": "^5.4.1",
         "v-calendar": "^1.0.8",
@@ -72,7 +71,6 @@
         "@vue/cli-service": "^4.4.0",
         "@vue/eslint-config-prettier": "^6.0.0",
         "babel-eslint": "^10.1.0",
-        "ckeditor4-vue": "^1.2.0",
         "eslint": "6.8.0",
         "eslint-config-airbnb": "18.1.0",
         "eslint-plugin-import": "2.20.1",
@@ -87,7 +85,6 @@
         "prettier": "1.19.1",
         "stylus": "^0.54.7",
         "stylus-loader": "^3.0.2",
-        "terser-webpack-plugin": "^5.1.1",
         "vue-template-compiler": "^2.6.11"
     }
 }
