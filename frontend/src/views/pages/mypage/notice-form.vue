@@ -171,6 +171,24 @@ export default {
         fileTools_requestHeaders: {
           Authorization: '',
         },
+        extraPlugins: 'font, colorbutton, justify',
+        fontSize_sizes: '8pt/8pt;9pt/9pt;10pt/10pt;11pt/11pt;12pt/12pt;13pt/13pt;14pt/14pt;15pt/15pt;16pt/16pt;18pt/18pt;20pt/20pt;22pt/22pt;24pt/24pt;26pt/26pt;28pt/28pt;36pt/36pt;48pt/48pt;72pt/72pt;',
+        toolbarGroups: [
+          { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+          { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+          { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+          { name: 'forms', groups: [ 'forms' ] },
+          '/',
+          { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+          { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+          { name: 'links', groups: [ 'links' ] },
+          { name: 'insert', groups: [ 'insert' ] },
+          '/',
+          { name: 'styles', groups: [ 'styles' ] },
+          { name: 'colors', groups: [ 'colors' ] },
+          { name: 'tools', groups: [ 'tools' ] },
+          { name: 'others', groups: [ 'others' ] }
+        ]
       },
       checkedFile: [],
       uploadFileList: [],
