@@ -1,5 +1,6 @@
 const path = require('path');
 const ansiRegex = require('ansi-regex');
+
 module.exports = {
     lintOnSave: false,
     assetsDir: 'pc',
