@@ -144,9 +144,18 @@ public class ContentsFileService {
         contentsService.findById(contentsSeq);
         
         // topMenuCode 가지고 db에 있는 코드 목록 조회
-        List<Code> codeList = codeService.findCodesByUpperCode(topMenuCode);
+        String menuCode = topMenuCode;
+        if (topMenuCode.equals("FOUNDATION")) {
+            menuCode = "FOUN";
+        }
+        List<Code> codeList = codeService.findCodesByUpperCode(menuCode+"_FILE_SECTION");
 
         List<ContentsFileCountResultDTO> countResultDTOList = new ArrayList<>();
+
+        ContentsFileCountResultDTO allCount = new ContentsFileCountResultDTO();
+        allCount.setSectionCode("ALL");
+        allCount.setCount(contentsFileRepository.countByContentsSeqAndUseYn(contentsSeq, "Y"));
+        countResultDTOList.add(allCount);
 
         for (Code code : codeList) {
             String sectionCode = code.getCode();
@@ -156,6 +165,8 @@ public class ContentsFileService {
             fileCountResultDTO.setSectionCode(sectionCode);
             countResultDTOList.add(fileCountResultDTO);
         }
+
+
 
         return countResultDTOList;
     }

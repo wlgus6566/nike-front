@@ -113,6 +113,14 @@ public class ContentsFileController {
      * @implNote 파일 코드별 갯수 조회
      * @since 2021. 1. 27. 오후 2:43:54
      */
+    @ApiOperation(
+            value = "컨텐츠 파일 목록 조회"
+            , notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
+    )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 파일 갯수 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}/fileCount")
     public SingleResult<List<ContentsFileCountResultDTO>> findContentsFileCount(
             @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
