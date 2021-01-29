@@ -107,10 +107,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	private final DeviceService deviceService;
 
-	public SecurityConfig(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-
 	/**
 	 * Auth url string.
 	 *
