@@ -1,11 +1,15 @@
 package com.nike.dnp.service.contents;
 
 import com.nike.dnp.common.variable.ServiceCode;
+import com.nike.dnp.dto.contents.ContentsFileCountResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
+import com.nike.dnp.entity.code.Code;
+import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.exception.NotFoundHandleException;
 import com.nike.dnp.repository.contents.ContentsFileRepository;
+import com.nike.dnp.service.code.CodeService;
 import com.nike.dnp.util.FileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -25,8 +31,8 @@ import java.util.Optional;
  * The Class Contents file service.
  *
  * @author [이소정]
- * @since 2020. 7. 13. 오후 5:42:58
  * @implNote 컨텐츠 파일 서비스
+ * @since 2020. 7. 13. 오후 5:42:58
  */
 @Slf4j
 @Service
@@ -42,6 +48,18 @@ public class ContentsFileService {
     private final ContentsFileRepository contentsFileRepository;
 
     /**
+     * The Contents service
+     *
+     * @author [이소정]
+     */
+    private final ContentsService contentsService;
+
+    /**
+     * The Code service
+     */
+    private final CodeService codeService;
+
+    /**
      * Find all contents file list.
      *
      * @param contentsFileSearchDTO the contents file search dto
@@ -52,6 +70,8 @@ public class ContentsFileService {
      */
     public Page<ContentsFileResultDTO> findAllContentsFilePaging(final ContentsFileSearchDTO contentsFileSearchDTO) {
         log.info("ContentsFileService.findAllContentsFilePaging");
+        contentsService.findById(contentsFileSearchDTO.getContentsSeq());
+
         String searchOrderType = contentsFileSearchDTO.getOrderType();
         Sort sort = Sort.by(ServiceCode.ContentsFileSearchCode.ORDER.getValue()).ascending();
 
@@ -60,7 +80,6 @@ public class ContentsFileService {
         } else if (searchOrderType.equals(ServiceCode.ContentsFileSearchCode.FILE_NAME.toString())) {
             sort = Sort.by(ServiceCode.ContentsFileSearchCode.FILE_NAME.getValue()).ascending();
         }
-
 
         // QueryDsl 기능 이용
         return contentsFileRepository.findAllContentsFilePaging(
@@ -76,6 +95,7 @@ public class ContentsFileService {
      *
      * @param contentsFileSeq the contents file seq
      * @return the string
+     * @throws IOException the io exception
      * @author [이소정]
      * @implNote 컨텐츠 파일 다운로드
      * @since 2020. 7. 16. 오후 2:51:01
@@ -106,5 +126,48 @@ public class ContentsFileService {
         log.info("ContentsFileService.findById");
         return Optional.ofNullable(contentsFileRepository.findById(contentsFileSeq).orElseThrow(
                 () -> new NotFoundHandleException()));
+    }
+
+    /**
+     * Find contents file count.
+     *
+     * @param topMenuCode the top menu code
+     * @param contentsSeq the contents seq
+     * @return the list
+     * @author [이소정]
+     * @implNote 코드별 파일 갯수
+     * @since 2021. 1. 27. 오후 2:51:35
+     */
+    public List<ContentsFileCountResultDTO> findContentsFileCount(final String topMenuCode, final Long contentsSeq) {
+
+        // contents 여부 확인
+        contentsService.findById(contentsSeq);
+        
+        // topMenuCode 가지고 db에 있는 코드 목록 조회
+        String menuCode = topMenuCode;
+        if (topMenuCode.equals("FOUNDATION")) {
+            menuCode = "FOUN";
+        }
+        List<Code> codeList = codeService.findCodesByUpperCode(menuCode+"_FILE_SECTION");
+
+        List<ContentsFileCountResultDTO> countResultDTOList = new ArrayList<>();
+
+        ContentsFileCountResultDTO allCount = new ContentsFileCountResultDTO();
+        allCount.setSectionCode("ALL");
+        allCount.setCount(contentsFileRepository.countByContentsSeqAndUseYn(contentsSeq, "Y"));
+        countResultDTOList.add(allCount);
+
+        for (Code code : codeList) {
+            String sectionCode = code.getCode();
+            ContentsFileCountResultDTO fileCountResultDTO = new ContentsFileCountResultDTO();
+            Long count = contentsFileRepository.countByContentsSeqAndFileSectionCodeAndUseYn(contentsSeq, sectionCode, "Y");
+            fileCountResultDTO.setCount(count);
+            fileCountResultDTO.setSectionCode(sectionCode);
+            countResultDTOList.add(fileCountResultDTO);
+        }
+
+
+
+        return countResultDTOList;
     }
 }

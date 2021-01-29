@@ -39,4 +39,31 @@ public interface ContentsFileRepository extends JpaRepository<ContentsFile, Long
      */
     List<ContentsFile> findByContentsSeq(Long contentsSeq);
 
+    /**
+     * Count by contents seq and file section code and use yn long.
+     *
+     * @param ContentsSeq     the contents seq
+     * @param fileSectionCode the file section code
+     * @param useYn           the use yn
+     * @return the long
+     * @author [이소정]
+     * @implNote [method 설명]
+     * @implNote파일 sectionCode 별 파일 갯수 조회
+     * @since 2021. 1. 27. 오후 3:28:34
+     */
+    Long countByContentsSeqAndFileSectionCodeAndUseYn(Long ContentsSeq, String fileSectionCode, String useYn);
+
+
+    /**
+     * Count by contents seq and use yn long.
+     *
+     * @param ContentsSeq the contents seq
+     * @param useYn       the use yn
+     * @return the long
+     * @author [이소정]
+     * @implNote 파일 갯수 조회
+     * @since 2021. 1. 29. 오후 2:18:28
+     */
+    Long countByContentsSeqAndUseYn(Long ContentsSeq, String useYn);
+
 }
