@@ -110,7 +110,7 @@ public class ContentsFileController {
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
-     * @implNote 파일 코드별 갯수 조회
+     * @implNote 파일 코드별 갯수 조회 api
      * @since 2021. 1. 27. 오후 2:43:54
      */
     @ApiOperation(
