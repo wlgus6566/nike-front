@@ -114,7 +114,7 @@ public class ContentsFileController {
      * @since 2021. 1. 27. 오후 2:43:54
      */
     @ApiOperation(
-            value = "컨텐츠 파일 목록 조회"
+            value = "컨텐츠 파일 갯수 조회"
             , notes = REQUEST_CHARACTER
             + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
             + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
