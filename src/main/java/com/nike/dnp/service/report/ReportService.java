@@ -134,7 +134,7 @@ public class ReportService {
             userAuthSearchDTO.setSearchYn("Y");
         }
 
-        List<AuthReturnDTO> authList = this.findAllAuthListWithDepth(userAuthSearchDTO, "Y");
+        List<AuthReturnDTO> authList = this.findAllAuthListWithDepth(userAuthSearchDTO, "Y", "Y");
         List<Long> authSeqList = this.authDepthToList(authList);
 
         reportSearchDTO.setAuthSeqList(authSeqList);
@@ -572,12 +572,13 @@ public class ReportService {
      * @since 2020. 8. 26. 오후 4:52:23
      */
     public List<AuthReturnDTO> findAllAuthListWithDepth(
-            final UserAuthSearchDTO userAuthSearchDTO, final String onlySkillCode
+            final UserAuthSearchDTO userAuthSearchDTO, final String onlySkillCode, final String depth3Yn
     ) {
         return authService.getAuthListWithDepth(
                 userAuthSearchDTO
                 , authService.getById(userAuthSearchDTO.getAuthSeq())
                 , onlySkillCode
+                , depth3Yn
         );
     }
 
