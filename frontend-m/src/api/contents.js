@@ -23,9 +23,13 @@ function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
     });
 }
 
+function getContentsFileCount(topMenuCode, menuCode, contentsSeq) {
+    return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}/fileCount`);
+}
 
 export {
     getContents,
     getContentsView,
     getContentsViewFile,
+    getContentsFileCount
 };

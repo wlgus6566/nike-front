@@ -1042,6 +1042,10 @@
     font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
     letter-spacing: 0;
 }
+.sorting-list li button span{
+    padding-bottom:9px;
+    font-size:18px;
+}
 .sorting-list li.active button span,
 .sorting-list li.active div span {
     color: #000;
@@ -2012,6 +2016,12 @@
 }
 .form-column + .form-column {
     margin-top: 10px;
+}
+.form-desc{
+    display:inline-flex;
+    margin-left:6px;
+    font-size:10px;
+    color:#f20000;
 }
 .label-title {
     display: inline-block;

@@ -55,7 +55,11 @@
                 :class="{ active: item.value === selectTabValue }"
             >
                 <button type="button" @click="onClickTab(item.value)">
-                    <span>{{ item.title }}</span>
+                    <span>
+                        {{ item.title }}
+                        <em>({{ item.count }})</em>
+                    </span>
+
                 </button>
             </li>
         </ul>
@@ -157,7 +161,7 @@
     </div>
 </template>
 <script>
-import { getContentsView, getContentsViewFile } from '@/api/contents';
+import { getContentsView, getContentsViewFile, getContentsFileCount  } from '@/api/contents';
 import fileDetailPopup from '@/views/pages/common/file-Detail-Popup';
 import NoData from '@/components/no-data';
 
@@ -183,28 +187,12 @@ export default {
             },
             filePopupFile: '',
             selectTabValue: 'ALL',
-            fileTabList: [
-                {
-                    value: 'ALL',
-                    title: 'ALL',
-                },
-                {
-                    value: 'GUIDE',
-                    title: 'GUIDE',
-                },
-                {
-                    value: 'VIDEO',
-                    title: 'VIDEO',
-                },
-                {
-                    value: 'VR',
-                    title: 'VR',
-                },
-            ],
+            fileTabList: [],
         };
     },
     created() {
         this.initPageData();
+        this.getFolderItemCount();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
@@ -218,6 +206,28 @@ export default {
         window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
+        async getFolderItemCount() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getContentsFileCount(
+                        this.$route.meta.topMenuCode,
+                        this.$route.params.pathMatch.toUpperCase(),
+                        this.$route.params.id
+                );
+                response.forEach(el => {
+                    const count =
+                            String(el.count).length > 1 ? el.count : '0' + el.count;
+                    this.fileTabList.push({
+                        value: el.sectionCode,
+                        title: el.sectionCode,
+                        count: count,
+                    });
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        },
         closeModal() {
             this.visible.modalEx = false;
             this.filePopupFile = '';
