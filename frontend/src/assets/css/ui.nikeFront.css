@@ -41,6 +41,9 @@
 .fc-black {
     color: #000 !important;
 }
+.fc-red {
+    color: #f20000 !important;
+}
 .img-cropper {
     width: 398px;
     height: 298px;

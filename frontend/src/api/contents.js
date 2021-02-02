@@ -23,6 +23,10 @@ function getContentsViewFile(topMenuCode, menuCode, contentsSeq, params) {
     });
 }
 
+function getContentsFileCount(topMenuCode, menuCode, contentsSeq) {
+    return contents.get(`/${topMenuCode}/${menuCode}/${contentsSeq}/fileCount`);
+}
+
 function postContents(topMenuCode, menuCode, data) {
     return contents.post(`/${topMenuCode}/${menuCode}`, data);
 }
@@ -67,6 +71,7 @@ export {
     getContents,
     getContentsView,
     getContentsViewFile,
+    getContentsFileCount,
     postContents,
     putContents,
     deleteContents,
