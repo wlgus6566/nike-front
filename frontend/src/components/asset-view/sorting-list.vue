@@ -11,7 +11,7 @@
             >
                 <span>
                     {{ item.title }}
-                    <em>({{ item.count }})</em>
+                    <em v-if="item.count !== '00'">({{ item.count }})</em>
                 </span>
             </button>
         </li>
