@@ -51,11 +51,10 @@ export default {
 }
 .sorting-list li button {
     display: block;
-    font-size: 14px;
+    font-size: 18px;
     color: #ccc;
     line-height: 19px;
     font-family: 'Bebas Neue', sans-serif;
-    white-space: nowrap;
 }
 .sorting-list li button span {
     position: relative;

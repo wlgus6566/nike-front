@@ -4,12 +4,7 @@
             <div class="title-box">
                 <h2 class="title">{{ customerData.title }}</h2>
                 <div class="info">
-                    <span
-                        class="name"
-                        v-if="
-                            customerData.noticeArticleSectionCode === 'NOTICE'
-                        "
-                    >
+                    <span class="name">
                         {{ customerData.nickname }}
                     </span>
                     <span class="date">{{ customerData.updateDt }}</span>
@@ -19,7 +14,7 @@
             <template
                 v-if="
                     customerData.fileList &&
-                        customerData.noticeArticleSectionCode === 'NOTICE'
+                    customerData.noticeArticleSectionCode === 'NOTICE'
                 "
             >
                 <div
@@ -41,7 +36,7 @@
             <template
                 v-if="
                     customerData.fileList &&
-                        customerData.noticeArticleSectionCode === 'NEWS'
+                    customerData.noticeArticleSectionCode === 'NEWS'
                 "
             >
                 <ul
@@ -131,7 +126,7 @@ export default {
                 console.log(error);
             }
         },
-        goToNoticeList: function() {
+        goToNoticeList: function () {
             if (this.$route.params.sectionCode === 'notice') {
                 this.$router.push('/mypage/notice');
             } else if (this.$route.params.sectionCode === 'news') {
