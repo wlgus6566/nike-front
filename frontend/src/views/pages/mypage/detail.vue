@@ -99,15 +99,39 @@
                                         "
                                     >
                                         <youtube
-                                            v-if="item.url"
+                                            v-if="
+                                                videoCheck(item.url).type ===
+                                                'youtube'
+                                            "
                                             :video-id="videoCheck(item.url).id"
                                             :player-vars="{
                                                 autoplay: 1,
                                             }"
                                         ></youtube>
+
+                                        <vimeo-player
+                                            v-else-if="
+                                                videoCheck(item.url).type ===
+                                                'vimeo'
+                                            "
+                                            class="video-item"
+                                            :video-id="videoCheck(item.url).id"
+                                            :player-height="height"
+                                            :player-width="width"
+                                        ></vimeo-player>
+                                        <iframe
+                                            v-else-if="
+                                                videoCheck(item.url).type ===
+                                                'brightcove'
+                                            "
+                                            :src="videoCheck(item.url).id"
+                                            allowfullscreen
+                                            webkitallowfullscreen
+                                            mozallowfullscreen
+                                        ></iframe>
                                         <video controls v-else>
                                             <source
-                                                :src="item.filePhysicalName"
+                                                :src="videoCheck(item.url).id"
                                                 type="video/mp4"
                                             />
                                         </video>
@@ -150,6 +174,8 @@ export default {
                 registrationDt: '',
                 contents: '',
             },
+            height: 'auto',
+            width: '600',
         };
     },
 

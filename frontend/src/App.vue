@@ -30,7 +30,7 @@ Vue.use(ElementUI, { locale });
 
 export default {
     name: 'App',
-    render: h => h(App),
+    render: (h) => h(App),
     data() {
         return {
             pageLoading: false,
@@ -38,12 +38,12 @@ export default {
     },
     created() {
         this.urlCheck();
-        bus.$on('pageLoading', state => {
+        bus.$on('pageLoading', (state) => {
             this.pageLoading = state;
         });
     },
     mounted() {
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             const keyCode = e.keyCode;
             if (keyCode === 123) {
                 e.preventDefault();
@@ -69,9 +69,9 @@ export default {
             if (navigator.platform) {
                 if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
                     console.log('모바일에서 접속하셨습니다');
-                    if (window.location.hostname === 'devwww.nikespace.co.kr') {
+                    /* if (window.location.hostname === 'devwww.nikespace.co.kr') {
                         document.location = 'http://devm.nikespace.co.kr/';
-                    }
+                    }*/
                     if (window.location.hostname === 'www.nikespace.co.kr') {
                         document.location = 'http://m.nikespace.co.kr/';
                     }
