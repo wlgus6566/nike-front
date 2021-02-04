@@ -57,9 +57,8 @@
                 <button type="button" @click="onClickTab(item.value)">
                     <span>
                         {{ item.title }}
-                        <em v-if="item.count !=='00'">({{ item.count }})</em>
+                        <em v-if="item.count !== '00'">({{ item.count }})</em>
                     </span>
-
                 </button>
             </li>
         </ul>
@@ -75,8 +74,8 @@
                         :download="item.fileName"
                         v-if="
                             item.fileExtension === 'PPT' ||
-                                item.fileExtension === 'PPTX' ||
-                                item.fileExtension === 'PDF'
+                            item.fileExtension === 'PPTX' ||
+                            item.fileExtension === 'PDF'
                         "
                     >
                         <span class="thumbnail">
@@ -105,7 +104,7 @@
                                 {{ item.title || item.fileName }}
                             </strong>
                             <span class="date">
-                              {{item.registrationDt}}
+                                {{ item.registrationDt }}
                             </span>
                         </span>
                     </a>
@@ -136,7 +135,7 @@
                                 {{ item.title || item.fileName }}
                             </strong>
                             <span class="date">
-                              {{item.registrationDt}}
+                                {{ item.registrationDt }}
                             </span>
                         </span>
                     </a>
@@ -161,7 +160,11 @@
     </div>
 </template>
 <script>
-import { getContentsView, getContentsViewFile, getContentsFileCount  } from '@/api/contents';
+import {
+    getContentsView,
+    getContentsViewFile,
+    getContentsFileCount,
+} from '@/api/contents';
 import fileDetailPopup from '@/views/pages/common/file-Detail-Popup';
 import NoData from '@/components/no-data';
 
@@ -196,7 +199,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {
-        this.initPageData();
+        //this.initPageData();
         window.addEventListener('scroll', this.handleScroll);
     },
     deactivated() {
@@ -211,13 +214,13 @@ export default {
                 const {
                     data: { data: response },
                 } = await getContentsFileCount(
-                        this.$route.meta.topMenuCode,
-                        this.$route.params.pathMatch.toUpperCase(),
-                        this.$route.params.id
+                    this.$route.meta.topMenuCode,
+                    this.$route.params.pathMatch.toUpperCase(),
+                    this.$route.params.id
                 );
-                response.forEach(el => {
+                response.forEach((el) => {
                     const count =
-                            String(el.count).length > 1 ? el.count : '0' + el.count;
+                        String(el.count).length > 1 ? el.count : '0' + el.count;
                     this.fileTabList.push({
                         value: el.sectionCode,
                         title: el.sectionCode,
