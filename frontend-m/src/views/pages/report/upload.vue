@@ -100,7 +100,7 @@
                         <div class="txtarea">
                             <textarea
                                 v-model="reportDetailData.reportName"
-                                placeholder="파트너_시즌_캠페인명_매장명"
+                                placeholder="파트너_매장명_시즌_캠페인"
                             ></textarea>
                         </div>
                     </div>
