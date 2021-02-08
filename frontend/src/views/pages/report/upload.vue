@@ -61,7 +61,7 @@
                             <textarea
                                 rows="5"
                                 v-model="reportDetailData.reportName"
-                                placeholder="파트너_시즌_캠페인명_매장명"
+                                placeholder="파트너_매장명_시즌_캠페인"
                             ></textarea>
                         </span>
                     </div>
