@@ -149,14 +149,13 @@ export default {
     },
 };
 </script>
-<style>
+<style scoped>
 .modal-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .modal-wrap .el-dialog {
-    width: 600px;
     margin: 0 !important;
 }
 .modal-wrap .el-scrollbar__wrap {

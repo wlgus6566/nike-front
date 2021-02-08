@@ -56,6 +56,7 @@ import {
     getContentsView,
     getContentsViewFile,
     sendMail,
+    getContentsFileCount,
 } from '@/api/contents';
 import router from '@/router';
 import { joinInit } from '@/api/join';
@@ -370,7 +371,7 @@ export default {
                 },
             },
             sectionCode: {
-                listSortOptions: [{ value: 'ALL', label: 'ALL' }],
+                listSortOptions: [],
                 value: 'ALL',
             },
             orderType: {
@@ -490,14 +491,15 @@ export default {
         };
     },
     mounted() {
-        this.sectionCode.listSortOptions = [
+        //총 카테고리 수가 추가되면서 this.getFolderItemCount() 함수에서 재정의함
+        /*this.sectionCode.listSortOptions = [
             { value: 'ALL', title: 'ALL' },
             ...this.folderSet[this.$route.meta.topMenuCode.toLowerCase()][
                 this.$route.meta.menuCode
                     .replace(`${this.$route.meta.topMenuCode}_`, '')
                     .toLowerCase()
             ],
-        ];
+        ];*/
         //console.log(this.sectionCode);
     },
     components: {
@@ -565,6 +567,28 @@ export default {
         },
     },
     methods: {
+        async getFolderItemCount() {
+            try {
+                const {
+                    data: { data: response },
+                } = await getContentsFileCount(
+                    this.$route.meta.topMenuCode,
+                    this.$route.params.pathMatch.toUpperCase(),
+                    this.$route.params.id
+                );
+                response.forEach(el => {
+                    const count =
+                        String(el.count).length > 1 ? el.count : '0' + el.count;
+                    this.sectionCode.listSortOptions.push({
+                        value: el.sectionCode,
+                        title: el.sectionCode,
+                        count: count,
+                    });
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        },
         alarmOpen() {
             this.visible.alarm = true;
         },
@@ -808,6 +832,7 @@ export default {
         this.$store.dispatch('getContBasket');
         this.getFolderDetail();
         this.initFetchData();
+        this.getFolderItemCount();
         window.addEventListener('scroll', this.handleScroll);
     },
     activated() {

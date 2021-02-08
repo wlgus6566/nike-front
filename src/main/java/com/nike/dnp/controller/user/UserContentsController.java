@@ -90,7 +90,7 @@ public class UserContentsController {
             @ApiParam(value = "유저 컨텐츠 권한 검색 DTO", required = true) @Valid @RequestBody final UserAuthSearchDTO userAuthSearchDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserContentsController.list");
-        return responseService.getSingleResult(authService.getAuthListWithoutN(userAuthSearchDTO));
+        return responseService.getSingleResult(authService.getAuthListWithoutN(userAuthSearchDTO, "Y"));
     }
 
     @ApiOperation(value = "유저 컨텐츠 권한 목록3"

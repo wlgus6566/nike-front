@@ -37,12 +37,9 @@
     </div>
 </template>
 <script>
-import draggable from 'vuedraggable';
 import FileItem from '@/components/news-file-upload/file-item.vue';
 import { fileUpLoad } from '@/api/file';
 import bus from '@/utils/bus';
-import { getContentsViewFile } from '@/api/contents';
-import { getCustomerDetail } from '@/api/customer';
 export default {
     name: 'FileSettings',
     data() {
@@ -93,7 +90,6 @@ export default {
     watch: {},
     components: {
         FileItem,
-        draggable,
     },
     methods: {
         getFolderDetailFile(file) {

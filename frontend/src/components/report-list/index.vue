@@ -23,7 +23,8 @@
                     <strong class="title">{{ item.nickname }}</strong>
                     <p class="txt">{{ item.reportName }}</p>
                     <p class="date">
-                        {{ $moment(item.updateDt).format('YYYY.MM.DD') }}
+                        {{ item.updateDt }}
+                        <!--  {{ $moment(item.updateDt).format('YYYY.MM.DD') }}-->
                     </p>
                 </div>
                 <div class="view-area">

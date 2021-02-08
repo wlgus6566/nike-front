@@ -5,27 +5,27 @@
             @delete="deleteBoard"
             @edit="modifyRoute"
         />
+
         <div class="detail-view">
             <div class="title-box">
                 <h2 class="title">{{ noticeDetail.title }}</h2>
                 <div class="info">
-                    <span
-                        class="name"
-                        v-if="
-                            noticeDetail.noticeArticleSectionCode === 'NOTICE'
-                        "
-                        >{{ noticeDetail.nickname }}</span
-                    >
+                    <span class="name">
+                        {{ noticeDetail.nickname }}
+                    </span>
                     <span class="date">{{ noticeDetail.updateDt }}</span>
                 </div>
             </div>
-          <div class="detail-cont">
-            <div class="cont-unit ck-content"  v-html="noticeDetail.contents"></div>
-          </div>
+            <div class="detail-cont">
+                <div
+                    class="cont-unit ck-content"
+                    v-html="noticeDetail.contents"
+                ></div>
+            </div>
             <template
                 v-if="
                     noticeDetail.fileList &&
-                        noticeArticleSectionCode === 'NOTICE'
+                    noticeArticleSectionCode === 'NOTICE'
                 "
             >
                 <div
@@ -65,8 +65,7 @@
                             :disabled="
                                 item.fileContentType.split('/')[0] !==
                                     'IMAGE' &&
-                                    item.fileContentType.split('/')[0] !==
-                                        'VIDEO'
+                                item.fileContentType.split('/')[0] !== 'VIDEO'
                             "
                         >
                             <template>
@@ -94,21 +93,45 @@
                                         class="video-item"
                                         v-if="
                                             item.fileKindCode === 'VIDEO' ||
-                                                item.fileContentType.split(
-                                                    '/'
-                                                )[0] === 'VIDEO'
+                                            item.fileContentType.split(
+                                                '/'
+                                            )[0] === 'VIDEO'
                                         "
                                     >
                                         <youtube
-                                            v-if="item.url"
+                                            v-if="
+                                                videoCheck(item.url).type ===
+                                                'youtube'
+                                            "
                                             :video-id="videoCheck(item.url).id"
                                             :player-vars="{
                                                 autoplay: 1,
                                             }"
                                         ></youtube>
+
+                                        <vimeo-player
+                                            v-else-if="
+                                                videoCheck(item.url).type ===
+                                                'vimeo'
+                                            "
+                                            class="video-item"
+                                            :video-id="videoCheck(item.url).id"
+                                            :player-height="height"
+                                            :player-width="width"
+                                        ></vimeo-player>
+                                        <iframe
+                                            v-else-if="
+                                                videoCheck(item.url).type ===
+                                                'brightcove'
+                                            "
+                                            :src="videoCheck(item.url).id"
+                                            allowfullscreen
+                                            webkitallowfullscreen
+                                            mozallowfullscreen
+                                        ></iframe>
                                         <video controls v-else>
                                             <source
-                                                :src="item.filePhysicalName"
+                                                :src="videoCheck(item.url).id"
                                                 type="video/mp4"
                                             />
                                         </video>
@@ -151,6 +174,8 @@ export default {
                 registrationDt: '',
                 contents: '',
             },
+            height: 'auto',
+            width: '600',
         };
     },
 
@@ -197,7 +222,7 @@ export default {
             gsap.from(el, 0.3, {
                 height: 0,
                 ease: Cubic.easeInOut,
-                onComplete: function() {
+                onComplete: function () {
                     el.style.height = 'auto';
                     done();
                 },

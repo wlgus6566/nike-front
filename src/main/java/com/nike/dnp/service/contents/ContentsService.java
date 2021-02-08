@@ -833,7 +833,7 @@ public class ContentsService {
             return this.loadDefaultAuthList(userAuthSearchDTO);
         } else {
             userAuthSearchDTO.setContentsSeq(contentsSeq);
-            return authService.getAuthListWithoutN(userAuthSearchDTO);
+            return authService.getAuthListWithoutN(userAuthSearchDTO, "Y");
         }
     }
 
@@ -848,13 +848,13 @@ public class ContentsService {
      */
     public List<AuthReturnDTO> loadDefaultAuthList(final UserAuthSearchDTO userAuthSearchDTO) {
         // 상세 권한 조회
-        List<AuthReturnDTO> authReturnDTOList = authService.getAuthListWithoutN(userAuthSearchDTO);
+        List<AuthReturnDTO> authReturnDTOList = authService.getAuthListWithoutN(userAuthSearchDTO, "Y");
 
         // 등록/수정권한 목록 조회
         UserAuthSearchDTO createAuthSearchDTO = new UserAuthSearchDTO();
         createAuthSearchDTO.setMenuCode(userAuthSearchDTO.getMenuCode());
         createAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.CREATE.toString());
-        List<AuthReturnDTO> createAuthList = authService.getAuthListWithoutN(createAuthSearchDTO);
+        List<AuthReturnDTO> createAuthList = authService.getAuthListWithoutN(createAuthSearchDTO, "Y");
 
         // 등록/수정 권한 목록을 depth -> list 로 변환
         List<Long> oneDepthAuthSeqList = new ArrayList<>();

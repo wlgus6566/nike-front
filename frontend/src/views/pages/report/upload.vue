@@ -53,7 +53,11 @@
                         <label class="label-title required">보고서 명</label>
                     </div>
                     <div class="form-column">
-                        <span class="textarea">
+                        <p class="form-desc fc-red">
+                            * 보고서 제목을 "파트너_매장명_시즌_캠페인"으로 입력
+                            해주세요
+                        </p>
+                        <span class="textarea mt10">
                             <textarea
                                 rows="5"
                                 v-model="reportDetailData.reportName"
@@ -454,5 +458,9 @@ export default {
 <style scoped>
 .file-setting-wrap {
     padding: 20px 20px 0;
+}
+.form-desc {
+    margin-top: 8px;
+    line-height: 15px;
 }
 </style>

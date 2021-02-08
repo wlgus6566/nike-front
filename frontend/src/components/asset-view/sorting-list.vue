@@ -9,7 +9,10 @@
                 type="button"
                 @click="$emit('sectionCodeChange', item.value)"
             >
-                <span>{{ item.title }}</span>
+                <span>
+                    {{ item.title }}
+                    <em v-if="item.count !== '00'">({{ item.count }})</em>
+                </span>
             </button>
         </li>
     </ul>
@@ -50,7 +53,7 @@ export default {
     display: block;
     font-size: 18px;
     color: #ccc;
-    line-height: 21px;
+    line-height: 19px;
     font-family: 'Bebas Neue', sans-serif;
 }
 .sorting-list li button span {

@@ -1,5 +1,6 @@
 package com.nike.dnp.controller.contents;
 
+import com.nike.dnp.dto.contents.ContentsFileCountResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.model.response.SingleResult;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * The Class Contents file controller.
@@ -97,6 +100,34 @@ public class ContentsFileController {
     ) {
         fileSearchDTO.setContentsSeq(contentsSeq);
         return responseService.getSingleResult(contentsFileService.findAllContentsFilePaging(fileSearchDTO));
+    }
+
+    /**
+     * Find contents file count single result.
+     *
+     * @param topMenuCode the top menu code
+     * @param menuCode    the menu code
+     * @param contentsSeq the contents seq
+     * @return the single result
+     * @author [이소정]
+     * @implNote 파일 코드별 갯수 조회 api
+     * @since 2021. 1. 27. 오후 2:43:54
+     */
+    @ApiOperation(
+            value = "컨텐츠 파일 갯수 조회"
+            , notes = REQUEST_CHARACTER
+            + "topMenuCode|상위메뉴|true|String|ASSET/TOOLKIT/FOUNDATION\n"
+            + "menuCode|파일구분(2depth menu)|true|String|Asset일 경우 > SP/SU/FA/HO\n"
+            + "||||TOOLKIT일 경우 > VMS/EKIN/SOCIAL/RB\n"
+            + "||||FOUNDATION 경우 > VMS/EKIN/DIGITAL/RB\n"
+    )
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, name = "컨텐츠 파일 갯수 조회", value = "/{topMenuCode}/{menuCode}/{contentsSeq}/fileCount")
+    public SingleResult<List<ContentsFileCountResultDTO>> findContentsFileCount(
+            @ApiParam(name = "topMenuCode", value = "상위 메뉴", defaultValue = "ASSET", required = true) @PathVariable final String topMenuCode,
+            @ApiParam(name = "menuCode", value = "파일구분(2depth menu)", defaultValue = "SP", required = true) @PathVariable final String menuCode,
+            @ApiParam(name = "contentsSeq", value = "컨텐츠 시퀀스", defaultValue = "4", required = true) @PathVariable final Long contentsSeq
+    ) {
+        return responseService.getSingleResult(contentsFileService.findContentsFileCount(topMenuCode, contentsSeq));
     }
 
 }

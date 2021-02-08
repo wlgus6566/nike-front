@@ -136,7 +136,7 @@ public class AuthService {
      * @since 2020. 9. 1. 오전 11:06:48
      */
     public int countByAuthSeq(final Long authSeq) {
-        return userAuthRepository.findAllByAuthSeq(authSeq).size();
+        return userAuthRepository.findAllByAuthSeqNormal(authSeq).size();
     }
 
     /**
@@ -646,11 +646,11 @@ public class AuthService {
      * @implNote 권한 depth에 맞는 하위 목록
      * @since 2020. 8. 18. 오후 10:07:48
      */
-    public List<AuthReturnDTO> getAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final Auth auth, final String onlySkillCode) {
+    public List<AuthReturnDTO> getAuthListWithDepth(final UserAuthSearchDTO userAuthSearchDTO, final Auth auth, final String onlySkillCode, final String depth3Yn) {
         log.info("AuthService.getAuthListWithDepth");
         List<AuthReturnDTO> allAuthList;
         if ("Y".equals(onlySkillCode)) {
-            allAuthList = this.getAuthListWithoutN(userAuthSearchDTO);
+            allAuthList = this.getAuthListWithoutN(userAuthSearchDTO, depth3Yn);
         } else {
             allAuthList = this.getAuthList(userAuthSearchDTO);
         }
@@ -675,7 +675,7 @@ public class AuthService {
                         break;
                     }
 
-                    // 3depth인경우
+                    // 3depth인 경우
                     AuthReturnDTO findAuth =this.findAuthDepthList(auth.getAuthSeq(), authReturnDTO.getSubAuths());
                     if (!ObjectUtils.isEmpty(findAuth.getAuthSeq())) {
                         transformAuthList.add(findAuth);
@@ -781,8 +781,8 @@ public class AuthService {
      * @implNote 권한 목록 조회 (권한 Y인것만)
      * @since 2020. 8. 31. 오후 2:49:32
      */
-    public List<AuthReturnDTO> getAuthListWithoutN(final UserAuthSearchDTO userAuthSearchDTO) {
-        log.info("AuthService.getAuthList2");
+    public List<AuthReturnDTO> getAuthListWithoutN(final UserAuthSearchDTO userAuthSearchDTO, final String depth3Yn) {
+        log.info("AuthService.getAuthListWithoutN");
         final List<AuthReturnDTO> findByConfig = this.findByConfig(userAuthSearchDTO);
         final List<AuthReturnDTO> auths = this.findAuths();
 
@@ -832,13 +832,20 @@ public class AuthService {
                 for (AuthReturnDTO dto2 : return1.getSubAuths()) {
                     if (dto2.getViewYn().equals("Y")) {
                         final AuthReturnDTO return2 = dto2;
-                        final List<AuthReturnDTO> return2sub = new ArrayList<>();
-                        for (AuthReturnDTO dto3 : return2.getSubAuths()) {
-                            if (dto3.getViewYn().equals("Y")) {
-                                return2sub.add(dto3);
+
+                        // 3depth 여부에 따라 구분
+                        if ("N".equals(depth3Yn)) {
+                            return2.setSubAuths(null);
+                        } else {
+                            final List<AuthReturnDTO> return2sub = new ArrayList<>();
+                            for (AuthReturnDTO dto3 : return2.getSubAuths()) {
+                                if (dto3.getViewYn().equals("Y")) {
+                                    return2sub.add(dto3);
+                                }
                             }
+                            return2.setSubAuths(return2sub);
                         }
-                        return2.setSubAuths(return2sub);
+
                         return1sub.add(return2);
                     }
                 }

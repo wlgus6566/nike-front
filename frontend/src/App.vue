@@ -69,9 +69,9 @@ export default {
             if (navigator.platform) {
                 if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
                     console.log('모바일에서 접속하셨습니다');
-                    if (window.location.hostname === 'devwww.nikespace.co.kr') {
+                    /* if (window.location.hostname === 'devwww.nikespace.co.kr') {
                         document.location = 'http://devm.nikespace.co.kr/';
-                    }
+                    }*/
                     if (window.location.hostname === 'www.nikespace.co.kr') {
                         document.location = 'http://m.nikespace.co.kr/';
                     }
@@ -88,7 +88,7 @@ export default {
 @import url('assets/css/layout.css');
 @import url('assets/css/reset.css');
 @import url('assets/css/ui.nikeFront.css');
-@import url('assets/css/ckeditor.css');
+@import url('assets/css/ckeditor4.css');
 .page-loading {
     flex-direction: column;
     z-index: 2010;

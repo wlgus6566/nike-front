@@ -133,6 +133,7 @@ public class OrderController {
 			, @ApiIgnore final BindingResult result) {
 		log.info("OrderController.saveOrder");
 		final OrderEntity orderEntity = orderService.saveOrder(orderSaveDTO);
+
 		for (OrderProductSaveDTO orderProductSaveDTO : orderSaveDTO.getOrderProductList()) {
 			final Product product = productService.findByGoodsSeq(orderProductSaveDTO.getGoodsSeq());
 			OrderProductMapping orderProduct = orderProductMappingService.saveOrderProductMapping(
@@ -145,8 +146,9 @@ public class OrderController {
 							.build()
 			);
 
-			// 파일 저장
-			if (!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
+			// MNQ > 수리/보수 메뉴에만 첨부파일 저장 
+			if (ServiceCode.ProductCategory3EnumCode.MNQ40.toString().equals(product.getCategory3Code()) &&
+					!ObjectUtils.isEmpty(orderProductSaveDTO.getFileList()) && !orderProductSaveDTO.getFileList().isEmpty()) {
 				for (OrderProductFileSaveDTO orderProductFileSaveDTO : orderProductSaveDTO.getFileList()) {
 					orderProductFileSaveDTO.setOrderGoodsSeq(orderProduct.getOrderGoodsSeq());
 					orderProductFileService.saveOrderProductFile(orderProductFileSaveDTO);

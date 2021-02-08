@@ -393,15 +393,6 @@ export default {
 };
 </script>
 <style scoped>
-::v-deep .fullCalendar-wrap .fc .fc-daygrid-body .active .fc-daygrid-day-number,
-::v-deep .fc .fc-daygrid-day.fc-active .fc-daygrid-day-number,
-::v-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-    width: 22px;
-    height: 22px;
-}
-::v-deep .fc .fc-daygrid-day-top {
-    padding-bottom: 3px;
-}
 /*TODO 주말 색 변경필오*/
 .fc-day-sun.fc-daygrid-day-frame.fc-daygrid-day-top.fc-daygrid-day-number {
     color: #0000ff;

@@ -437,13 +437,13 @@ public class ServiceCode {
     }
 
     /**
-     * The enum Atf file section.
+     * The enum Asset file section.
      *
      * @author [이소정]
+     * @since 2021. 1. 27. 오후 2:37:38
      */
-    public enum Atf_File_section {
-        ASSET
-        , ATT
+    public enum AssetFileSection {
+        ATT
         , ENG
         , RN
         , TR
@@ -455,7 +455,28 @@ public class ServiceCode {
         , OTHERS
         , DIGITAL
         , GUIDE
+    }
+
+    /**
+     * The enum Toolkit file section.
+     *
+     * @author [이소정]
+     * @since 2021. 1. 27. 오후 2:37:38
+     */
+    public enum ToolkitFileSection {
+        GUIDE
         , VIDEO
         , VR
+    }
+
+    /**
+     * The enum Foundation file section.
+     *
+     * @author [이소정]
+     * @since 2021. 1. 27. 오후 2:37:38
+     */
+    public enum FoundationFileSection {
+        GUIDE
+        , VIDEO
     }
 }

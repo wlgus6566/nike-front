@@ -221,7 +221,7 @@ public class ReportController {
         userAuthSearchDTO.setMenuCode(ServiceCode.MenuCode.REPORT_UPLOAD.toString());
         userAuthSearchDTO.setSkillCode(ServiceCode.MenuSkillEnumCode.REPORT.toString());
         userAuthSearchDTO.setAuthSeq(SecurityUtil.currentUser().getAuthSeq());
-        return responseService.getSingleResult(reportService.findAllAuthListWithDepth(userAuthSearchDTO, "Y"));
+        return responseService.getSingleResult(reportService.findAllAuthListWithDepth(userAuthSearchDTO, "Y", "N"));
     }
 
     /**

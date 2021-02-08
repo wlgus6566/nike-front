@@ -32,7 +32,7 @@ Vue.use({ locale });
 
 export default {
     name: 'App',
-    render: h => h(App),
+    render: (h) => h(App),
     watch: {
         $route() {},
     },
@@ -49,7 +49,7 @@ export default {
     mounted() {},
     created() {
         this.urlCheck();
-        bus.$on('pageLoading', state => {
+        bus.$on('pageLoading', (state) => {
             this.pageLoading = state;
         });
     },
@@ -75,9 +75,9 @@ export default {
                 } else {
                     console.log('PC에서 접속하셨습니다');
                     console.log(window.location.hostname);
-                    if (window.location.hostname === 'devm.nikespace.co.kr') {
+                    /* if (window.location.hostname === 'devm.nikespace.co.kr') {
                         document.location = 'https://devwww.nikespace.co.kr/';
-                    }
+                    }*/
                     if (window.location.hostname === 'm.nikespace.co.kr') {
                         document.location = 'https://www.nikespace.co.kr/';
                     }

@@ -12,19 +12,49 @@
                     class="inner"
                     v-if="
                         filePopupFile.fileKindCode === 'VIDEO' ||
-                            filePopupFile.fileContentType.split('/')[0] ===
-                                'VIDEO'
+                        filePopupFile.fileContentType.split('/')[0] === 'VIDEO'
                     "
                 >
                     <div class="thumbnail">
                         <div class="video-filePopupFile">
-                            <template v-if="filePopupFile.url">
+                            <template
+                                v-if="
+                                    videoCheck(filePopupFile.url).type ===
+                                    'youtube'
+                                "
+                            >
                                 <youtube
                                     :video-id="videoCheck(filePopupFile.url).id"
                                     :player-vars="{
                                         autoplay: 1,
                                     }"
                                 ></youtube>
+                            </template>
+                            <template
+                                v-else-if="
+                                    videoCheck(filePopupFile.url).type ===
+                                    'vimeo'
+                                "
+                            >
+                                <vimeo-player
+                                    class="video-item"
+                                    :video-id="videoCheck(filePopupFile.url).id"
+                                    :player-height="height"
+                                    :player-width="width"
+                                ></vimeo-player>
+                            </template>
+                            <template
+                                v-else-if="
+                                    videoCheck(filePopupFile.url).type ===
+                                    'brightcove'
+                                "
+                            >
+                                <iframe
+                                    :src="videoCheck(filePopupFile.url).id"
+                                    allowfullscreen
+                                    webkitallowfullscreen
+                                    mozallowfullscreen
+                                ></iframe>
                             </template>
                             <template v-else
                                 ><video controls>
@@ -43,7 +73,7 @@
                             class="etc"
                             v-if="
                                 filePopupFile.fileContentType.split('/')[0] !==
-                                    'IMAGE'
+                                'IMAGE'
                             "
                         >
                             <i class="icon-file"></i>
@@ -75,6 +105,8 @@ export default {
     data() {
         return {
             orderComment: '',
+            height: 'auto',
+            width: '600',
         };
     },
     props: ['visible', 'filePopupFile'],

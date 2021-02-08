@@ -95,6 +95,9 @@
                 <li class="upload-item">
                     <div class="form-column">
                         <label class="label-title required">보고서 명</label>
+                        <span class="form-desc">
+                            * 보고서 제목을 "파트너_매장명_시즌_캠페인"으로 입력 해주세요
+                        </span>
                     </div>
                     <div class="form-column">
                         <div class="txtarea">
@@ -413,4 +416,6 @@ export default {
     },
 };
 </script>
-<style scoped></style>
+<style scoped>
+
+</style>
