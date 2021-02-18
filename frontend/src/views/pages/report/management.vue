@@ -155,7 +155,7 @@ export default {
             const windowE = document.documentElement;
             if (
                 windowE.clientHeight + windowE.scrollTop >=
-                windowE.scrollHeight
+                windowE.scrollHeight - 1
             ) {
                 this.infiniteScroll();
             }
