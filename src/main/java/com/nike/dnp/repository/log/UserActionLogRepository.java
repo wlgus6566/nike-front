@@ -4,6 +4,8 @@ import com.nike.dnp.entity.log.UserActionLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * UserActionLogRepository
  *
@@ -13,4 +15,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserActionLogRepository extends JpaRepository<UserActionLog, Long> {
+
+    List<UserActionLog> findAllByUrl(final String url);
+
 }

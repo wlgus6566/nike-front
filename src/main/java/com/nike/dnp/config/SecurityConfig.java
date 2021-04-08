@@ -247,6 +247,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					,"/api/join/**"
 					,"/api/log/**"
 					,"/api/report/answer**"
+					,"/api/contents/mailCheck"
 					//,"/api/report/answer/**"
 			).permitAll()
 			.accessDecisionManager(accessDecisionManager())
