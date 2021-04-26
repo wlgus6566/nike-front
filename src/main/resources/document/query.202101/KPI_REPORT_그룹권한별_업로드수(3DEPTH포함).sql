@@ -78,10 +78,10 @@ FROM TB_AUTH TA
                                       ON TR.AUTH_SEQ = TA.AUTH_SEQ
                            LEFT JOIN TB_AUTH UTA
                                      ON TA.UPPER_AUTH_SEQ = UTA.AUTH_SEQ
-                  WHERE TR.REGISTRATION_DT BETWEEN '2020-09-24 00:00:00' AND '2020-10-15 23:59:59'
+#                   WHERE TR.REGISTRATION_DT BETWEEN '2020-09-24 00:00:00' AND '2020-10-15 23:59:59'
 #                   WHERE TR.REGISTRATION_DT BETWEEN '2020-10-16 00:00:00' AND '2020-11-15 23:59:59'
 #                   WHERE TR.REGISTRATION_DT BETWEEN '2020-11-16 00:00:00' AND '2020-12-15 23:59:59'
-#                   WHERE TR.REGISTRATION_DT BETWEEN '2020-09-24 00:00:00' AND '2020-12-15 23:59:59'
+                  WHERE TR.REGISTRATION_DT BETWEEN '2021-03-16 00:00:00' AND '2021-04-15 23:59:59'
                     AND (TA.AUTH_DEPTH = 2 OR TA.AUTH_DEPTH = 3)
 #         AND TR.DEVICE = 'PC'
 #         AND TR.DEVICE = 'MO'
@@ -145,7 +145,8 @@ FROM TB_AUTH TA
 
 #                                                   WHERE TR.REGISTRATION_DT BETWEEN '2020-12-16 00:00:00' AND '2021-01-15 23:59:59'
 #                                                   WHERE TR.REGISTRATION_DT BETWEEN '2021-01-16 00:00:00' AND '2021-02-15 23:59:59'
-                           WHERE TR.REGISTRATION_DT BETWEEN '2021-02-16 00:00:00' AND '2021-03-15 23:59:59'
+#                            WHERE TR.REGISTRATION_DT BETWEEN '2021-02-16 00:00:00' AND '2021-03-15 23:59:59'
+                           WHERE TR.REGISTRATION_DT BETWEEN '2021-03-16 00:00:00' AND '2021-04-15 23:59:59'
                              AND (TA.AUTH_DEPTH = 2 OR TA.AUTH_DEPTH = 3)
                        ) T
                 GROUP BY T.AUTH_SEQ, T.REGISTER_SEQ
