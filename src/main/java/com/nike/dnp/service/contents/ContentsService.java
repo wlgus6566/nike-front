@@ -5,6 +5,7 @@ import com.nike.dnp.common.variable.FailCode;
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthReturnDTO;
 import com.nike.dnp.dto.contents.*;
+import com.nike.dnp.dto.email.SendCountDTO;
 import com.nike.dnp.dto.email.SendDTO;
 import com.nike.dnp.dto.file.FileResultDTO;
 import com.nike.dnp.dto.user.UserAuthSearchDTO;
@@ -929,5 +930,17 @@ public class ContentsService {
             }
         }
         return viewAuthList;
+    }
+
+    /**
+     * Check send email list.
+     *
+     * @return list
+     * @author [이소정]
+     * @implNote 메일 발송 확인
+     * @since 2021. 4. 8. 오후 5:16:36
+     */
+    public List<SendCountDTO> checkSendEmail() {
+        return mailService.checkSendMail();
     }
 }

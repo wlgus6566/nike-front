@@ -4,6 +4,7 @@ import com.nike.dnp.dto.log.EmailSendingLogSaveDTO;
 import com.nike.dnp.service.log.EmailSendingLogService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -14,8 +15,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import static java.lang.Math.min;
 
 /**
  * The Class Send email office 365.
@@ -210,39 +214,63 @@ public class SendEmailOffice365 {
             }
         });
 
+        int emailMaxCount = 450;
         try {
-            final Message message = new MimeMessage(session);
-            message.setHeader("Content-Type", "text/html; charset=UTF-8");
-            InternetAddress[] addresses = new InternetAddress[toEmail.length];
-            for (int i=0; i<toEmail.length; i++) {
-                addresses[i] = new InternetAddress(toEmail[i]);
-            }
-            //message.setRecipients(Message.RecipientType.TO, addresses);
-            //message.addRecipients(Message.RecipientType.BCC, addresses);
-            message.setFrom(new InternetAddress(fromEmail, "NIKE SPACE", "UTF-8"));
-            message.setSubject(subject);
+            // 반복할 갯수 조회
+            int repeatCount = (toEmail.length / emailMaxCount) + (toEmail.length % emailMaxCount == 0 ? 0 : 1);
 
-            if (file.isEmpty()) {
-                message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
-                message.setText("TEST");
-            } else {
-                final MimeBodyPart mimeMultipart = new MimeBodyPart();
-                mimeMultipart.setContent(file, "text/html; charset=UTF-8");
-                final Multipart multipart = new MimeMultipart();
-                multipart.addBodyPart(mimeMultipart);
-                message.setContent(multipart);
-            }
+            // [] -> list
+            List<String> emailList = Arrays.asList(toEmail);
 
-            message.setSentDate(new Date());
-            Transport.send(message, addresses);
+            for (int c = 0; c < repeatCount; c++) {
+                // toEmail을 emailMaxCou
+                // nt 개씩 잘라서 사용.
 
-            for (int i=0; i<toEmail.length; i++) {
-                emailSendingLogService.save(
-                        EmailSendingLogSaveDTO.builder()
-                                .email(toEmail[i])
-                                .title(message.getSubject())
-                                .contents(ObjectUtils.isEmpty(file) ? "" : file)
-                                .build());
+                int splitMaxSize = 0;
+                if (emailList.size() - (c * emailMaxCount) > emailMaxCount) {
+                    splitMaxSize = emailMaxCount;
+                } else {
+                    splitMaxSize = emailList.size();
+                }
+
+                List<String> subEmailList = new ArrayList<>(emailList.subList(c * emailMaxCount, splitMaxSize));
+
+                String[] subEmailArray = new String[subEmailList.size()];
+                subEmailList.toArray(subEmailArray);
+
+                final Message message = new MimeMessage(session);
+                message.setHeader("Content-Type", "text/html; charset=UTF-8");
+                InternetAddress[] addresses = new InternetAddress[subEmailArray.length];
+                for (int i=0; i < subEmailArray.length; i++) {
+                    addresses[i] = new InternetAddress(subEmailArray[i]);
+                }
+                //message.setRecipients(Message.RecipientType.TO, addresses);
+                //message.addRecipients(Message.RecipientType.BCC, addresses);
+                message.setFrom(new InternetAddress(fromEmail, "NIKE SPACE", "UTF-8"));
+                message.setSubject(subject);
+
+                if (file.isEmpty()) {
+                    message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
+                    message.setText("TEST");
+                } else {
+                    final MimeBodyPart mimeMultipart = new MimeBodyPart();
+                    mimeMultipart.setContent(file, "text/html; charset=UTF-8");
+                    final Multipart multipart = new MimeMultipart();
+                    multipart.addBodyPart(mimeMultipart);
+                    message.setContent(multipart);
+                }
+
+                message.setSentDate(new Date());
+                Transport.send(message, addresses);
+
+                for (int i=0; i < subEmailArray.length; i++) {
+                    emailSendingLogService.save(
+                            EmailSendingLogSaveDTO.builder()
+                                    .email(subEmailArray[i])
+                                    .title(message.getSubject())
+                                    .contents(ObjectUtils.isEmpty(file) ? "" : file)
+                                    .build());
+                }
             }
 
         } catch (final MessagingException | UnsupportedEncodingException exception) {

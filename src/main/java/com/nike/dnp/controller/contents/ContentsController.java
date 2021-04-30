@@ -7,6 +7,7 @@ import com.nike.dnp.dto.contents.ContentsMailSendDTO;
 import com.nike.dnp.dto.contents.ContentsResultDTO;
 import com.nike.dnp.dto.contents.ContentsSaveDTO;
 import com.nike.dnp.dto.contents.ContentsSearchDTO;
+import com.nike.dnp.dto.email.SendCountDTO;
 import com.nike.dnp.entity.contents.Contents;
 import com.nike.dnp.model.response.CommonResult;
 import com.nike.dnp.model.response.SingleResult;
@@ -164,9 +165,11 @@ public class ContentsController {
     /**
      * Save contents single result.
      *
+     * @param request         the request
      * @param topMenuCode     the top menu code
      * @param menuCode        the menu code
      * @param contentsSaveDTO the contents save dto
+     * @param result          the result
      * @return the single result
      * @author [이소정]
      * @implNote 컨텐츠 등록
@@ -259,7 +262,7 @@ public class ContentsController {
      * @param contentsSeq the contents seq
      * @return the single result
      * @author [이소정]
-     * @implNote
+     * @implNote 설명]
      * @apiNote
      * @since 2020. 7. 7. 오후 2:06:55
      */
@@ -317,6 +320,7 @@ public class ContentsController {
     /**
      * Send email common result.
      *
+     * @param contentsSeq the contents seq
      * @param topMenuCode the top menu code
      * @param menuCode    the menu code
      * @return the common result
@@ -335,6 +339,19 @@ public class ContentsController {
     }
 
 
+    /**
+     * Check send email list.
+     *
+     * @return the list
+     * @author [이소정]
+     * @implNote 메일 발송 확인
+     * @since 2021. 4. 8. 오후 5:16:55
+     */
+    @ApiOperation(value = "컨텐츠 메일 발송 확인", notes = REQUEST_CHARACTER)
+    @GetMapping(name = "컨텐츠 메일 발송 확인", value = "/mailCheck", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<SendCountDTO> checkSendEmail() {
+        return contentsService.checkSendEmail();
+    }
 
 }
 
