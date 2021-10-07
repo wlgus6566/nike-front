@@ -4,7 +4,9 @@ import com.nike.dnp.dto.contents.ContentsFileResultDTO;
 import com.nike.dnp.dto.contents.ContentsFileSearchDTO;
 import com.nike.dnp.entity.contents.ContentsFile;
 import com.nike.dnp.entity.contents.QContentsFile;
+import com.nike.dnp.entity.log.QDownloadLog;
 import com.nike.dnp.util.ObjectMapperUtil;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,9 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.nike.dnp.entity.log.QDownloadLog.downloadLog;
 
 
 /**
@@ -61,8 +66,42 @@ public class ContentsFileRepositoryImpl extends QuerydslRepositorySupport implem
                         , qContentsFile.contentsSeq.eq(contentsFileSearchDTO.getContentsSeq())
                         , qContentsFile.useYn.eq("Y")
                 );
-        final List<ContentsFileResultDTO> contentsFileResultDTOList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsFileResultDTO.class);
-        return new PageImpl<>(contentsFileResultDTOList, pageRequest, query.fetchCount());
+
+        /*
+         * 2021-10-07
+         * 작업자: 최미영, 류성재
+         * 다운로드 수가 전부 0 으로 나오는 증상으로 수정
+         * 이후 퍼포먼스에 이슈가 적은 방법으로 수정해야함.
+         */
+        List<ContentsFileResultDTO> dataList = getQuerydsl()
+                .applyPagination(pageRequest, query)
+                .fetch()
+                .stream()
+                .map(entity -> {
+                    Long contentsFileSeq = entity.getContentsFileSeq();
+                    long downloadCount = queryFactory
+                            .from(downloadLog)
+                            .where(
+                                    downloadLog.fileSeq.eq(contentsFileSeq),
+                                    downloadLog.downloadType.eq("CONTENTS")
+                            ).fetchCount();
+                    ContentsFileResultDTO data = ObjectMapperUtil.map(entity, ContentsFileResultDTO.class);
+
+                    data.setDownloadCount(downloadCount);
+
+                    return data;
+                })
+                .collect(Collectors.toList());
+
+
+        /*
+         * 2021-10-07
+         * 작업자: 최미영, 류성재
+         * 다운로드 수가 전부 0 으로 나오는 증상으로 수정
+         * 이후 퍼포먼스에 이슈가 적은 방법으로 수정해야함.
+         */
+        //final List<ContentsFileResultDTO> contentsFileResultDTOList = ObjectMapperUtil.mapAll(getQuerydsl().applyPagination(pageRequest, query).fetch(), ContentsFileResultDTO.class);
+        return new PageImpl<>(dataList, pageRequest, query.fetchCount());
     }
 }
 
