@@ -8,7 +8,7 @@
 
 	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>INFO</level>
+			<level>ERROR</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
@@ -16,15 +16,15 @@
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%logger{36}] [%-5level] - %msg%n</Pattern>
 		</encoder>
 	</appender>
-	
+
 	<!-- Loggers -->
 	<logger name="org.springframework" level="INFO" />
-	<logger name="com.nike.dnp" level="INFO" />
-	<logger name="jdbc.sqlonly" level="INFO" />
-	<logger name="jdbc.audit" level="INFO" />
-	<logger name="jdbc.resultset" level="INFO" />
-	<logger name="jdbc.resultsettable" level="INFO" />
-	<logger name="jdbc.sqltiming" level="INFO" />
+	<logger name="com.nike.dnp" level="DEBUG" />
+	<logger name="jdbc.sqlonly" level="ERROR" />
+	<logger name="jdbc.audit" level="ERROR" />
+	<logger name="jdbc.resultset" level="ERROR" />
+	<logger name="jdbc.resultsettable" level="ERROR" />
+	<logger name="jdbc.sqltiming" level="ERROR" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
