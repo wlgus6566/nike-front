@@ -2,6 +2,7 @@ package com.nike.dnp.repository.user;
 
 import com.nike.dnp.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,6 +59,18 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
      * @implNote 유저 아이디 존재 유무
      */
     int countByUserId(String userId);
+
+    /**
+     * Count by user id and not userStatuscode 'DELETE' int.
+     *
+     * @param userId the user id
+     * @return the int
+     * @author [최미영]
+     * @since 2021. 10. 12. 오전 11:33
+     * @implNote 유저 상태값 'DELETE' 아닌 그리고 유저 존재 유무
+     */
+    int countByUserIdAndUserStatusCodeNot(String userId,String userStatusCode);
+
 
     /**
      * Find by user seq optional.

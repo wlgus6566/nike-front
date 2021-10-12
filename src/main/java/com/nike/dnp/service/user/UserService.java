@@ -351,6 +351,20 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Count by user id not userStatus delete int.
+     *
+     * @param userId the user id
+     * @return the int
+     * @author [최미영]
+     * @implNote 유저 상태값 'DELETE' 아닌 그리고 유저 존재 유무
+     * @since 2021. 10. 12. 오전 11:33
+     */
+    public int countByUserIdAndUserStatusCodeNot(final String userId) {
+        log.info("UserService.countByUserIdAndUserStatusCodeNot");
+        return userRepository.countByUserIdAndUserStatusCodeNot(userId,"DELETE");
+    }
+
+    /**
      * Save user.
      *
      * @param userSaveDTO the user save dto
@@ -496,7 +510,7 @@ public class UserService implements UserDetailsService {
     public Integer checkId(final String userId) {
         log.info("UserService.checkId");
         if (EmailPatternUtil.isValidEmail(userId)) {
-            if (this.countByUserId(userId) > 0) {
+            if (this.countByUserIdAndUserStatusCodeNot(userId) > 0) {
                 throw new CodeMessageHandleException(
                         FailCode.ConfigureError.USED_ID.name()
                         , MessageUtil.getMessage(FailCode.ConfigureError.USED_ID.name())
