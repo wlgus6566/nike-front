@@ -61,7 +61,7 @@
                             </p>
                             <p class="date">
                                 {{
-                                    $moment(item.registrationDt).format(
+                                    $moment(item.updateDt).format(
                                         'YYYY.MM.DD'
                                     )
                                 }}
