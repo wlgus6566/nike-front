@@ -9,7 +9,7 @@
                 <a href="#" @click.prevent="onClickTab(item.value)">{{
                     item.title
                 }}</a>
-            </li>ㄴ
+            </li>
         </ul>
         <template v-if="historyFolderData">
             <MyFolderList
