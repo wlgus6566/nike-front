@@ -11,7 +11,7 @@
             >
                 <span>
                     {{ item.title }}
-                    <em v-if="item.count !== '00'">({{ item.count }})</em>
+<!--                    <em v-if="item.count !== '00'">({{ item.count }})</em>-->
                 </span>
             </button>
         </li>
@@ -22,7 +22,7 @@ export default {
     name: 'SortingList',
     props: ['sectionCode'],
     mounted() {},
-    methods: {
+  methods: {
         activeClass(value) {
             return value === this.sectionCode.value ? 'active' : '';
         },

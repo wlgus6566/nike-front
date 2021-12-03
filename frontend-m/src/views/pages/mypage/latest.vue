@@ -9,7 +9,7 @@
                 <a href="#" @click.prevent="onClickTab(item.value)">{{
                     item.title
                 }}</a>
-            </li>
+            </li>ㄴ
         </ul>
         <template v-if="historyFolderData">
             <MyFolderList
@@ -97,6 +97,7 @@ export default {
             this.fetchData();
         },
         async fetchData(infinite) {
+
             this.loadingData = true;
             try {
                 const {
