@@ -60,11 +60,12 @@
                                 FA2ss0 RN NIKE DIRECT 시공 보고서 자료
                             </p>
                             <p class="date">
-                                {{
+<!--                                {{
                                     $moment(item.updateDt).format(
                                         'YYYY.MM.DD'
                                     )
-                                }}
+                                }}-->
+                              {{ item.updateDt }}
                             </p>
                         </div>
                         <div class="view-area">
