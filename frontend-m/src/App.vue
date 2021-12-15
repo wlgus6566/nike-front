@@ -72,6 +72,7 @@ export default {
             if (navigator.platform) {
                 if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {
                     console.log('모바일에서 접속하셨습니다');
+                    document.location = 'https://www.nikespace.co.kr/';
                 } else {
                     console.log('PC에서 접속하셨습니다');
                     console.log(window.location.hostname);

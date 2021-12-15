@@ -36,4 +36,8 @@ public interface RecentUploadRepository extends JpaRepository<RecentUpload, Long
      * @since 2020. 8. 5. 오후 3:22:55
      */
     List<RecentUpload> findAllByContentsSeq(Long contentsSeq);
+
+
+    Long countByRegisterSeq(Long registerSeq);
+    Long countByRegisterSeqAndTypeCd(Long registerSeq,String typeCd);
 }

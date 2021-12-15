@@ -108,6 +108,13 @@ export default {
                     typeCd: this.typeCd,
                     MobileYn: 'Y',
                 });
+
+
+
+
+
+
+
                 this.isLastPage = response.last;
                 this.totalPage = response.totalPages;
 
@@ -126,6 +133,12 @@ export default {
                 this.isLastPage = response.last;
                 this.page++;
                 this.loadingData = false;
+
+
+
+
+
+
             } catch (error) {
                 console.log(error);
             }

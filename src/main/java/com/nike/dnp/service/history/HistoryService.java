@@ -2,6 +2,7 @@ package com.nike.dnp.service.history;
 
 import com.nike.dnp.common.variable.ServiceCode;
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.history.HistoryFolderCountResultDTO;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.entity.contents.RecentUpload;
@@ -13,9 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,8 +84,8 @@ public class HistoryService {
                 PageRequest.of(historySearchDTO.getPage()
                         , historySearchDTO.getSize()
                         , Sort.by("registrationDt").descending()));
-
     }
+
 
     /**
      * Save history.
@@ -171,4 +174,54 @@ public class HistoryService {
         recentUploadRepository.deleteAll(recentUploadList);
 
     }
+
+    public List<HistoryFolderCountResultDTO> countHistoryFolder(final HistorySearchDTO historySearchDTO, final AuthUserDTO authUserDTO, String menuCode){
+        historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
+        List<HistoryFolderCountResultDTO> historyFolderCountResultDTOList = new ArrayList<>();
+
+        Long historyAllCount = 0L;
+
+        if(menuCode.equals("viewFolder")) {
+            historyAllCount = historyRepository.countByRegisterSeq(historySearchDTO.getRegisterSeq());
+        }else if(menuCode.equals("uploadFolder")){
+            historyAllCount = recentUploadRepository.countByRegisterSeq(historySearchDTO.getRegisterSeq());
+        }
+
+        HistoryFolderCountResultDTO allCount = new HistoryFolderCountResultDTO();
+        allCount.setSectionCode("ALL");
+        allCount.setCount(historyAllCount);
+        historyFolderCountResultDTOList.add(allCount);
+
+        List<String> typeCdList = new ArrayList<>();
+        typeCdList.add("ASSET");
+        typeCdList.add("TOOLKIT");
+        typeCdList.add("FOUNDATION");
+        typeCdList.add("REPORT_MANAGE");
+
+        for(String typeCd : typeCdList){
+            HistoryFolderCountResultDTO historyCount = new HistoryFolderCountResultDTO();
+            historyCount.setSectionCode(typeCd);
+            if(menuCode.equals("viewFolder")){
+                historyCount.setCount(historyRepository.countByRegisterSeqAndTypeCd(historySearchDTO.getRegisterSeq(),typeCd));
+            }else if(menuCode.equals("uploadFolder")){
+                historyCount.setCount(recentUploadRepository.countByRegisterSeqAndTypeCd(historySearchDTO.getRegisterSeq(),typeCd));
+            }
+
+            historyFolderCountResultDTOList.add(historyCount);
+        }
+        return historyFolderCountResultDTOList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
