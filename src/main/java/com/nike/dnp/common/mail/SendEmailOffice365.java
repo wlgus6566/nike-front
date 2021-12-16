@@ -169,6 +169,7 @@ public class SendEmailOffice365 {
             message.setFrom(new InternetAddress(fromEmail, "NIKE SPACE", "UTF-8"));
             message.setSubject(subject);
 
+
             if (file.isEmpty()) {
                 message.setSubject("[NIKE SPACE] 발신 테스트 메일입니다.");
                 message.setText("TEST");
@@ -292,6 +293,10 @@ public class SendEmailOffice365 {
         config.put("mail.smtp.starttls.enable", "true");
         config.put("mail.smtp.host", SERVIDOR_SMTP);
         config.put("mail.smtp.port", PORTA_SERVIDOR_SMTP);
+        config.put("mail.smtp.ssl.trust", "smtp.office365.com");
+        config.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        config.put("mail.transport.protocol", "smtp");
+
         return config;
     }
 

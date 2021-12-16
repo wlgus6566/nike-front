@@ -115,8 +115,8 @@ public class OpenLoginController {
     public SingleResult<String> sendCertCode (
             @ModelAttribute @Validated({ValidationGroups.Group1.class}) final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
-        log.info("UserController.sendCertCode");
 
+        log.info("UserController.sendCertCode");
         final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
                         FailCode.ConfigureError.RETRY_CONFIRM_EMAIL.name()
