@@ -1,6 +1,7 @@
 package com.nike.dnp.controller.history;
 
 import com.nike.dnp.dto.auth.AuthUserDTO;
+import com.nike.dnp.dto.history.HistoryFolderCountResultDTO;
 import com.nike.dnp.dto.history.HistoryResultDTO;
 import com.nike.dnp.dto.history.HistorySearchDTO;
 import com.nike.dnp.model.response.SingleResult;
@@ -14,9 +15,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * The Class History controller.
@@ -129,6 +133,23 @@ public class HistoryController {
         log.info("HistoryController.findAllHistoryViewFolder");
         historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
         return responseService.getSingleResult(historyService.findAllViewHistoryPaging(historySearchDTO, authUserDTO));
+    }
+
+
+    @ApiOperation(
+            value = "최근 본 / 업로드 파일 갯수 조회"
+            , notes = REQUEST_CHARACTER
+            + "menuCode|상위메뉴|true|String|viewFolder/uploadFolder\n"
+    )
+    @GetMapping(name="최근 본 / 업로드 파일 갯수 조회" , value="/history/count/{menuCode}")
+    public SingleResult<List<HistoryFolderCountResultDTO>> countHistoryFolder(
+           final HistorySearchDTO historySearchDTO,
+           @ApiIgnore @AuthenticationPrincipal final AuthUserDTO authUserDTO,
+           @PathVariable String menuCode
+    ){
+        log.info("HistoryController.countHistoryFolder");
+        historySearchDTO.setRegisterSeq(authUserDTO.getUserSeq());
+        return responseService.getSingleResult(historyService.countHistoryFolder(historySearchDTO, authUserDTO,menuCode));
     }
 }
 

@@ -258,6 +258,8 @@ export default {
                 this.pageLast = response.last;
                 this.totalPage = response.totalPages;
                 this.loadingData = false;
+
+
             } catch (error) {
                 console.log(error);
             }

@@ -319,7 +319,9 @@ public class UserService implements UserDetailsService {
      */
     public Optional<User> findByUserIdReturnOptional(final String userId) {
         log.info("UserService.findByUserIdReturnOptional");
-        return userRepository.findByUserId(userId);
+
+        System.out.println(userId);
+        return userRepository.findByUserIdAndUserStatusCode(userId,"NORMAL");
     }
 
     /**

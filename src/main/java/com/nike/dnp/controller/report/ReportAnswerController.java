@@ -87,6 +87,7 @@ public class ReportAnswerController {
             @ApiParam(name = "reportSeq", value = "보고서 시퀀스", defaultValue = "2", required = true) @PathVariable final Long reportSeq
     ) {
         log.info("ReportAnswerController.findAllReportAnswer");
+        System.out.println("==============================>");
         return responseService.getSingleResult(reportAnswerService.findAll(reportSeq));
     }
 

@@ -146,6 +146,7 @@ export default {
         },
         //최근 본 폴더 리스트
         async historyViewDataList(infinite) {
+
             this.loadingData = true;
             try {
                 const {
@@ -155,6 +156,8 @@ export default {
                     size: this.itemLength,
                     typeCd: this.sectionCode.value,
                 });
+
+                console.log(response)
                 this.totalPage = response.totalPages;
                 if (infinite) {
                     if (this.totalPage > this.page - 1) {

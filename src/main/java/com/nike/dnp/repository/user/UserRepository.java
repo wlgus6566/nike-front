@@ -84,5 +84,8 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     Optional<User> findByUserSeq(Long userSeq);
 
 
+    Optional<User> findByUserIdAndUserStatusCode(String userId,String userStatusCode);
+
+
 
 }

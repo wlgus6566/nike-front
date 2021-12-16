@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * The Interface History repository custom.
  *
@@ -27,4 +29,5 @@ public interface HistoryRepositoryCustom {
      * @implNote
      */
     Page<HistoryResultDTO> findAllHistoryPage(final HistorySearchDTO historySearchDTO, final PageRequest pageRequest);
+
 }

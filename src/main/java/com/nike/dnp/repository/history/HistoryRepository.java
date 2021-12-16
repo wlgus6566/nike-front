@@ -36,4 +36,22 @@ public interface HistoryRepository extends JpaRepository<History, Long>, History
      * @since 2020. 8. 5. 오후 3:22:55
      */
     List<History> findAllByContentsSeq(Long contentsSeq);
+
+    List<History> findByRegisterSeq(Long registerSeq);
+
+
+
+
+    /**
+     * Find all by contents seq list.
+     *
+     * @param registerSeq register seq
+     * @return Long
+     * @author [최미영]
+     * @implNote resister seq로 목록 갯수 조회
+     * @since 2021. 12. 10. 오후 2:55
+     */
+
+    Long countByRegisterSeqAndTypeCd(Long registerSeq,String typeCd);
+    Long countByRegisterSeq(Long registerSeq);
 }

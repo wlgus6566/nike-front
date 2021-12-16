@@ -86,7 +86,6 @@ public class HistoryRepositoryImpl extends QuerydslRepositorySupport implements 
         return new PageImpl<>(historyResultList, pageRequest, query.fetchCount());
     }
 
-
 //    @Override
 //    public Page<HistoryResultDTO> findAllHistoryPage(HistorySearchDTO historySearchDTO, PageRequest pageRequest) {
 //        final QHistory qHistory = QHistory.history;
