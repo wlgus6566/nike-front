@@ -22,7 +22,7 @@ export default {
     name: 'SortingList',
     props: ['sectionCode'],
     mounted() {},
-  methods: {
+    methods: {
         activeClass(value) {
             return value === this.sectionCode.value ? 'active' : '';
         },
