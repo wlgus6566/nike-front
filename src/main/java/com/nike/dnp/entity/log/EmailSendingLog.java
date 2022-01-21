@@ -56,7 +56,7 @@ public class EmailSendingLog extends BaseTimeEntity {
      *
      * @author [오지훈]
      */
-    @Column(name = "CONTENTS" , length = 1000)
+    @Column(name = "CONTENTS" )
     @ApiModelProperty(name = "contents", value = "내용", required = true )
     private String contents;
 
