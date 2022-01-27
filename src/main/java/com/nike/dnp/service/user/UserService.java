@@ -587,47 +587,47 @@ public class UserService implements UserDetailsService {
 
         System.out.println("=====================================>");
         final User user = this.findByUserId(userId);
-        Optional<User> user2 =  userRepository.findByUserIdAndUserStatusCode(userId,"DELETE");
+        Optional<User> user2 =  userRepository.findByUserIdAndUserStatusCode(userId,"NORMAL");
         System.out.println(userId);
         System.out.println(user2.isPresent());
         System.out.println(user2.get().getUserId());
         System.out.println("=====================================>");
-//
-//        this.checkCertCode(certCode, certKey);
-//        this.checkPassword(
-//                UserPasswordDTO.builder()
-//                        .userSeq(user2.get().getUserSeq())
-//                        .userId(user2.get().getUserId())
-//                        .userPassword(user2.get().getPassword())
-//                        .password(ConvertUtil.convertCharacterToString(encryption))
-//                        .newPassword(ConvertUtil.convertCharacterToString(newEncryption))
-//                        .confirmPassword(ConvertUtil.convertCharacterToString(confirmEncryption))
-//                        .build());
-//
-//        //비밀번호 업데이트
-//        user2.get().updatePassword(ConvertUtil.convertCharacterToString(certEncryption));
-//        passwordHistoryRepository.save(
-//                PasswordHistory.builder()
-//                        .userSeq(user2.get().getUserSeq())
-//                        .password(ConvertUtil.convertCharacterToString(certEncryption))
-//                        .build());
-//
-//        //인증코드 삭제
-//        redisService.delete("cert:" + userId);
-//
-//        //비밀번호 치환
-//        ConvertUtil.cleanValue(encryption);
-//        ConvertUtil.cleanValue(newEncryption);
-//        ConvertUtil.cleanValue(confirmEncryption);
-//        ConvertUtil.cleanValue(certEncryption);
-//
-//        /*throw new CodeMessageHandleException(
-//                FailCode.ExceptionError.ERROR.name()
-//                ,MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
-//        );*/
-//
+
+        this.checkCertCode(certCode, certKey);
+        this.checkPassword(
+                UserPasswordDTO.builder()
+                        .userSeq(user2.get().getUserSeq())
+                        .userId(user2.get().getUserId())
+                        .userPassword(user2.get().getPassword())
+                        .password(ConvertUtil.convertCharacterToString(encryption))
+                        .newPassword(ConvertUtil.convertCharacterToString(newEncryption))
+                        .confirmPassword(ConvertUtil.convertCharacterToString(confirmEncryption))
+                        .build());
+
+        //비밀번호 업데이트
+        user2.get().updatePassword(ConvertUtil.convertCharacterToString(certEncryption));
+        passwordHistoryRepository.save(
+                PasswordHistory.builder()
+                        .userSeq(user2.get().getUserSeq())
+                        .password(ConvertUtil.convertCharacterToString(certEncryption))
+                        .build());
+
+        //인증코드 삭제
+        redisService.delete("cert:" + userId);
+
+        //비밀번호 치환
+        ConvertUtil.cleanValue(encryption);
+        ConvertUtil.cleanValue(newEncryption);
+        ConvertUtil.cleanValue(confirmEncryption);
+        ConvertUtil.cleanValue(certEncryption);
+
+        /*throw new CodeMessageHandleException(
+                FailCode.ExceptionError.ERROR.name()
+                ,MessageUtil.getMessage(FailCode.ExceptionError.ERROR.name())
+        );*/
+
         final UserResultDTO userResultDTO = new UserResultDTO();
-//        userResultDTO.setUserSeq(user2.get().getUserSeq());
+        userResultDTO.setUserSeq(user2.get().getUserSeq());
         return userResultDTO;
     }
 
