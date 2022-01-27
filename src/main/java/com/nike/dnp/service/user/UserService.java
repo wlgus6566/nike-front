@@ -585,11 +585,11 @@ public class UserService implements UserDetailsService {
         }
 
 
-        System.out.println("=====================================");
+        System.out.println("=====================================>");
 //        final User user = this.findByUserId(userId);
         Optional<User> user2 =  userRepository.findByUserIdAndUserStatusCode(userId,"DELETE");
-
-        System.out.println("=====================================");
+        System.out.println(user2.get().getUserId());
+        System.out.println("=====================================>");
 
         this.checkCertCode(certCode, certKey);
         this.checkPassword(
