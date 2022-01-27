@@ -586,9 +586,9 @@ public class UserService implements UserDetailsService {
 
 
         System.out.println("=====================================>");
-        final User user = this.findByUserId(userId);
+//        final User user = this.findByUserId(userId);
         Optional<User> user2 =  userRepository.findByUserIdAndUserStatusCode(userId,"NORMAL");
-        System.out.println(userId);
+//        System.out.println(userId);
         System.out.println(user2.isPresent());
         System.out.println(user2.get().getUserId());
         System.out.println("=====================================>");
