@@ -589,7 +589,7 @@ public class UserService implements UserDetailsService {
         final User user = this.findByUserId(userId);
         Optional<User> user2 =  userRepository.findByUserIdAndUserStatusCode(userId,"DELETE");
         System.out.println(userId);
-        System.out.println(user2);
+        System.out.println(user2.isPresent());
         System.out.println(user2.get().getUserId());
         System.out.println("=====================================>");
 //
