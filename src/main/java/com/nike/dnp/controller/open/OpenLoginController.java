@@ -83,7 +83,7 @@ public class OpenLoginController {
             @ModelAttribute @Validated({ValidationGroups.Group1.class, ValidationGroups.Group2.class}) final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
         log.info("UserController.sendCert");
-
+        System.out.println("01==============>");
         final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
                         FailCode.ConfigureError.RETRY_CONFIRM_EMAIL.name()
@@ -115,7 +115,7 @@ public class OpenLoginController {
     public SingleResult<String> sendCertCode (
             @ModelAttribute @Validated({ValidationGroups.Group1.class}) final UserIdDTO userIdDTO
             , @ApiIgnore final BindingResult result) {
-
+        System.out.println("02===============>");
         log.info("UserController.sendCertCode");
         final User user = userService.findByUserIdReturnOptional(userIdDTO.getUserId()).orElseThrow(
                 () -> new CodeMessageHandleException(
