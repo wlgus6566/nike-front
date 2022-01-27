@@ -584,23 +584,29 @@ public class UserService implements UserDetailsService {
             certEncryption = ConvertUtil.convertStringToCharacter(passwordEncoder.encode(ConvertUtil.convertCharacterToString(newEncryption)));
         }
 
-        final User user = this.findByUserId(userId);
+
+        System.out.println("=====================================");
+//        final User user = this.findByUserId(userId);
+        Optional<User> user2 =  userRepository.findByUserIdAndUserStatusCode(userId,"DELETE");
+
+        System.out.println("=====================================");
+
         this.checkCertCode(certCode, certKey);
         this.checkPassword(
                 UserPasswordDTO.builder()
-                        .userSeq(user.getUserSeq())
-                        .userId(user.getUserId())
-                        .userPassword(user.getPassword())
+                        .userSeq(user2.get().getUserSeq())
+                        .userId(user2.get().getUserId())
+                        .userPassword(user2.get().getPassword())
                         .password(ConvertUtil.convertCharacterToString(encryption))
                         .newPassword(ConvertUtil.convertCharacterToString(newEncryption))
                         .confirmPassword(ConvertUtil.convertCharacterToString(confirmEncryption))
                         .build());
 
         //비밀번호 업데이트
-        user.updatePassword(ConvertUtil.convertCharacterToString(certEncryption));
+        user2.get().updatePassword(ConvertUtil.convertCharacterToString(certEncryption));
         passwordHistoryRepository.save(
                 PasswordHistory.builder()
-                        .userSeq(user.getUserSeq())
+                        .userSeq(user2.get().getUserSeq())
                         .password(ConvertUtil.convertCharacterToString(certEncryption))
                         .build());
 
@@ -619,7 +625,7 @@ public class UserService implements UserDetailsService {
         );*/
 
         final UserResultDTO userResultDTO = new UserResultDTO();
-        userResultDTO.setUserSeq(user.getUserSeq());
+        userResultDTO.setUserSeq(user2.get().getUserSeq());
         return userResultDTO;
     }
 
