@@ -1,0 +1,93 @@
+spring:
+  profiles: nikelocal
+  datasource:
+    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://10.80.1.212:10002/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+    username: nikemanager
+    password: 'emotion!@'
+
+#  driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    url: jdbc:log4jdbc:mysql://10.80.1.212:10012/nikedb?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+#    username: nikeadmin
+#    password: 'emotion!@'
+  jpa:
+    database: mysql
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        show-sql: true
+        SQL: debug
+        format_sql: true
+        use_sql_comments: true
+        type:
+          descriptor:
+            sql: info
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+    output:
+      ansi:
+        enabled: always
+  redis:
+    host: 10.80.1.212
+    port: 6379
+    cache:
+      redis:
+        cache-null-values: false
+        use-key-prefix: true
+      type: redis
+    userSessionTime: 30
+
+logging:
+  config: classpath:logback-nikelocal.xml
+  level:
+    org:
+      hibernate:
+        type: trace
+server:
+  domain: http://localhost
+  port: 8080
+
+## 시큐리티 url/ ip 체크 flag
+security:
+  auth:
+    url: true
+    ip : false
+
+## Custom 설정
+nike:
+  ## Link 관련 설정
+  url:
+    pc:
+##      domain: 'http://localhost:8081'
+      domain: 'https://devwww.nikespace.co.kr'
+    mobile:
+      domain: 'http://localhost:8082'
+    login: '/login'
+    password: '/password-set'
+  ## File 관련 설정
+  file:
+    root: 'C:\Users\L062\Desktop\nike\img'
+    imageMagick: 'C:\Program Files\ImageMagick-7.0.10-Q16-HDRI'
+    imageMagickCommand: 'magick'
+    ffmpeg: 'C:\Users\L062\Desktop\nike\ffmpeg-4.3-win64-static\bin'
+    ffmpegCommand: 'ffmpeg'
+
+## AWS
+cloud:
+  aws:
+    distributionDomain: 'devupload.nikespace.co.kr'
+    privateKeyFilePath: 'C:\Users\L062\Desktop\nike\document\nikecdn.der'
+    s3:
+      bucket: 'nike-test-bucket-dnp'
+      editor: 'nike-test-resource-bucket-dnp'
+    stack:
+      auto:  false
