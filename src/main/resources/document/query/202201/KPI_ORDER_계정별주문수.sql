@@ -20,7 +20,7 @@ FROM TB_AUTH TA
                            LEFT JOIN TB_AUTH UTA
                                      ON TA.UPPER_AUTH_SEQ = UTA.AUTH_SEQ
 -- #                   WHERE TBO.REGISTRATION_DT BETWEEN '2021-11-16 00:00:00' AND '2021-12-15 23:59:59'
-                  WHERE TBO.REGISTRATION_DT BETWEEN '2021-12-16 00:00:00' AND '2022-01-15 23:59:59'
+                  WHERE TBO.REGISTRATION_DT BETWEEN '2022-01-16 00:00:00' AND '2022-02-15 23:59:59'
               ) T
          GROUP BY T.AUTH_SEQ
      ) S
