@@ -30,7 +30,7 @@ FROM (
                     ELSE 'ETC'
              END AS TIME
          FROM TB_USER_LOGIN_LOG TULL
-         WHERE TULL.LOGIN_DT BETWEEN '2021-04-16 00:00:00' AND '2021-05-15 23:59:59'
+         WHERE TULL.LOGIN_DT BETWEEN '2021-10-16 00:00:00' AND '2021-11-15 23:59:59'
            -- ZABBIX 로그인에 사용한 계정 제외
            AND TULL.USER_SEQ != 2
      ) RESULT

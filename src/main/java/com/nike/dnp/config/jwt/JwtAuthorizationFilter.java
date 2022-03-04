@@ -169,7 +169,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		log.info("JwtAuthorizationFilter.getAuthentication");
 		Authentication authentication = null;
 		if(username != null){
-			final Optional<User> user = userRepository.findByUserId(username);
+//			final Optional<User> user = userRepository.findByUserId(username);
+			final Optional<User> user = userRepository.findByUserIdAndUserStatusCode(username,"NORMAL");
 			final AuthUserDTO authUserDTO = new AuthUserDTO(user.get());
 			// 레디스 키 시간 초기화
 			redisService.set(redisKey, redisToken, Integer.parseInt(String.valueOf(BeanUtil.getBean("userSessionTime"))));

@@ -291,7 +291,8 @@ public class UserService implements UserDetailsService {
      */
     public User findByUserId(final String userId) {
         log.info("UserService.findByUserId");
-        return userRepository.findByUserId(userId).orElseThrow(NotFoundHandleException::new);
+//        return userRepository.findByUserId(userId).orElseThrow(NotFoundHandleException::new);
+        return userRepository.findByUserIdAndUserStatusCode(userId,"NORMAL").orElseThrow(NotFoundHandleException::new);
     }
 
     /**
