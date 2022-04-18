@@ -11,5 +11,4 @@
              AND TULL.USER_SEQ != 2
              GROUP BY DATE_FORMAT(TULL.LOGIN_DT, '%Y-%m-%d')
          ) USER
-    GROUP BY USER.DATE
-;
+    GROUP BY USER.DATE;
