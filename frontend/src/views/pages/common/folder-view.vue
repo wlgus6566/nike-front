@@ -604,6 +604,7 @@ export default {
                         contentsUrl: this.$route.fullPath,
                         // contentsUrl: `/contents/detail/${this.$route.params.id}`,
                     });
+                  alert('알림 메일 전송이 완료되었습니다.');
                     if (response.data.existMsg) {
                         alert(response.data.msg);
                     }
